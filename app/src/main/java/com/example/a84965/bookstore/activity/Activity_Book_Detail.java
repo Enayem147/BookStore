@@ -1,0 +1,347 @@
+package com.example.a84965.bookstore.activity;
+
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.a84965.bookstore.R;
+import com.example.a84965.bookstore.adapter.Adapter_Pager;
+import com.example.a84965.bookstore.model.Sach;
+import com.example.a84965.bookstore.model.GioHang;
+import com.example.a84965.bookstore.model.KhachHang;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
+
+import java.text.DecimalFormat;
+
+public class Activity_Book_Detail extends AppCompatActivity {
+    ViewPager viewPager;
+    TabLayout tabLayout;
+    Toolbar toolbar;
+    private Handler handler;
+    private String sach_ma = "";
+    private String sach_hinh = "";
+    private String sach_ten = "";
+    private int sach_gia = 0 ;
+    Button btn_Them;
+    ImageView imgHinh;
+    TextView txtTen,txtGia;
+    private DatabaseReference mDatabase;
+    int soluong = 1;
+    private boolean isLogin = false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity__book__detail);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        callControls();
+        initToolBar();
+        initBookDetail();
+        Intent intent = getIntent();
+        sach_ma =  intent.getStringExtra("Sach_Ma");
+
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        btn_Them.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(HomePage.KH_Ten == null || HomePage.KH_Ten.equals("")){
+                    DialogDangNhap();
+                }else{
+                    DialogThem();
+                }
+            }
+        });
+
+        //Toast.makeText(this, getTenTG(), Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void DialogDangNhap(){
+        final Dialog dialog  = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_login);
+        final TextView txtSDT = dialog.findViewById(R.id.txtLogin_SDT);
+        final TextView txtMK = dialog.findViewById(R.id.txtLogin_MK);
+        CheckBox cbRemember = dialog.findViewById(R.id.cbLogin);
+        Button btnDangNhap = dialog.findViewById(R.id.btnDangNhap);
+        btnDangNhap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isLogin = false;
+                mDatabase.child("KhachHang").addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        KhachHang khachHang = dataSnapshot.getValue(KhachHang.class);
+                        if (khachHang.getKH_SDT().equals(txtSDT.getText().toString()) && khachHang.getKH_MK().equals(txtMK.getText().toString())) {
+                            isLogin = true;
+                            HomePage.KH_Ten = khachHang.getKH_HoTen();
+                            HomePage.KH_SDT = khachHang.getKH_SDT();
+                            HomePage.updateMenuTitles();
+                            initCart(khachHang.getKH_SDT());
+                        }
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                final ProgressDialog progressDialog = new ProgressDialog(Activity_Book_Detail.this);
+                progressDialog.setTitle("Đăng nhập");
+                progressDialog.setMessage("Chờ trong giây lát !!!");
+                progressDialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(isLogin){
+                            progressDialog.dismiss();
+                            Toast.makeText(Activity_Book_Detail.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }else{
+                            progressDialog.dismiss();
+                            Toast.makeText(Activity_Book_Detail.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },3000);
+
+            }
+        });
+        dialog.show();
+    }
+
+    private void  initCart(final String sdt){
+        if(sdt != null){
+            mDatabase.child("GioHang").child(sdt).addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    if(!dataSnapshot.getKey().equals("default")){
+                        GioHang gh = dataSnapshot.getValue(GioHang.class);
+                        HomePage.gioHang.add(gh);
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
+
+
+    private void callControls() {
+        btn_Them = findViewById(R.id.btnThem_Sach);
+        txtTen = findViewById(R.id.txtDetail_Ten);
+        txtGia = findViewById(R.id.txtDetail_Gia);
+        imgHinh = findViewById(R.id.imgBook_Detail);
+        handler = new Handler();
+    }
+
+    public void initBookDetail(){
+        final DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+        mDatabase.child("Sach").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Sach sach = dataSnapshot.getValue(Sach.class);
+                if(sach.getSach_Ma().equals(sach_ma)){
+                    sach_ten = sach.getSach_Ten();
+                    sach_hinh = sach.getSach_HinhAnh();
+                    sach_gia = sach.getSach_DonGia();
+                    txtTen.setText(sach.getSach_Ten());
+                    txtGia.setText(decimalFormat.format(sach.getSach_DonGia()));
+                    Picasso.get()
+                            .load(sach.getSach_HinhAnh())
+                            .into(imgHinh);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void DialogThem() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_giohang);
+
+        final TextView txtSoLuong = dialog.findViewById(R.id.txtNhap_SL);
+        txtSoLuong.setText(soluong+"");
+        Button btnTru = dialog.findViewById(R.id.btnNhap_Tru);
+        Button btnCong = dialog.findViewById(R.id.btnNhap_Cong);
+        Button btnXacNhan = dialog.findViewById(R.id.btnNhap_XN);
+
+        btnCong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                soluong++;
+                txtSoLuong.setText(soluong +"");
+            }
+        });
+
+        btnTru.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                soluong--;
+                if(soluong <= 0){
+                    soluong=1;
+                }
+                txtSoLuong.setText(soluong +"");
+            }
+        });
+
+        btnXacNhan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(HomePage.gioHang.size() == 0){
+                    HomePage.gioHang.add(new GioHang(sach_ma,sach_ten,sach_hinh,sach_gia,soluong));
+                }else{
+                    boolean exist = false;
+                    for(int i=0;i<HomePage.gioHang.size();i++){
+                        if(sach_ma.equals(HomePage.gioHang.get(i).getSach_Ma())){
+                            int sl = HomePage.gioHang.get(i).getSach_SL();
+                            sl+=soluong;
+                            HomePage.gioHang.get(i).setSach_SL(sl);
+                            exist = true;
+                        }
+                    }
+                    if(!exist){
+                        HomePage.gioHang.add(new GioHang(sach_ma,sach_ten,sach_hinh,sach_gia,soluong));
+                    }
+                }
+                Toast.makeText(Activity_Book_Detail.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.cart_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.menuDetail_giohang:
+                if(HomePage.KH_Ten == null || HomePage.KH_Ten.equals("")){
+                    DialogDangNhap();
+                }else{
+                    Intent intentGH = new Intent(this,Activity_Cart.class);
+                    startActivity(intentGH);
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+    private void initToolBar() {
+        toolbar = findViewById(R.id.toolBar);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_back);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        viewPager = findViewById(R.id.viewPager);
+        tabLayout = findViewById(R.id.tabLayout);
+        FragmentManager manager = getSupportFragmentManager();
+        Adapter_Pager adapter  = new Adapter_Pager(manager);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    public String getMaSach(){
+        return sach_ma;
+    }
+
+
+
+
+}

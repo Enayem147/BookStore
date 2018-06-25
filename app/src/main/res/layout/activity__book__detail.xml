@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.Activity_Book_Detail"
+    android:background="#FFF"
+    android:orientation="vertical">
+    <include
+        android:id="@+id/toolBar"
+        layout="@layout/layout_toolbar"
+        >
+    </include>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFF"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:background="@drawable/border_book_detail"
+                android:id="@+id/imgBook_Detail"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:src="@drawable/loading_img"
+                android:layout_width="150dp"
+                android:layout_height="240dp" />
+            <LinearLayout
+                android:background="@drawable/border_book_detail"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                    <TextView
+                        android:gravity="center_horizontal"
+                        android:layout_gravity="center"
+                        android:text="Đừng gọi anh là người yêu cũ"
+                        android:layout_margin="5dp"
+                        android:id="@+id/txtDetail_Ten"
+                        android:textColor="#2979FF"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp" />
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/txtDetail_Gia"
+                        android:textStyle="bold"
+                        android:textColor="#D50000"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_marginLeft="4dp"
+                        android:textColor="#D50000"
+                        android:textSize="20sp"
+                        android:text="đ"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <Button
+                    android:textSize="15sp"
+                    android:id="@+id/btnThem_Sach"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:textColor="#FFF"
+                    android:background="#2979FF"
+                    android:text="Thêm vào giỏ hàng"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    <LinearLayout
+        android:background="@drawable/border_book_detail"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp">
+        <android.support.design.widget.TabLayout
+            app:tabIndicatorColor="#2979FF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:id="@+id/tabLayout">
+        </android.support.design.widget.TabLayout>
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/viewPager">
+        </android.support.v4.view.ViewPager>
+    </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
