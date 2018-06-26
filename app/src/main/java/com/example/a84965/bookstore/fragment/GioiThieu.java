@@ -11,12 +11,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.a84965.bookstore.R;
-import com.example.a84965.bookstore.activity.Activity_Book_Detail;
+import com.example.a84965.bookstore.activity.BookDetailActivity;
 import com.example.a84965.bookstore.model.Sach;
-import com.example.a84965.bookstore.ultil.GetChildFireBase;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,7 +30,7 @@ public class GioiThieu extends Fragment {
         txtGioiThieu = view.findViewById(R.id.txtGioithieu);
         txtGioiThieu.setMovementMethod(new ScrollingMovementMethod());
 
-        final Activity_Book_Detail activity = (Activity_Book_Detail)getActivity();
+        final BookDetailActivity activity = (BookDetailActivity)getActivity();
         Sach sach = activity.getThongTinSach();
         txtGioiThieu.setText(sach.getSach_GioiThieu());
         return  view;

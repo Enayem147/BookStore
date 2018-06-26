@@ -23,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class Activity_Books extends AppCompatActivity {
+public class BooksActivity extends AppCompatActivity {
     Toolbar toolbar;
     ListView listView;
     private DatabaseReference mDatabase;

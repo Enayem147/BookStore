@@ -3,4 +3,35 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="san_pham_moi">Sản phẩm mới</string>
+    <string name="them_gio_hang">Thêm vào giỏ hàng</string>
+    <string name="gio_hang_trong">Giỏ hàng trống</string>
+    <string name="tong_tien">Tổng :</string>
+    <string name="xac_nhan">Xác nhận</string>
+    <string name="nhap_sdt">Nhập số điện thoại</string>
+    <string name="nhap_mk">Nhập mật khẩu</string>
+    <string name="nhap_ten">Nhập họ và tên</string>
+    <string name="nhap_dc">Nhập địa chỉ</string>
+    <string name="dang_ky">Đăng ký</string>
+    <string name="dang_nhap">Đăng nhập</string>
+    <string name="ghi_nho_dang_nhap">Ghi nhớ đăng nhập</string>
+    <string name="lien_he">Liên hệ</string>
+    <string name="nhap_so_luong">Nhập số lượng</string>
+    <string name="cong">+</string>
+    <string name="tru">-</string>
+    <string name="thong_tin_khach_hang">THÔNG TIN KHÁCH HÀNG</string>
+    <string name="doi_mk">Thay đổi mật khẩu</string>
+    <string name="doi_thong_tin">Thay đổi thông tin</string>
+    <string name="ho_va_ten">Họ và tên</string>
+    <string name="sdt">Số điện thoại (Tên truy cập)</string>
+    <string name="dia_chi">Địa chỉ</string>
+    <string name="tac_gia">Tác giả : </string>
+    <string name="nam_xb">Năm xuất bản : </string>
+    <string name="nha_xb">Nhà xuất bản : </string>
+    <string name="so_trang">Số trang : </string>
+    <string name="gia">Giá : </string>
+    <string name="so_luong">Số lượng : </string>
+    <string name="dat_hang">Đặt hàng</string>
+    <string name="tiep_tuc_mua_hang">Tiếp tục mua hàng</string>
+
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Activity_Invoice"
+    tools:context=".activity.InvoiceActivity"
     android:orientation="vertical"
     android:layout_gravity="center">
     <include
@@ -32,8 +32,8 @@
             >
             <ImageView
                 android:background="@drawable/ic_invoice"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/txtInv_MaHD"
                 android:textColor="@color/colorPrimaryDark"
@@ -50,9 +50,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
-                android:background="@drawable/icon_user"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:background="@drawable/icon_menu_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/txtInv_Ten"
                 android:textColor="@color/colorPrimaryDark"
@@ -71,8 +71,8 @@
             >
             <ImageView
                 android:background="@drawable/icon_phone"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/txtInv_SDT"
                 android:textColor="@color/colorPrimaryDark"
@@ -91,8 +91,8 @@
             android:orientation="horizontal">
             <ImageView
                 android:background="@drawable/icon_address"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/txtInv_DiaChi"
                 android:textColor="@color/colorPrimaryDark"
@@ -111,8 +111,8 @@
             android:orientation="horizontal">
             <ImageView
                 android:background="@drawable/ic_invoice_cart"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_width="32dp"
+                android:layout_height="32dp" />
             <ListView
                 android:id="@+id/listView_Invoice"
                 android:layout_marginLeft="10dp"
@@ -123,14 +123,14 @@
 
         <LinearLayout
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
-                android:background="@drawable/ic_money_total"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:background="@drawable/ic_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/txtInvoice_Total"
                 android:textColor="#D50000"
@@ -149,7 +149,7 @@
                 android:id="@+id/btnOrder_DatHang"
                 android:textColor="#FFF"
                 android:background="@color/colorPrimary"
-                android:text="Xác nhận"
+                android:text="@string/xac_nhan"
                 android:layout_width="100dp"
                 android:layout_height="50dp" />
         </LinearLayout>

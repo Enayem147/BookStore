@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Activity_Register"
+    tools:context=".activity.RegisterActivity"
     android:background="#FFF"
     android:gravity="center"
     android:orientation="vertical">
@@ -33,13 +33,13 @@
             <ImageView
                 android:layout_gravity="center"
                 android:background="@drawable/icon_phone"
-                android:layout_width="32dp"
-                android:layout_height="32dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <EditText
                 android:inputType="number"
                 android:layout_gravity="center"
                 android:id="@+id/txtRes_SDT"
-                android:hint="Nhập số điện thoại"
+                android:hint="@string/nhap_sdt"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -52,13 +52,13 @@
             <ImageView
                 android:layout_gravity="center"
                 android:background="@drawable/icon_pass"
-                android:layout_width="32dp"
-                android:layout_height="32dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <EditText
                 android:inputType="textPassword"
                 android:layout_gravity="center"
                 android:id="@+id/txtRes_MK"
-                android:hint="Nhập mật khẩu"
+                android:hint="@string/nhap_mk"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -70,13 +70,13 @@
             android:layout_gravity="center">
             <ImageView
                 android:layout_gravity="center"
-                android:background="@drawable/icon_user"
-                android:layout_width="32dp"
-                android:layout_height="32dp" />
+                android:background="@drawable/icon_menu_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <EditText
                 android:layout_gravity="center"
                 android:id="@+id/txtRes_HoTen"
-                android:hint="Nhập họ tên"
+                android:hint="@string/nhap_ten"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -90,13 +90,13 @@
             <ImageView
                 android:layout_gravity="center"
                 android:background="@drawable/icon_address"
-                android:layout_width="32dp"
-                android:layout_height="32dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <EditText
                 android:inputType="textMultiLine"
                 android:layout_gravity="center"
                 android:id="@+id/txtRes_DiaChi"
-                android:hint="Nhập địa chỉ"
+                android:hint="@string/nhap_dc"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -111,7 +111,7 @@
                 android:id="@+id/btnRegister"
                 android:textColor="#FFF"
                 android:background="@color/colorPrimary"
-                android:text="Đăng ký"
+                android:text="@string/dang_ky"
                 android:layout_width="100dp"
                 android:layout_height="50dp" />
         </LinearLayout>

@@ -10,17 +10,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.a84965.bookstore.R;
-import com.example.a84965.bookstore.adapter.Adapter_Cart;
 import com.example.a84965.bookstore.adapter.Adapter_Invoice;
 import com.example.a84965.bookstore.model.KhachHang;
 import com.example.a84965.bookstore.model.LichSu;
 import com.example.a84965.bookstore.ultil.GetChildFireBase;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -29,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Activity_Invoice extends AppCompatActivity {
+public class InvoiceActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     TextView txtTotal , txtMaHD , txtTen , txtSDT , txtDiaChi;
     ListView listView;
@@ -111,17 +107,8 @@ public class Activity_Invoice extends AppCompatActivity {
         txtMaHD.setText("SBS"+calendar.getTimeInMillis());
         txtSDT.setText(HomePage.KH_SDT);
 
-        mDatabase.child("KhachHang").addChildEventListener(new GetChildFireBase() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                KhachHang khachHang = dataSnapshot.getValue(KhachHang.class);
-                if(khachHang.getKH_SDT().equals(HomePage.KH_SDT)){
-                    txtTen.setText(khachHang.getKH_HoTen());
-                    txtDiaChi.setText(khachHang.getKH_DiaChi());
-                }
-                super.onChildAdded(dataSnapshot, s);
-            }
-        });
+        txtTen.setText(HomePage.khachHang.getKH_HoTen().toUpperCase());
+        txtDiaChi.setText(HomePage.khachHang.getKH_DiaChi());
     }
 
     private void initCartReview() {
@@ -129,6 +116,6 @@ public class Activity_Invoice extends AppCompatActivity {
         adapter_invoice = new Adapter_Invoice(HomePage.gioHang,getApplicationContext());
         listView.setAdapter(adapter_invoice);
         adapter_invoice.notifyDataSetChanged();
-        txtTotal.setText(decimalFormat.format(Activity_Cart.invoice_tongtien) + " đ");
+        txtTotal.setText(decimalFormat.format(CartActivity.invoice_tongtien) + " đ");
     }
 }

@@ -13,15 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.a84965.bookstore.R;
-import com.example.a84965.bookstore.activity.Activity_Book_Detail;
+import com.example.a84965.bookstore.activity.BookDetailActivity;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.NhaXuatBan;
 import com.example.a84965.bookstore.model.TacGia;
 import com.example.a84965.bookstore.model.TacGiaChiTiet;
 import com.example.a84965.bookstore.ultil.GetChildFireBase;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -116,7 +114,7 @@ public class Adapter_Books extends BaseAdapter {
         });
 
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-        txt_Gia.setText(decimalFormat.format(sach.getSach_DonGia()));
+        txt_Gia.setText(decimalFormat.format(sach.getSach_DonGia()) + " đ");
 
         Picasso.get()
                 .load(sach.getSach_HinhAnh())
@@ -125,7 +123,7 @@ public class Adapter_Books extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,Activity_Book_Detail.class);
+                Intent intent = new Intent(context,BookDetailActivity.class);
                 intent.putExtra("Sach",sach);
                 intent.putExtra("NhaXuatBan",nhaXB);
                 intent.putExtra("TacGia", (Serializable) listTG);

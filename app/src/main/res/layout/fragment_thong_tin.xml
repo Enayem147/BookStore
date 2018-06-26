@@ -15,7 +15,7 @@
         <TextView
             android:textColor="#000000"
             android:textSize="18sp"
-            android:text="Tác giả :"
+            android:text="@string/tac_gia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
@@ -31,7 +31,7 @@
         android:orientation="horizontal"
         android:layout_marginTop="10dp">
         <TextView
-            android:text="Nhà xuất bản : "
+            android:text="@string/nha_xb"
             android:textColor="#000000"
             android:textSize="18sp"
             android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
         <TextView
             android:textColor="#000000"
             android:textSize="18sp"
-            android:text="Năm xuất bản :"
+            android:text="@string/nam_xb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
@@ -69,7 +69,7 @@
         <TextView
             android:textColor="#000000"
             android:textSize="18sp"
-            android:text="Số trang :"
+            android:text="@string/so_trang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView

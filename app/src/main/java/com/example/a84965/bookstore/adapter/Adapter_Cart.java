@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.a84965.bookstore.R;
-import com.example.a84965.bookstore.activity.Activity_Cart;
+import com.example.a84965.bookstore.activity.CartActivity;
 import com.example.a84965.bookstore.activity.HomePage;
 import com.example.a84965.bookstore.model.GioHang;
 import com.squareup.picasso.Picasso;
@@ -28,7 +28,7 @@ public class Adapter_Cart extends BaseAdapter {
     DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
     int soluong = 1;
 
-    public Adapter_Cart(ArrayList<GioHang> list, Activity context ) {
+    public Adapter_Cart(ArrayList<GioHang> list, Activity context) {
         this.list = list;
         this.context = context;
     }
@@ -50,12 +50,12 @@ public class Adapter_Cart extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final TextView txtTenSach,txtDonGia,txtSoLuong;
-        Button btnCong,btnTru;
+        final TextView txtTenSach, txtDonGia, txtSoLuong;
+        Button btnCong, btnTru;
         ImageView imgHinhAnh;
 
-        LayoutInflater inflater  = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.list_view_cart,null);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        convertView = inflater.inflate(R.layout.list_view_cart, null);
         txtTenSach = convertView.findViewById(R.id.txtCart_TenSach);
         txtDonGia = convertView.findViewById(R.id.txtCart_DonGia);
         txtSoLuong = convertView.findViewById(R.id.txtCart_SoLuong);
@@ -63,7 +63,7 @@ public class Adapter_Cart extends BaseAdapter {
         btnTru = convertView.findViewById(R.id.btnCart_Tru);
         imgHinhAnh = convertView.findViewById(R.id.imgCart_HinhSach);
 
-        final GioHang gioHang = (GioHang)getItem(position);
+        final GioHang gioHang = (GioHang) getItem(position);
         soluong = gioHang.getSach_SL();
         btnCong.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,9 +71,9 @@ public class Adapter_Cart extends BaseAdapter {
                 soluong = gioHang.getSach_SL();
                 soluong++;
                 gioHang.setSach_SL(soluong);
-                txtSoLuong.setText(gioHang.getSach_SL()+"");
-                txtDonGia.setText(decimalFormat.format(gioHang.getSach_DonGia() * gioHang.getSach_SL()));
-                Activity_Cart.setTotal();
+                txtSoLuong.setText(gioHang.getSach_SL() + "");
+                txtDonGia.setText(decimalFormat.format(gioHang.getSach_DonGia() * gioHang.getSach_SL())+ " đ");
+                CartActivity.setTotal();
             }
         });
 
@@ -82,22 +82,20 @@ public class Adapter_Cart extends BaseAdapter {
             public void onClick(View v) {
                 soluong = gioHang.getSach_SL();
                 soluong--;
-                if(soluong == 0){
-                    soluong=1;
+                if (soluong == 0) {
+                    soluong = 1;
                 }
                 gioHang.setSach_SL(soluong);
-                txtSoLuong.setText(gioHang.getSach_SL()+"");
-                txtDonGia.setText(decimalFormat.format(gioHang.getSach_DonGia() * gioHang.getSach_SL()));
-                Activity_Cart.setTotal();
+                txtSoLuong.setText(gioHang.getSach_SL() + "");
+                txtDonGia.setText(decimalFormat.format(gioHang.getSach_DonGia() * gioHang.getSach_SL()) + " đ");
+                CartActivity.setTotal();
             }
         });
 
 
-
-
-        txtSoLuong.setText(gioHang.getSach_SL()+"");
+        txtSoLuong.setText(gioHang.getSach_SL() + "");
         txtTenSach.setText(gioHang.getSach_Ten());
-        txtDonGia.setText(decimalFormat.format(gioHang.getSach_DonGia() * gioHang.getSach_SL()));
+        txtDonGia.setText(decimalFormat.format(gioHang.getSach_DonGia() * gioHang.getSach_SL()) + " đ");
         Picasso.get()
                 .load(gioHang.getSach_HinhAnh())
                 .into(imgHinhAnh);
@@ -112,24 +110,22 @@ public class Adapter_Cart extends BaseAdapter {
                 builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(HomePage.gioHang.size() <=0){
-                            Activity_Cart.txtEmpty.setVisibility(View.VISIBLE);
-                            Activity_Cart.txtCart1.setVisibility(View.INVISIBLE);
-                            Activity_Cart.txtCart2.setVisibility(View.INVISIBLE);
-                            Activity_Cart.txtTotal.setVisibility(View.INVISIBLE);
-                        }else{
+                        if (HomePage.gioHang.size() <= 0) {
+                            CartActivity.txtEmpty.setVisibility(View.VISIBLE);
+                            CartActivity.txtCart1.setVisibility(View.INVISIBLE);
+                            CartActivity.txtTotal.setVisibility(View.INVISIBLE);
+                        } else {
                             HomePage.gioHang.remove(position);
                             notifyDataSetChanged();
-                            Activity_Cart.setTotal();
-                            if(HomePage.gioHang.size() <= 0 ){
-                                Activity_Cart.txtEmpty.setVisibility(View.VISIBLE);
-                                Activity_Cart.txtCart1.setVisibility(View.INVISIBLE);
-                                Activity_Cart.txtCart2.setVisibility(View.INVISIBLE);
-                                Activity_Cart.txtTotal.setVisibility(View.INVISIBLE);
-                            }else{
-                                Activity_Cart.txtEmpty.setVisibility(View.INVISIBLE);
+                            CartActivity.setTotal();
+                            if (HomePage.gioHang.size() <= 0) {
+                                CartActivity.txtEmpty.setVisibility(View.VISIBLE);
+                                CartActivity.txtCart1.setVisibility(View.INVISIBLE);
+                                CartActivity.txtTotal.setVisibility(View.INVISIBLE);
+                            } else {
+                                CartActivity.txtEmpty.setVisibility(View.INVISIBLE);
                                 notifyDataSetChanged();
-                                Activity_Cart.setTotal();
+                                CartActivity.setTotal();
                             }
                         }
                     }

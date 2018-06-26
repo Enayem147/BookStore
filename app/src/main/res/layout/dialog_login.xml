@@ -22,13 +22,13 @@
             <ImageView
                 android:layout_gravity="center"
                 android:background="@drawable/icon_phone"
-                android:layout_width="32dp"
-                android:layout_height="32dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <EditText
                 android:inputType="number"
                 android:layout_gravity="center"
                 android:id="@+id/txtLogin_SDT"
-                android:hint="Nhập số điện thoại"
+                android:hint="@string/nhap_sdt"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -41,13 +41,13 @@
             <ImageView
                 android:layout_gravity="center"
                 android:background="@drawable/icon_pass"
-                android:layout_width="32dp"
-                android:layout_height="32dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <EditText
                 android:layout_gravity="center"
                 android:inputType="textPassword"
                 android:id="@+id/txtLogin_MK"
-                android:hint="Nhập mật khẩu"
+                android:hint="@string/nhap_mk"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -56,7 +56,7 @@
             android:id="@+id/cbLogin"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="30dp"
-            android:text="Ghi nhớ đăng nhập"
+            android:text="@string/ghi_nho_dang_nhap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -70,7 +70,7 @@
                 android:id="@+id/btnDangNhap"
                 android:textColor="#FFF"
                 android:background="@color/colorPrimary"
-                android:text="Đăng nhập"
+                android:text="@string/dang_nhap"
                 android:layout_width="100dp"
                 android:layout_height="50dp" />
         </LinearLayout>

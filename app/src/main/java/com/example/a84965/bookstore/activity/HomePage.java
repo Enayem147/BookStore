@@ -45,9 +45,7 @@ import com.example.a84965.bookstore.model.LichSu;
 import com.example.a84965.bookstore.model.QuangCao;
 import com.example.a84965.bookstore.model.TheLoai;
 import com.example.a84965.bookstore.ultil.GetChildFireBase;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -74,8 +72,8 @@ public class HomePage extends AppCompatActivity {
     private static Menu menu;
     private DatabaseReference mDatabase;
     static public String KH_Ten;
+    static public KhachHang khachHang = new KhachHang();
     static public String KH_SDT = "";
-
     static public String new_SDT = "";
     static public String new_MK = "";
     static public ArrayList<GioHang> gioHang;
@@ -102,7 +100,7 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (KH_SDT == null || KH_SDT.equals("")) {
-                    Intent intentRes = new Intent(HomePage.this, Activity_Register.class);
+                    Intent intentRes = new Intent(HomePage.this, RegisterActivity.class);
                     startActivity(intentRes);
                 } else {
                     DialogProfile();
@@ -182,7 +180,7 @@ public class HomePage extends AppCompatActivity {
                 if (KH_Ten == null || KH_Ten.equals("")) {
                     DialogDangNhap();
                 } else {
-                    Intent intent3 = new Intent(this, Activity_Cart.class);
+                    Intent intent3 = new Intent(this, CartActivity.class);
                     startActivity(intent3);
                 }
                 break;
@@ -277,14 +275,15 @@ public class HomePage extends AppCompatActivity {
                 mDatabase.child("KhachHang").addChildEventListener(new GetChildFireBase() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        KhachHang khachHang = dataSnapshot.getValue(KhachHang.class);
-                        if (khachHang.getKH_SDT().equals(txtSDT.getText().toString()) && khachHang.getKH_MK().equals(txtMK.getText().toString())) {
+                        KhachHang kh = dataSnapshot.getValue(KhachHang.class);
+                        if (kh.getKH_SDT().equals(txtSDT.getText().toString()) && kh.getKH_MK().equals(txtMK.getText().toString())) {
                             isLogin = true;
-                            KH_Ten = khachHang.getKH_HoTen();
-                            KH_SDT = khachHang.getKH_SDT();
+                            KH_Ten = kh.getKH_HoTen();
+                            KH_SDT = kh.getKH_SDT();
                             updateMenuTitles();
-                            initCart(khachHang.getKH_SDT());
-                            initHistory(khachHang.getKH_SDT());
+                            initCart(kh.getKH_SDT());
+                            initHistory(kh.getKH_SDT());
+                            khachHang = kh;
                         }
                         super.onChildAdded(dataSnapshot, s);
                     }
@@ -320,6 +319,15 @@ public class HomePage extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView txtThoat = dialog.findViewById(R.id.txtProf_Thoat);
+        TextView txtHoTen = dialog.findViewById(R.id.txtProf_HoTen);
+        TextView txtSDT = dialog.findViewById(R.id.txtProf_SDT);
+        TextView txtDiaChi = dialog.findViewById(R.id.txtProf_DiaChi);
+
+        if(khachHang != null){
+            txtHoTen.setText(khachHang.getKH_HoTen().toUpperCase());
+            txtSDT.setText(khachHang.getKH_SDT());
+            txtDiaChi.setText(khachHang.getKH_DiaChi());
+        }
         LinearLayout btnChangePass = dialog.findViewById(R.id.btnProf_ChangePass);
         LinearLayout btnChangeProf = dialog.findViewById(R.id.btnProf_ChangeProf);
 
@@ -462,7 +470,7 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TheLoai theLoai = (TheLoai) parent.getItemAtPosition(position);
-                Intent intent = new Intent(getApplicationContext(), Activity_Books.class);
+                Intent intent = new Intent(getApplicationContext(), BooksActivity.class);
                 intent.putExtra("TL_Ma", theLoai.getTL_Ma());
                 intent.putExtra("TL_Ten", theLoai.getTL_Ten());
                 startActivity(intent);

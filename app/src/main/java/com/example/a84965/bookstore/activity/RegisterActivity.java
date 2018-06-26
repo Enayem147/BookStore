@@ -17,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Activity_Register extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     String sdt = "";
@@ -34,13 +34,6 @@ public class Activity_Register extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         callControls();
         register();
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
     }
 
     private void register() {
@@ -88,7 +81,7 @@ public class Activity_Register extends AppCompatActivity {
                 }
 
                 if(!error){
-                    Toast.makeText(Activity_Register.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                     KhachHang khachHang = new KhachHang(sdt,mk,ten,diachi);
                     mDatabase.child("KhachHang").push().setValue(khachHang);
                     HomePage.new_SDT = sdt;
@@ -138,5 +131,11 @@ public class Activity_Register extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_Register);
         toolbar.setNavigationIcon(R.drawable.ic_menu_back);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }

@@ -17,7 +17,7 @@
         <ImageView
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
-            android:src="@drawable/no_image"
+            android:src="@drawable/loading_img"
             android:id="@+id/img_NewBook"
             android:layout_width="100dp"
             android:layout_height="150dp" />
@@ -28,7 +28,6 @@
             android:id="@+id/txt_NewBook_Ten"
             android:textColor="#6200EA"
             android:layout_gravity="center"
-            android:text="Nếu chỉ còn một ngày để sống"
             android:layout_width="150dp"
             android:layout_height="wrap_content" />
         <TextView

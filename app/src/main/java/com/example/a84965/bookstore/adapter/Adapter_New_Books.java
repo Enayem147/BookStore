@@ -13,16 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import com.example.a84965.bookstore.activity.Activity_Book_Detail;
+import com.example.a84965.bookstore.activity.BookDetailActivity;
 import com.example.a84965.bookstore.model.NhaXuatBan;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.model.TacGia;
 import com.example.a84965.bookstore.model.TacGiaChiTiet;
 import com.example.a84965.bookstore.ultil.GetChildFireBase;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -109,7 +107,7 @@ public class Adapter_New_Books extends RecyclerView.Adapter<Adapter_New_Books.Vi
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, Activity_Book_Detail.class);
+                Intent intent = new Intent(context, BookDetailActivity.class);
                 intent.putExtra("Sach", list.get(position));
                 intent.putExtra("NhaXuatBan",nhaXB);
                 intent.putExtra("TacGia", (Serializable) listTG);

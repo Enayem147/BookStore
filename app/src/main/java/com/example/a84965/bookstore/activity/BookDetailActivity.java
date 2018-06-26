@@ -38,7 +38,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Activity_Book_Detail extends AppCompatActivity {
+public class BookDetailActivity extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
     Toolbar toolbar;
@@ -118,7 +118,7 @@ public class Activity_Book_Detail extends AppCompatActivity {
                         super.onChildAdded(dataSnapshot, s);
                     }
                 });
-                final ProgressDialog progressDialog = new ProgressDialog(Activity_Book_Detail.this);
+                final ProgressDialog progressDialog = new ProgressDialog(BookDetailActivity.this);
                 progressDialog.setTitle("Đăng nhập");
                 progressDialog.setMessage("Chờ trong giây lát !!!");
                 progressDialog.show();
@@ -127,11 +127,11 @@ public class Activity_Book_Detail extends AppCompatActivity {
                     public void run() {
                         if(isLogin){
                             progressDialog.dismiss();
-                            Toast.makeText(Activity_Book_Detail.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BookDetailActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                         }else{
                             progressDialog.dismiss();
-                            Toast.makeText(Activity_Book_Detail.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BookDetailActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },3000);
@@ -168,7 +168,7 @@ public class Activity_Book_Detail extends AppCompatActivity {
     public void initBookDetail(){
         final DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         txtTen.setText(sach.getSach_Ten());
-        txtGia.setText(decimalFormat.format(sach.getSach_DonGia()));
+        txtGia.setText(decimalFormat.format(sach.getSach_DonGia()) +" đ");
         Picasso.get()
                 .load(sach.getSach_HinhAnh())
                 .into(imgHinh);
@@ -228,7 +228,7 @@ public class Activity_Book_Detail extends AppCompatActivity {
                         HomePage.gioHang.add(new GioHang(sach_ma,sach_ten,sach_hinh,sach_gia,soluong));
                     }
                 }
-                Toast.makeText(Activity_Book_Detail.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BookDetailActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });
@@ -250,7 +250,7 @@ public class Activity_Book_Detail extends AppCompatActivity {
                 if(HomePage.KH_Ten == null || HomePage.KH_Ten.equals("")){
                     DialogDangNhap();
                 }else{
-                    Intent intentGH = new Intent(this,Activity_Cart.class);
+                    Intent intentGH = new Intent(this,CartActivity.class);
                     startActivity(intentGH);
                 }
                 break;

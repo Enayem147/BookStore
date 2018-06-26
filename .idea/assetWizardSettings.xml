@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/E:/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/notification/ic_phone_in_talk_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/E:/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_monetization_on_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -35,7 +35,7 @@
                           <map>
                             <entry key="color" value="2979ff" />
                             <entry key="height" value="32" />
-                            <entry key="outputName" value="icon_menu_contact" />
+                            <entry key="outputName" value="ic_money" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\84965" />
                             <entry key="width" value="32" />

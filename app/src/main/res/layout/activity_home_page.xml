@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Sản phẩm mới"
+                    android:text="@string/san_pham_moi"
                     android:textColor="#2979FF"
                     android:textSize="25sp" />
 
@@ -99,7 +99,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="Đăng ký"
+                            android:text="@string/dang_ky"
                             android:textColor="#000"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -140,7 +140,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="Liên hệ"
+                            android:text="@string/lien_he"
                             android:textColor="#000"
                             android:textSize="16sp" />
                     </LinearLayout>

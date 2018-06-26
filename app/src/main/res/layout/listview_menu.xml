@@ -15,7 +15,6 @@
         <ImageView
             android:id="@+id/imageView_TheLoai"
             android:layout_margin="5dp"
-            android:src="@drawable/book"
             android:layout_width="32dp"
             android:layout_height="32dp" />
     </LinearLayout>

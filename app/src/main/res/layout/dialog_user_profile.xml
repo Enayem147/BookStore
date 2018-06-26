@@ -5,7 +5,8 @@
     android:layout_gravity="center"
     android:background="#FFFF"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:paddingBottom="10dp">
 
     <TextView
         android:id="@+id/txtProf_Thoat"
@@ -25,7 +26,7 @@
         android:gravity="center"
         android:textSize="26sp"
         android:textStyle="bold"
-        android:text="THÔNG TIN KHÁCH HÀNG"
+        android:text="@string/thong_tin_khach_hang"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -50,7 +51,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thay đổi mật khẩu"
+                    android:text="@string/doi_mk"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -78,7 +79,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thay đổi thông tin"
+                    android:text="@string/doi_thong_tin"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -100,15 +101,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Họ và Tên"
+                android:text="@string/ho_va_ten"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txtProf_HoTen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="HOÀNG NGUYỄN TRƯỜNG NAM"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="15sp" />
 
@@ -122,15 +123,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Số điện thoại (Tên truy cập)"
+                android:text="@string/sdt"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txtProf_SDT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0965707573"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="15sp" />
 
@@ -144,16 +145,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Địa chỉ"
+                android:text="@string/dia_chi"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txtProf_DiaChi"
                 android:layout_marginBottom="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="269 Phú lợi - K3 - P2 - TP Sóc Trăng "
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="15sp" />
 

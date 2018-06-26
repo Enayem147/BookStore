@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tác giả : "
+                android:text="@string/tac_gia"
                 android:textColor="#000000"
                 android:textSize="15sp" />
 
@@ -60,7 +60,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nhà xuất bản : "
+                android:text="@string/nha_xb"
                 android:textColor="#000000"
                 android:textSize="15sp" />
 
@@ -81,7 +81,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Giá : "
+                android:text="@string/gia"
                 android:textColor="#000000"
                 android:textSize="15sp" />
 
@@ -92,12 +92,6 @@
                 android:layout_marginLeft="10dp"
                 android:textSize="14sp" />
 
-            <TextView
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="đ"
-                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

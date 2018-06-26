@@ -19,13 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.Activity_Register" />
-        <activity android:name=".activity.Activity_Cart"/>
-        <activity android:name=".activity.Activity_Books" />
-        <activity android:name=".activity.Activity_Book_Detail"/>
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.CartActivity"/>
+        <activity android:name=".activity.BooksActivity" />
+        <activity android:name=".activity.BookDetailActivity"/>
         <activity android:name=".activity.Activity_Book_Upload" />
         <activity android:name=".activity.Activity_FireBase" />
-        <activity android:name=".activity.Activity_Invoice"/>
+        <activity android:name=".activity.InvoiceActivity"/>
     </application>
 
 </manifest>
