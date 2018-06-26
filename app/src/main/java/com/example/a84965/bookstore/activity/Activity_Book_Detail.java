@@ -28,20 +28,24 @@ import com.example.a84965.bookstore.adapter.Adapter_Pager;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.GioHang;
 import com.example.a84965.bookstore.model.KhachHang;
-import com.google.firebase.database.ChildEventListener;
+import com.example.a84965.bookstore.ultil.GetChildFireBase;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Activity_Book_Detail extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
     Toolbar toolbar;
     private Handler handler;
+    private Sach sach = null;
+    private String nhaXB = "";
+    private List<String> listTG = new ArrayList<>();
     private String sach_ma = "";
     private String sach_hinh = "";
     private String sach_ten = "";
@@ -58,19 +62,23 @@ public class Activity_Book_Detail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__book__detail);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        Intent intent = getIntent();
+        sach = (Sach) intent.getSerializableExtra("Sach");
+        nhaXB = intent.getStringExtra("NhaXuatBan");
+        listTG = (ArrayList<String>) intent.getSerializableExtra("TacGia");
+
         callControls();
         initToolBar();
         initBookDetail();
-        Intent intent = getIntent();
-        sach_ma =  intent.getStringExtra("Sach_Ma");
+        ButtonThemGioHangClicked();
 
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+
+
+        //Toast.makeText(this, getTenTG(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void ButtonThemGioHangClicked(){
         btn_Them.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,8 +89,6 @@ public class Activity_Book_Detail extends AppCompatActivity {
                 }
             }
         });
-
-        //Toast.makeText(this, getTenTG(), Toast.LENGTH_SHORT).show();
     }
 
 
@@ -98,7 +104,7 @@ public class Activity_Book_Detail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isLogin = false;
-                mDatabase.child("KhachHang").addChildEventListener(new ChildEventListener() {
+                mDatabase.child("KhachHang").addChildEventListener(new GetChildFireBase() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         KhachHang khachHang = dataSnapshot.getValue(KhachHang.class);
@@ -109,25 +115,7 @@ public class Activity_Book_Detail extends AppCompatActivity {
                             HomePage.updateMenuTitles();
                             initCart(khachHang.getKH_SDT());
                         }
-                    }
-
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        super.onChildAdded(dataSnapshot, s);
                     }
                 });
                 final ProgressDialog progressDialog = new ProgressDialog(Activity_Book_Detail.this);
@@ -155,33 +143,14 @@ public class Activity_Book_Detail extends AppCompatActivity {
 
     private void  initCart(final String sdt){
         if(sdt != null){
-            mDatabase.child("GioHang").child(sdt).addChildEventListener(new ChildEventListener() {
+            mDatabase.child("GioHang").child(sdt).addChildEventListener(new GetChildFireBase() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     if(!dataSnapshot.getKey().equals("default")){
                         GioHang gh = dataSnapshot.getValue(GioHang.class);
                         HomePage.gioHang.add(gh);
                     }
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    super.onChildAdded(dataSnapshot, s);
                 }
             });
         }
@@ -198,42 +167,16 @@ public class Activity_Book_Detail extends AppCompatActivity {
 
     public void initBookDetail(){
         final DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-        mDatabase.child("Sach").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Sach sach = dataSnapshot.getValue(Sach.class);
-                if(sach.getSach_Ma().equals(sach_ma)){
-                    sach_ten = sach.getSach_Ten();
-                    sach_hinh = sach.getSach_HinhAnh();
-                    sach_gia = sach.getSach_DonGia();
-                    txtTen.setText(sach.getSach_Ten());
-                    txtGia.setText(decimalFormat.format(sach.getSach_DonGia()));
-                    Picasso.get()
-                            .load(sach.getSach_HinhAnh())
-                            .into(imgHinh);
-                }
-            }
+        txtTen.setText(sach.getSach_Ten());
+        txtGia.setText(decimalFormat.format(sach.getSach_DonGia()));
+        Picasso.get()
+                .load(sach.getSach_HinhAnh())
+                .into(imgHinh);
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        sach_ma = sach.getSach_Ma();
+        sach_ten = sach.getSach_Ten();
+        sach_gia = sach.getSach_DonGia();
+        sach_hinh = sach.getSach_HinhAnh();
     }
 
     private void DialogThem() {
@@ -330,6 +273,12 @@ public class Activity_Book_Detail extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -337,11 +286,15 @@ public class Activity_Book_Detail extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public String getMaSach(){
-        return sach_ma;
+    public Sach getThongTinSach(){
+        return sach;
     }
 
+    public String getNhaXB(){
+        return nhaXB;
+    }
 
-
-
+    public List getTacGia(){
+        return  listTG;
+    }
 }

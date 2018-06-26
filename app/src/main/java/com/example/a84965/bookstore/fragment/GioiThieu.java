@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.activity.Activity_Book_Detail;
 import com.example.a84965.bookstore.model.Sach;
+import com.example.a84965.bookstore.ultil.GetChildFireBase;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,37 +35,8 @@ public class GioiThieu extends Fragment {
         txtGioiThieu.setMovementMethod(new ScrollingMovementMethod());
 
         final Activity_Book_Detail activity = (Activity_Book_Detail)getActivity();
-        mDatabase.child("Sach").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Sach sach = dataSnapshot.getValue(Sach.class);
-                if(sach.getSach_Ma().equals(activity.getMaSach())){
-                    txtGioiThieu.setText(sach.getSach_GioiThieu());
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
+        Sach sach = activity.getThongTinSach();
+        txtGioiThieu.setText(sach.getSach_GioiThieu());
         return  view;
     }
 

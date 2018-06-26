@@ -1,6 +1,8 @@
 package com.example.a84965.bookstore.model;
 
-public class Sach {
+import java.io.Serializable;
+
+public class Sach implements Serializable {
     private String Sach_Ma;
     private String Sach_Ten;
     private String Sach_HinhAnh;

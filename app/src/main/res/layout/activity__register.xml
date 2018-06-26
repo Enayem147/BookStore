@@ -36,6 +36,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp" />
             <EditText
+                android:inputType="number"
                 android:layout_gravity="center"
                 android:id="@+id/txtRes_SDT"
                 android:hint="Nhập số điện thoại"

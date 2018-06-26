@@ -44,6 +44,7 @@ import com.example.a84965.bookstore.model.KhachHang;
 import com.example.a84965.bookstore.model.LichSu;
 import com.example.a84965.bookstore.model.QuangCao;
 import com.example.a84965.bookstore.model.TheLoai;
+import com.example.a84965.bookstore.ultil.GetChildFireBase;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -73,7 +74,7 @@ public class HomePage extends AppCompatActivity {
     private static Menu menu;
     private DatabaseReference mDatabase;
     static public String KH_Ten;
-    static public String KH_SDT ="";
+    static public String KH_SDT = "";
 
     static public String new_SDT = "";
     static public String new_MK = "";
@@ -93,6 +94,24 @@ public class HomePage extends AppCompatActivity {
         clickMenu();
         GetHinhAnhQuangCao();
         MenuRegisterClick();
+        drawerLayoutChange();
+    }
+
+    private void MenuRegisterClick() {
+        linearLayoutMenuRes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (KH_SDT == null || KH_SDT.equals("")) {
+                    Intent intentRes = new Intent(HomePage.this, Activity_Register.class);
+                    startActivity(intentRes);
+                } else {
+                    DialogProfile();
+                }
+            }
+        });
+    }
+
+    private void drawerLayoutChange() {
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
@@ -121,22 +140,6 @@ public class HomePage extends AppCompatActivity {
             }
         });
     }
-
-    private void MenuRegisterClick(){
-        linearLayoutMenuRes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (KH_SDT == null || KH_SDT.equals("")) {
-                    Intent intentRes = new Intent(HomePage.this,Activity_Register.class);
-                    startActivity(intentRes);
-                }else{
-                    DialogProfile();
-                }
-            }
-        });
-    }
-
-
 
     public static void updateMenuTitles() {
         MenuItem loginMenuItem = menu.findItem(R.id.menu_dangnhap);
@@ -171,8 +174,7 @@ public class HomePage extends AppCompatActivity {
                 if (KH_SDT == null || KH_SDT.equals("")) {
                     DialogDangNhap();
                     break;
-                }
-                else{
+                } else {
                     DialogDangXuat();
                     break;
                 }
@@ -205,9 +207,10 @@ public class HomePage extends AppCompatActivity {
 
     private void DialogDangXuat() {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-     //   alertDialog.setIcon(R.drawable.icon_dialog_logout);
+        //   alertDialog.setIcon(R.drawable.icon_dialog_logout);
         alertDialog.setMessage("Bạn có muốn đăng xuất không");
-
+        alertDialog.setTitle("Đăng xuất");
+        alertDialog.setIcon(R.drawable.icon_dialog_logout);
         alertDialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -231,7 +234,7 @@ public class HomePage extends AppCompatActivity {
 
     private void GetHinhAnhQuangCao() {
         viewFlipper = findViewById(R.id.imgQuangCao_TrangChinh);
-        mDatabase.child("QuangCao").addChildEventListener(new ChildEventListener() {
+        mDatabase.child("QuangCao").addChildEventListener(new GetChildFireBase() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 QuangCao qc = dataSnapshot.getValue(QuangCao.class);
@@ -240,26 +243,7 @@ public class HomePage extends AppCompatActivity {
                         .load(qc.getQC_HinhAnh())
                         .into(imageView);
                 viewFlipper.addView(imageView);
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                super.onChildAdded(dataSnapshot, s);
             }
         });
 
@@ -290,7 +274,7 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isLogin = false;
-                mDatabase.child("KhachHang").addChildEventListener(new ChildEventListener() {
+                mDatabase.child("KhachHang").addChildEventListener(new GetChildFireBase() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         KhachHang khachHang = dataSnapshot.getValue(KhachHang.class);
@@ -302,26 +286,7 @@ public class HomePage extends AppCompatActivity {
                             initCart(khachHang.getKH_SDT());
                             initHistory(khachHang.getKH_SDT());
                         }
-                    }
-
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        super.onChildAdded(dataSnapshot, s);
                     }
                 });
                 final ProgressDialog progressDialog = new ProgressDialog(HomePage.this);
@@ -346,7 +311,7 @@ public class HomePage extends AppCompatActivity {
         dialog.show();
     }
 
-    private void DialogProfile(){
+    private void DialogProfile() {
 
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -355,8 +320,8 @@ public class HomePage extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView txtThoat = dialog.findViewById(R.id.txtProf_Thoat);
-        ImageView btnChangePass = dialog.findViewById(R.id.btnProf_ChangePass);
-        ImageView btnChangeProf = dialog.findViewById(R.id.btnProf_ChangeProf);
+        LinearLayout btnChangePass = dialog.findViewById(R.id.btnProf_ChangePass);
+        LinearLayout btnChangeProf = dialog.findViewById(R.id.btnProf_ChangeProf);
 
         txtThoat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -432,32 +397,13 @@ public class HomePage extends AppCompatActivity {
         recyclerView.setAdapter(adapter_new_books);
 
         final Adapter_New_Books finalAdapter_new_books = adapter_new_books;
-        mDatabase.child("Sach").addChildEventListener(new ChildEventListener() {
+        mDatabase.child("Sach").addChildEventListener(new GetChildFireBase() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Sach sach = dataSnapshot.getValue(Sach.class);
                 listBook.add(sach);
                 adapter_new_books.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                super.onChildAdded(dataSnapshot, s);
             }
         });
 
@@ -467,66 +413,28 @@ public class HomePage extends AppCompatActivity {
     private void initCart(final String sdt) {
         gioHang = new ArrayList<>();
         if (sdt != null && gioHang.size() == 0) {
-            mDatabase.child("GioHang").child(sdt).addChildEventListener(new ChildEventListener() {
+            mDatabase.child("GioHang").child(sdt).addChildEventListener(new GetChildFireBase() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     if (!dataSnapshot.getKey().equals("default")) {
                         GioHang gh = dataSnapshot.getValue(GioHang.class);
                         gioHang.add(gh);
                     }
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    super.onChildAdded(dataSnapshot, s);
                 }
             });
         }
     }
 
-    private void initHistory(final String sdt){
+    private void initHistory(final String sdt) {
         lichSu = new ArrayList<>();
         if (sdt != null && lichSu.size() == 0) {
-            mDatabase.child("LichSu").child(sdt).addChildEventListener(new ChildEventListener() {
+            mDatabase.child("LichSu").child(sdt).addChildEventListener(new GetChildFireBase() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        LichSu ls = dataSnapshot.getValue(LichSu.class);
-                        lichSu.add(ls);
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    LichSu ls = dataSnapshot.getValue(LichSu.class);
+                    lichSu.add(ls);
+                    super.onChildAdded(dataSnapshot, s);
                 }
             });
         }
@@ -537,32 +445,13 @@ public class HomePage extends AppCompatActivity {
         final ArrayList<TheLoai> list = new ArrayList<>();
         adapter_menu = new Adapter_Menu(getApplicationContext(), list);
         listView.setAdapter(adapter_menu);
-        mDatabase.child("TheLoai").addChildEventListener(new ChildEventListener() {
+        mDatabase.child("TheLoai").addChildEventListener(new GetChildFireBase() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 TheLoai theLoai = dataSnapshot.getValue(TheLoai.class);
                 list.add(theLoai);
                 adapter_menu.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                super.onChildAdded(dataSnapshot, s);
             }
         });
 
@@ -598,7 +487,7 @@ public class HomePage extends AppCompatActivity {
             gioHang = new ArrayList<>();
         }
 
-        if(lichSu == null){
+        if (lichSu == null) {
             lichSu = new ArrayList<>();
         }
     }
@@ -629,7 +518,7 @@ public class HomePage extends AppCompatActivity {
     }
 
 
-    private void DialogCompleteOrder(String HD_Ma){
+    private void DialogCompleteOrder(String HD_Ma) {
 
     }
 
@@ -675,7 +564,7 @@ public class HomePage extends AppCompatActivity {
         super.onRestart();
     }
 
-    private  void updateCart(){
+    private void updateCart() {
         if (KH_SDT != null && !KH_SDT.equals("")) {
             DatabaseReference dataCart = FirebaseDatabase.getInstance().getReference("GioHang").child(HomePage.KH_SDT);
             dataCart.removeValue();

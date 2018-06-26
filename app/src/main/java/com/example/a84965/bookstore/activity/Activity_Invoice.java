@@ -17,6 +17,7 @@ import com.example.a84965.bookstore.adapter.Adapter_Cart;
 import com.example.a84965.bookstore.adapter.Adapter_Invoice;
 import com.example.a84965.bookstore.model.KhachHang;
 import com.example.a84965.bookstore.model.LichSu;
+import com.example.a84965.bookstore.ultil.GetChildFireBase;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,6 +39,7 @@ public class Activity_Invoice extends AppCompatActivity {
     Calendar calendar = Calendar.getInstance();
     Date date = new Date();
     SimpleDateFormat sdf = new SimpleDateFormat ("E dd.MM.yyy 'lúc' k:mm ");
+    String ngayDat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,18 +48,14 @@ public class Activity_Invoice extends AppCompatActivity {
         callControls();
         initCartReview();
         initInvoice();
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        final String ngayDat = sdf.format(date);
+        ButtonThanhToanClick();
+    }
 
+    private void ButtonThanhToanClick(){
+        ngayDat = sdf.format(date);
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 for (int i = 0; i < HomePage.gioHang.size(); i++) {
                     LichSu lichSu = new LichSu(txtMaHD.getText().toString(),
                             HomePage.gioHang.get(i).getSach_Ma(),
@@ -101,13 +99,19 @@ public class Activity_Invoice extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("ĐƠN ĐẶT HÀNG");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void initInvoice(){
         txtMaHD.setText("SBS"+calendar.getTimeInMillis());
         txtSDT.setText(HomePage.KH_SDT);
 
-        mDatabase.child("KhachHang").addChildEventListener(new ChildEventListener() {
+        mDatabase.child("KhachHang").addChildEventListener(new GetChildFireBase() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 KhachHang khachHang = dataSnapshot.getValue(KhachHang.class);
@@ -115,26 +119,7 @@ public class Activity_Invoice extends AppCompatActivity {
                     txtTen.setText(khachHang.getKH_HoTen());
                     txtDiaChi.setText(khachHang.getKH_DiaChi());
                 }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                super.onChildAdded(dataSnapshot, s);
             }
         });
     }

@@ -14,6 +14,7 @@ import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.adapter.Adapter_Books;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.LoaiSach;
+import com.example.a84965.bookstore.ultil.GetChildFireBase;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,14 +34,6 @@ public class Activity_Books extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         initActionBar();
         initBookList();
-        clickBookListEvent();
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
     }
 
     @Override
@@ -57,16 +50,16 @@ public class Activity_Books extends AppCompatActivity {
         final ArrayList<Sach> listBooks = new ArrayList<>();
 
         final Adapter_Books adapter_books;
-        adapter_books = new Adapter_Books(getApplicationContext(),listBooks);
+        adapter_books = new Adapter_Books(this,listBooks);
         listView.setAdapter(adapter_books);
 
-        mDatabase.child("LoaiSach").addChildEventListener(new ChildEventListener() {
+        mDatabase.child("LoaiSach").addChildEventListener(new GetChildFireBase() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 final LoaiSach loaiSach = dataSnapshot.getValue(LoaiSach.class);
                 if(loaiSach.getTL_Ma() == TL_Ma){
 
-                    mDatabase.child("Sach").addChildEventListener(new ChildEventListener() {
+                    mDatabase.child("Sach").addChildEventListener(new GetChildFireBase() {
                         @Override
                         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                             Sach sach = dataSnapshot.getValue(Sach.class);
@@ -74,65 +67,16 @@ public class Activity_Books extends AppCompatActivity {
                                 listBooks.add(sach);
                                 adapter_books.notifyDataSetChanged();
                             }
-                        }
-
-                        @Override
-                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                        }
-
-                        @Override
-                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                            super.onChildAdded(dataSnapshot, s);
                         }
                     });
                 }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                super.onChildAdded(dataSnapshot, s);
             }
         });
 
     }
 
-    private  void clickBookListEvent(){
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Sach sach = (Sach)parent.getItemAtPosition(position);
-                Intent intent = new Intent(getApplicationContext(),Activity_Book_Detail.class);
-                intent.putExtra("Sach_Ma",sach.getSach_Ma());
-                startActivity(intent);
-            }
-        });
-    }
 
     private void initActionBar() {
         toolbar = findViewById(R.id.toolbar_Books);
@@ -142,5 +86,11 @@ public class Activity_Books extends AppCompatActivity {
         Intent intent = getIntent();
         String TL_Ten = intent.getStringExtra("TL_Ten");
         setTitle(TL_Ten);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }

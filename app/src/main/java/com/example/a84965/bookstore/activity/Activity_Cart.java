@@ -40,13 +40,10 @@ public class Activity_Cart extends AppCompatActivity {
         callControls();
         initCart();
         setTotal();
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        AllButtonClick();
+    }
 
+    private void AllButtonClick(){
         btnTiepTuc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +63,6 @@ public class Activity_Cart extends AppCompatActivity {
 
             }
         });
-
     }
 
 
@@ -104,6 +100,13 @@ public class Activity_Cart extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("Giỏ hàng");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void initCart() {

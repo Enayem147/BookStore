@@ -45,21 +45,19 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
+                android:orientation="horizontal"
+                android:id="@+id/btnProf_ChangePass">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Thay đổi mật khẩu"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
-
                 <ImageView
-                    android:id="@+id/btnProf_ChangePass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="120dp"
+                    android:layout_marginLeft="160dp"
                     android:src="@drawable/ic_right_blue" />
             </LinearLayout>
 
@@ -74,21 +72,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:id="@+id/btnProf_ChangeProf">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Thay đổi thông tin"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/btnProf_ChangeProf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="120dp"
+                    android:layout_marginLeft="160dp"
                     android:src="@drawable/ic_right_blue" />
             </LinearLayout>
 
@@ -98,12 +96,13 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
                 android:background="@color/colorPrimary" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Họ và Tên"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -111,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:text="HOÀNG NGUYỄN TRƯỜNG NAM"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -125,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:text="Số điện thoại (Tên truy cập)"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -133,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:text="0965707573"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -147,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:text="Địa chỉ"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -156,7 +155,7 @@
                 android:layout_height="wrap_content"
                 android:text="269 Phú lợi - K3 - P2 - TP Sóc Trăng "
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
         </LinearLayout>
 

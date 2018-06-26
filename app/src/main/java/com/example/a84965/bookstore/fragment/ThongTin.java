@@ -16,6 +16,7 @@ import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.NhaXuatBan;
 import com.example.a84965.bookstore.model.TacGia;
 import com.example.a84965.bookstore.model.TacGiaChiTiet;
+import com.example.a84965.bookstore.ultil.GetChildFireBase;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,13 +29,16 @@ import java.util.List;
 
 public class ThongTin extends Fragment {
     private DatabaseReference mDatabase;
+
     public ThongTin() {
     }
-    TextView txtTG,txtNhaXB,txtNamXB,txtSoTrang;
+
+    TextView txtTG, txtNhaXB, txtNamXB, txtSoTrang;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_thong_tin,container,false);
+        View view = inflater.inflate(R.layout.fragment_thong_tin, container, false);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         txtTG = view.findViewById(R.id.txt_tt_tacgia);
@@ -42,138 +46,25 @@ public class ThongTin extends Fragment {
         txtNamXB = view.findViewById(R.id.txt_tt_namxb);
         txtSoTrang = view.findViewById(R.id.txt_tt_sotrang);
 
-        final Activity_Book_Detail activity = (Activity_Book_Detail)getActivity();
+        final Activity_Book_Detail activity = (Activity_Book_Detail) getActivity();
+        final Sach sach = activity.getThongTinSach();
 
-        mDatabase.child("Sach").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                final Sach sach = dataSnapshot.getValue(Sach.class);
-                if(sach.getSach_Ma().equals(activity.getMaSach())){
-                    txtNamXB.setText(sach.getSach_NamXB()+"");
-                    txtSoTrang.setText(sach.getSach_SoTrang()+"");
+        txtNamXB.setText(sach.getSach_NamXB() + "");
+        txtSoTrang.setText(sach.getSach_SoTrang() + "");
 
-                    //Lấy tên nhà xuất bản
-                     mDatabase.child("NhaXuatBan").addChildEventListener(new ChildEventListener() {
-                         @Override
-                         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                             NhaXuatBan nxb = dataSnapshot.getValue(NhaXuatBan.class);
-                             if(nxb.getNXB_Ma().equals(sach.getNXB_Ma())){
-                                 txtNhaXB.setText(nxb.getNXB_Ten());
-                             }
-                         }
+        //Lấy tên nhà xuất bản
+        txtNhaXB.setText(activity.getNhaXB());
 
-                         @Override
-                         public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                         }
-
-                         @Override
-                         public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                         }
-
-                         @Override
-                         public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                         }
-
-                         @Override
-                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                         }
-                     });
-                    //Lấy tên tác giả
-                    final List<String> listTG = new ArrayList<>();
-                    mDatabase.child("TacGiaChiTiet").addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                            final TacGiaChiTiet tacGiaChiTiet = dataSnapshot.getValue(TacGiaChiTiet.class);
-                            if(tacGiaChiTiet.getSach_Ma().equals(activity.getMaSach())){
-                                mDatabase.child("TacGia").addChildEventListener(new ChildEventListener() {
-                                    @Override
-                                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                        TacGia tacGia = dataSnapshot.getValue(TacGia.class);
-                                        if(tacGia.getTG_Ma().equals(tacGiaChiTiet.getTG_Ma())){
-                                            // lấy danh sách đồng tác giả
-                                            listTG.add(tacGia.getTG_Ten());
-                                            String strTG = "";
-                                            strTG = listTG.get(0);
-                                            for(int i=1;i<listTG.size();i++){
-                                                strTG +=" , "+listTG.get(i);
-                                            }
-                                            txtTG.setText(strTG);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                    }
-
-                                    @Override
-                                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                                    }
-
-                                    @Override
-                                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
+        //Lấy tên tác giả
+        List<String> listTG = activity.getTacGia();
+        String strTG = "";
+        strTG = listTG.get(0);
+        for (int i = 1; i < listTG.size(); i++) {
+            strTG += " , " + listTG.get(i);
+        }
+        txtTG.setText(strTG);
 
 
-                            }
-                        }
-
-                        @Override
-                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                        }
-
-                        @Override
-                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
         txtTG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,7 +74,6 @@ public class ThongTin extends Fragment {
 
         return view;
     }
-
 
 
 }
