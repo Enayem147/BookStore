@@ -41,7 +41,8 @@
                 android:id="@+id/txtRes_SDT"
                 android:hint="@string/nhap_sdt"
                 android:layout_width="250dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/icon_cancel" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="10dp"
@@ -60,7 +61,8 @@
                 android:id="@+id/txtRes_MK"
                 android:hint="@string/nhap_mk"
                 android:layout_width="250dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/icon_cancel"/>
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="10dp"
@@ -78,7 +80,8 @@
                 android:id="@+id/txtRes_HoTen"
                 android:hint="@string/nhap_ten"
                 android:layout_width="250dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/icon_cancel"/>
         </LinearLayout>
 
         <LinearLayout
@@ -98,7 +101,8 @@
                 android:id="@+id/txtRes_DiaChi"
                 android:hint="@string/nhap_dc"
                 android:layout_width="250dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/icon_cancel"/>
         </LinearLayout>
 
         <LinearLayout

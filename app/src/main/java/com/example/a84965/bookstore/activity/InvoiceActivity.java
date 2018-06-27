@@ -1,8 +1,6 @@
 package com.example.a84965.bookstore.activity;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,11 +10,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.a84965.bookstore.R;
-import com.example.a84965.bookstore.adapter.Adapter_Invoice;
-import com.example.a84965.bookstore.model.KhachHang;
+import com.example.a84965.bookstore.adapter.InvoiceAdapter;
 import com.example.a84965.bookstore.model.LichSu;
-import com.example.a84965.bookstore.ultil.GetChildFireBase;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -65,19 +60,16 @@ public class InvoiceActivity extends AppCompatActivity {
 
                 DatabaseReference dataCart = FirebaseDatabase.getInstance().getReference("GioHang").child(HomePage.KH_SDT);
                 dataCart.removeValue();
-
                 HomePage.gioHang.clear();
-
+                HomePage.isUserOrder = true;
                 Intent intent = new Intent(getApplicationContext(),HomePage.class);
+                intent.putExtra("MaHD",txtMaHD.getText());
+                intent.putExtra("NgayLap",ngayDat);
                 startActivity(intent);
             }
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 
     private void callControls() {
         listView = findViewById(R.id.listView_Invoice);
@@ -112,10 +104,10 @@ public class InvoiceActivity extends AppCompatActivity {
     }
 
     private void initCartReview() {
-        final Adapter_Invoice adapter_invoice;
-        adapter_invoice = new Adapter_Invoice(HomePage.gioHang,getApplicationContext());
-        listView.setAdapter(adapter_invoice);
-        adapter_invoice.notifyDataSetChanged();
+        final InvoiceAdapter _invoiceAdapter;
+        _invoiceAdapter = new InvoiceAdapter(HomePage.gioHang,getApplicationContext());
+        listView.setAdapter(_invoiceAdapter);
+        _invoiceAdapter.notifyDataSetChanged();
         txtTotal.setText(decimalFormat.format(CartActivity.invoice_tongtien) + " đ");
     }
 }

@@ -12,14 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a84965.bookstore.R;
-import com.example.a84965.bookstore.adapter.Adapter_Cart;
+import com.example.a84965.bookstore.adapter.CartAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DecimalFormat;
 
 public class CartActivity extends AppCompatActivity {
-    private Adapter_Cart adapter_cart;
+    private CartAdapter _cartAdapter;
     Handler handler;
     ListView listViewCart;
     Toolbar toolbar;
@@ -106,13 +106,13 @@ public class CartActivity extends AppCompatActivity {
 
     private void initCart() {
         if (HomePage.gioHang.size() > 0) {
-            adapter_cart = new Adapter_Cart(HomePage.gioHang, this);
+            _cartAdapter = new CartAdapter(HomePage.gioHang, this);
             txtEmpty.setVisibility(View.INVISIBLE);
             listViewCart.setVisibility(View.VISIBLE);
             txtCart1.setVisibility(View.VISIBLE);
             txtTotal.setVisibility(View.VISIBLE);
-            listViewCart.setAdapter(adapter_cart);
-            adapter_cart.notifyDataSetChanged();
+            listViewCart.setAdapter(_cartAdapter);
+            _cartAdapter.notifyDataSetChanged();
         }
     }
 

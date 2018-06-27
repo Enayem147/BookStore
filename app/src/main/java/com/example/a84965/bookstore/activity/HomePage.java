@@ -36,8 +36,8 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.example.a84965.bookstore.R;
-import com.example.a84965.bookstore.adapter.Adapter_Menu;
-import com.example.a84965.bookstore.adapter.Adapter_New_Books;
+import com.example.a84965.bookstore.adapter.MenuAdapter;
+import com.example.a84965.bookstore.adapter.NewBooksAdapter;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.GioHang;
 import com.example.a84965.bookstore.model.KhachHang;
@@ -51,11 +51,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HomePage extends AppCompatActivity {
 
     public static boolean isNewUser = false;
     public static boolean isMainPage = true;
+    public static boolean isUserOrder = false;
     private long backPressedTime;
     private Toast backToast;
     private Handler handler;
@@ -65,7 +67,7 @@ public class HomePage extends AppCompatActivity {
     ListView listView;
     DrawerLayout drawerLayout;
     ViewFlipper viewFlipper;
-    LinearLayout linearLayoutMenuRes;
+    LinearLayout linearLayoutMenuRes , linearLayoutMenuAll;
     static TextView txtMenuRes;
     static ImageView imgMenuRes;
 
@@ -92,7 +94,19 @@ public class HomePage extends AppCompatActivity {
         clickMenu();
         GetHinhAnhQuangCao();
         MenuRegisterClick();
+        MenuAllBookClick();
         drawerLayoutChange();
+
+        if (isUserOrder) {
+            initHistory(KH_SDT);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    DialogCompleteOrder();
+                }
+            },500);
+
+        }
     }
 
     private void MenuRegisterClick() {
@@ -105,6 +119,16 @@ public class HomePage extends AppCompatActivity {
                 } else {
                     DialogProfile();
                 }
+            }
+        });
+    }
+
+    private void MenuAllBookClick(){
+        linearLayoutMenuAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentBookList = new Intent(HomePage.this,BookListActivity.class);
+                startActivity(intentBookList);
             }
         });
     }
@@ -143,7 +167,7 @@ public class HomePage extends AppCompatActivity {
         MenuItem loginMenuItem = menu.findItem(R.id.menu_dangnhap);
         MenuItem historyMenuItem = menu.findItem(R.id.menu_history);
         if (KH_SDT == null || KH_SDT.equals("")) {
-            txtMenuRes.setText("Đăng ký");
+            txtMenuRes.setText(R.string.dang_ky);
             imgMenuRes.setImageResource(R.drawable.icon_menu_register);
             loginMenuItem.setIcon(R.drawable.icon_menu_login);
             historyMenuItem.setVisible(false);
@@ -185,7 +209,8 @@ public class HomePage extends AppCompatActivity {
                 }
                 break;
             case R.id.menu_history:
-                Toast.makeText(this, "History", Toast.LENGTH_SHORT).show();
+                Intent intHistory = new Intent(this, HistoryActivity.class);
+                startActivity(intHistory);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -205,7 +230,6 @@ public class HomePage extends AppCompatActivity {
 
     private void DialogDangXuat() {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        //   alertDialog.setIcon(R.drawable.icon_dialog_logout);
         alertDialog.setMessage("Bạn có muốn đăng xuất không");
         alertDialog.setTitle("Đăng xuất");
         alertDialog.setIcon(R.drawable.icon_dialog_logout);
@@ -323,7 +347,7 @@ public class HomePage extends AppCompatActivity {
         TextView txtSDT = dialog.findViewById(R.id.txtProf_SDT);
         TextView txtDiaChi = dialog.findViewById(R.id.txtProf_DiaChi);
 
-        if(khachHang != null){
+        if (khachHang != null) {
             txtHoTen.setText(khachHang.getKH_HoTen().toUpperCase());
             txtSDT.setText(khachHang.getKH_SDT());
             txtDiaChi.setText(khachHang.getKH_DiaChi());
@@ -395,22 +419,22 @@ public class HomePage extends AppCompatActivity {
 
     private void initView() {
         final ArrayList<Sach> listBook = new ArrayList<>();
-        final Adapter_New_Books adapter_new_books;
-        adapter_new_books = new Adapter_New_Books(listBook, this);
+        final NewBooksAdapter _new_booksAdapter;
+        _new_booksAdapter = new NewBooksAdapter(listBook, this);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, gridLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setAdapter(adapter_new_books);
+        recyclerView.setAdapter(_new_booksAdapter);
 
-        final Adapter_New_Books finalAdapter_new_books = adapter_new_books;
+        final NewBooksAdapter final_new_booksAdapter = _new_booksAdapter;
         mDatabase.child("Sach").addChildEventListener(new GetChildFireBase() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Sach sach = dataSnapshot.getValue(Sach.class);
                 listBook.add(sach);
-                adapter_new_books.notifyDataSetChanged();
+                _new_booksAdapter.notifyDataSetChanged();
                 super.onChildAdded(dataSnapshot, s);
             }
         });
@@ -449,16 +473,16 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void initMenu() {
-        final Adapter_Menu adapter_menu;
+        final MenuAdapter _menuAdapter;
         final ArrayList<TheLoai> list = new ArrayList<>();
-        adapter_menu = new Adapter_Menu(getApplicationContext(), list);
-        listView.setAdapter(adapter_menu);
+        _menuAdapter = new MenuAdapter(getApplicationContext(), list);
+        listView.setAdapter(_menuAdapter);
         mDatabase.child("TheLoai").addChildEventListener(new GetChildFireBase() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 TheLoai theLoai = dataSnapshot.getValue(TheLoai.class);
                 list.add(theLoai);
-                adapter_menu.notifyDataSetChanged();
+                _menuAdapter.notifyDataSetChanged();
                 super.onChildAdded(dataSnapshot, s);
             }
         });
@@ -483,6 +507,7 @@ public class HomePage extends AppCompatActivity {
         txtMenuRes = findViewById(R.id.txtMenuRes);
         imgMenuRes = findViewById(R.id.imgMenuRes);
         linearLayoutMenuRes = findViewById(R.id.linerLayoutMenuRes);
+        linearLayoutMenuAll = findViewById(R.id.linerLayoutMenuAll);
 
         handler = new Handler();
         toolbar = findViewById(R.id.toolBar_TrangChinh);
@@ -526,9 +551,25 @@ public class HomePage extends AppCompatActivity {
     }
 
 
-    private void DialogCompleteOrder(String HD_Ma) {
+    private void DialogCompleteOrder() {
 
+        Intent intent = getIntent();
+        String maHD = intent.getStringExtra("MaHD");
+        String ngayLapHD = intent.getStringExtra("NgayLap");
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_complete_invoice);
+
+        TextView txtMaHD = dialog.findViewById(R.id.txtInvoiceComp_MaHD);
+        TextView txtNgayLap = dialog.findViewById(R.id.txtInvoiceComp_NgayLap);
+        txtMaHD.setText(maHD);
+        txtNgayLap.setText(ngayLapHD);
+        dialog.show();
+        isUserOrder = false;
     }
+
+
 
     @Override
     protected void onRestart() {
@@ -558,7 +599,6 @@ public class HomePage extends AppCompatActivity {
 
             }
         });
-
         if (isNewUser) {
             handler.postDelayed(new Runnable() {
                 @Override
@@ -587,6 +627,7 @@ public class HomePage extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         updateCart();
+        lichSu.clear();
         super.onDestroy();
         handler.postDelayed(new Runnable() {
             @Override

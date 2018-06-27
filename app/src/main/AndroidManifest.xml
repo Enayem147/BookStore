@@ -16,16 +16,19 @@
         <activity android:name=".activity.HomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.CartActivity"/>
+        <activity android:name=".activity.CartActivity" />
         <activity android:name=".activity.BooksActivity" />
-        <activity android:name=".activity.BookDetailActivity"/>
+        <activity android:name=".activity.BookDetailActivity" />
         <activity android:name=".activity.Activity_Book_Upload" />
         <activity android:name=".activity.Activity_FireBase" />
-        <activity android:name=".activity.InvoiceActivity"/>
+        <activity android:name=".activity.InvoiceActivity" />
+        <activity android:name=".activity.HistoryActivity" />
+        <activity android:name=".activity.BookListActivity"></activity>
     </application>
 
 </manifest>

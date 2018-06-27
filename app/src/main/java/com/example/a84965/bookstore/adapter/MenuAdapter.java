@@ -14,11 +14,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class Adapter_Menu extends BaseAdapter {
+public class MenuAdapter extends BaseAdapter {
     Context context;
     ArrayList<TheLoai> list;
 
-    public Adapter_Menu(Context context, ArrayList<TheLoai> list) {
+    public MenuAdapter(Context context, ArrayList<TheLoai> list) {
         this.context = context;
         this.list = list;
     }

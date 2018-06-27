@@ -29,14 +29,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adapter_New_Books extends RecyclerView.Adapter<Adapter_New_Books.ViewHolder> {
+public class NewBooksAdapter extends RecyclerView.Adapter<NewBooksAdapter.ViewHolder> {
 
     ArrayList<Sach> list;
     Activity context;
     private DatabaseReference mDatabase;
     String nhaXB = "";
 
-    public Adapter_New_Books(ArrayList<Sach> list, Activity context) {
+    public NewBooksAdapter(ArrayList<Sach> list, Activity context) {
         this.list = list;
         this.context = context;
     }

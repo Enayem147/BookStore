@@ -15,13 +15,13 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class Adapter_Invoice extends BaseAdapter {
+public class InvoiceAdapter extends BaseAdapter {
 
     ArrayList<GioHang> list;
     Context context;
     DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
 
-    public Adapter_Invoice(ArrayList<GioHang> list, Context context) {
+    public InvoiceAdapter(ArrayList<GioHang> list, Context context) {
         this.list = list;
         this.context = context;
     }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.BookListActivity"
+    android:background="#FFF"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/layout_toolbar"
+        android:id="@+id/toolbar_BookList"
+        >
+    </include>
+
+    <SearchView
+        android:queryHint="@string/tim_kiem_sach"
+        android:id="@+id/txtSearch_Book"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </SearchView>
+
+    <ListView
+        android:id="@+id/listView_BookList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+
+</LinearLayout>

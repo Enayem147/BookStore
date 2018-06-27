@@ -6,4 +6,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="whitegray">#EEEEEE</color>
     <color name="bluegray">#B0BEC5</color>
+    <color name="black">#000</color>
 </resources>

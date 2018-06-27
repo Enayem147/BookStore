@@ -7,9 +7,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import com.example.a84965.bookstore.fragment.GioiThieu;
 import com.example.a84965.bookstore.fragment.ThongTin;
 
-public class Adapter_Pager extends FragmentStatePagerAdapter {
+public class PagerAdapter extends FragmentStatePagerAdapter {
 
-    public Adapter_Pager(FragmentManager fm) {
+    public PagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

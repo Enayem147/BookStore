@@ -30,14 +30,14 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adapter_Books extends BaseAdapter {
+public class BooksAdapter extends BaseAdapter {
 
     Activity context;
     ArrayList<Sach> list;
     String nhaXB = "";
     private DatabaseReference mDatabase;
 
-    public Adapter_Books(Activity context, ArrayList<Sach> list) {
+    public BooksAdapter(Activity context, ArrayList<Sach> list) {
         this.context = context;
         this.list = list;
     }

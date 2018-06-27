@@ -4,13 +4,19 @@ package com.example.a84965.bookstore.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.model.KhachHang;
+import com.example.a84965.bookstore.ultil.DrawableClickListener;
+import com.example.a84965.bookstore.ultil.OnTextChangeListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,11 +40,110 @@ public class RegisterActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         callControls();
         register();
+        allTextViewEvent();
+
     }
 
+    private void allTextViewEvent() {
+        //txtSDT
+
+        txtSDT.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtSDT) {
+            @Override
+            public boolean onDrawableClick() {
+                txtSDT.setText("");
+                return true;
+            }
+        });
+
+        txtSDT.addTextChangedListener(new OnTextChangeListener() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() == 0){
+                    Toast.makeText(RegisterActivity.this, "Rỗng", Toast.LENGTH_SHORT).show();
+                    txtSDT.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                }else{
+                    txtSDT.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_cancel,0);
+                }
+            }
+        });
+
+
+        //txtMK
+        txtMK.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtMK) {
+            @Override
+            public boolean onDrawableClick() {
+                txtMK.setText("");
+                return true;
+            }
+        });
+
+        txtMK.addTextChangedListener(new OnTextChangeListener() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() == 0){
+                    Toast.makeText(RegisterActivity.this, "Rỗng", Toast.LENGTH_SHORT).show();
+                    txtMK.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                }else{
+                    txtMK.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_cancel,0);
+                }
+            }
+        });
+
+        //txtTen
+        txtTen.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtTen) {
+            @Override
+            public boolean onDrawableClick() {
+                txtTen.setText("");
+                return true;
+            }
+        });
+
+        txtTen.addTextChangedListener(new OnTextChangeListener() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() == 0){
+                    Toast.makeText(RegisterActivity.this, "Rỗng", Toast.LENGTH_SHORT).show();
+                    txtTen.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                }else{
+                    txtTen.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_cancel,0);
+                }
+            }
+        });
+
+        //txtDiaChi
+        txtDiaChi.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtDiaChi) {
+            @Override
+            public boolean onDrawableClick() {
+                txtDiaChi.setText("");
+                return true;
+            }
+        });
+
+        txtDiaChi.addTextChangedListener(new OnTextChangeListener() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() == 0){
+                    Toast.makeText(RegisterActivity.this, "Rỗng", Toast.LENGTH_SHORT).show();
+                    txtDiaChi.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                }else{
+                    txtDiaChi.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_cancel,0);
+                }
+            }
+        });
+
+
+
+
+        //init drawable invisible
+        txtSDT.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+        txtTen.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+        txtMK.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+        txtDiaChi.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+
+    }
+
+
     private void register() {
-
-
         btnDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

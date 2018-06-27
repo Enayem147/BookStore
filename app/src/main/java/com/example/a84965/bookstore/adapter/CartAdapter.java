@@ -22,13 +22,13 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
-public class Adapter_Cart extends BaseAdapter {
+public class CartAdapter extends BaseAdapter {
     ArrayList<GioHang> list;
     Activity context;
     DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
     int soluong = 1;
 
-    public Adapter_Cart(ArrayList<GioHang> list, Activity context) {
+    public CartAdapter(ArrayList<GioHang> list, Activity context) {
         this.list = list;
         this.context = context;
     }

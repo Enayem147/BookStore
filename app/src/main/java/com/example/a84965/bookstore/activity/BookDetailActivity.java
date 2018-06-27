@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a84965.bookstore.R;
-import com.example.a84965.bookstore.adapter.Adapter_Pager;
+import com.example.a84965.bookstore.adapter.PagerAdapter;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.GioHang;
 import com.example.a84965.bookstore.model.KhachHang;
@@ -182,7 +182,7 @@ public class BookDetailActivity extends AppCompatActivity {
     private void DialogThem() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_giohang);
+        dialog.setContentView(R.layout.dialog_cart);
 
         final TextView txtSoLuong = dialog.findViewById(R.id.txtNhap_SL);
         txtSoLuong.setText(soluong+"");
@@ -269,7 +269,7 @@ public class BookDetailActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
         FragmentManager manager = getSupportFragmentManager();
-        Adapter_Pager adapter  = new Adapter_Pager(manager);
+        PagerAdapter adapter  = new PagerAdapter(manager);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

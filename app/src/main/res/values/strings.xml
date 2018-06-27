@@ -32,6 +32,12 @@
     <string name="gia">Giá : </string>
     <string name="so_luong">Số lượng : </string>
     <string name="dat_hang">Đặt hàng</string>
-    <string name="tiep_tuc_mua_hang">Tiếp tục mua hàng</string>
-
+    <string name="tiep_tuc_mua_hang">Tiếp tục mua hàng </string>
+    <string name="thoi_gian_mua">Thời gian mua hàng : </string>
+    <string name="ngay_lap_don">Ngày lập đơn hàng</string>
+    <string name="hoa_don">Hóa đơn : </string>
+    <string name="ma_don_hang">Mã đơn hàng</string>
+    <string name="cam_on">Cảm ơn đã đặt hàng ở BOOK STORE</string>
+    <string name="tat_ca_sp">Tất cả sản phẩm</string>
+    <string name="tim_kiem_sach">Tên sách , tên tác giả , thể loại , ...</string>
 </resources>

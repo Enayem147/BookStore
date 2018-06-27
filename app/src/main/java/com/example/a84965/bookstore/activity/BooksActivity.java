@@ -7,17 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.a84965.bookstore.R;
-import com.example.a84965.bookstore.adapter.Adapter_Books;
+import com.example.a84965.bookstore.adapter.BooksAdapter;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.LoaiSach;
 import com.example.a84965.bookstore.ultil.GetChildFireBase;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -49,9 +46,9 @@ public class BooksActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView_Books);
         final ArrayList<Sach> listBooks = new ArrayList<>();
 
-        final Adapter_Books adapter_books;
-        adapter_books = new Adapter_Books(this,listBooks);
-        listView.setAdapter(adapter_books);
+        final BooksAdapter _booksAdapter;
+        _booksAdapter = new BooksAdapter(this,listBooks);
+        listView.setAdapter(_booksAdapter);
 
         mDatabase.child("LoaiSach").addChildEventListener(new GetChildFireBase() {
             @Override
@@ -65,7 +62,7 @@ public class BooksActivity extends AppCompatActivity {
                             Sach sach = dataSnapshot.getValue(Sach.class);
                             if(sach.getSach_Ma().equals(loaiSach.getSach_Ma())){
                                 listBooks.add(sach);
-                                adapter_books.notifyDataSetChanged();
+                                _booksAdapter.notifyDataSetChanged();
                             }
                             super.onChildAdded(dataSnapshot, s);
                         }
