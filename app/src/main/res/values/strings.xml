@@ -39,5 +39,7 @@
     <string name="ma_don_hang">Mã đơn hàng</string>
     <string name="cam_on">Cảm ơn đã đặt hàng ở BOOK STORE</string>
     <string name="tat_ca_sp">Tất cả sản phẩm</string>
-    <string name="tim_kiem_sach">Tên sách , tên tác giả , thể loại , ...</string>
+    <string name="tim_kiem_sach">Nhập tên sách cần tìm kiếm</string>
+    <string name="the_loai">Thể loại : </string>
+    <string name="lich_su_mua_hang">Lịch sử mua hàng</string>
 </resources>

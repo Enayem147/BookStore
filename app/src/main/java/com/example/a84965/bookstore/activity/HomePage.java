@@ -38,11 +38,15 @@ import android.widget.ViewFlipper;
 import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.adapter.MenuAdapter;
 import com.example.a84965.bookstore.adapter.NewBooksAdapter;
+import com.example.a84965.bookstore.model.LoaiSach;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.GioHang;
 import com.example.a84965.bookstore.model.KhachHang;
 import com.example.a84965.bookstore.model.LichSu;
 import com.example.a84965.bookstore.model.QuangCao;
+import com.example.a84965.bookstore.model.TacGia;
+import com.example.a84965.bookstore.model.TacGiaChiTiet;
+import com.example.a84965.bookstore.model.TatCaSach;
 import com.example.a84965.bookstore.model.TheLoai;
 import com.example.a84965.bookstore.ultil.GetChildFireBase;
 import com.google.firebase.database.DataSnapshot;
@@ -51,7 +55,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 public class HomePage extends AppCompatActivity {
 
@@ -67,7 +71,7 @@ public class HomePage extends AppCompatActivity {
     ListView listView;
     DrawerLayout drawerLayout;
     ViewFlipper viewFlipper;
-    LinearLayout linearLayoutMenuRes , linearLayoutMenuAll;
+    LinearLayout linearLayoutMenuRes, linearLayoutMenuAll;
     static TextView txtMenuRes;
     static ImageView imgMenuRes;
 
@@ -80,6 +84,7 @@ public class HomePage extends AppCompatActivity {
     static public String new_MK = "";
     static public ArrayList<GioHang> gioHang;
     static public ArrayList<LichSu> lichSu;
+    static public ArrayList<TatCaSach> tatCaSach;
     public boolean isLogin = false;
 
     @Override
@@ -96,7 +101,7 @@ public class HomePage extends AppCompatActivity {
         MenuRegisterClick();
         MenuAllBookClick();
         drawerLayoutChange();
-
+        initAllBookList();
         if (isUserOrder) {
             initHistory(KH_SDT);
             handler.postDelayed(new Runnable() {
@@ -104,9 +109,78 @@ public class HomePage extends AppCompatActivity {
                 public void run() {
                     DialogCompleteOrder();
                 }
-            },500);
+            }, 500);
 
         }
+    }
+
+    private void initAllBookList() {
+        tatCaSach = new ArrayList<>();
+
+        mDatabase.child("Sach").addChildEventListener(new GetChildFireBase() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                final Sach sach = dataSnapshot.getValue(Sach.class);
+                final ArrayList<String> listTG = new ArrayList<>();
+                final ArrayList<String> listTL = new ArrayList<>();
+                //lấy danh sách các tác giả
+                mDatabase.child("TacGiaChiTiet").addChildEventListener(new GetChildFireBase() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        final TacGiaChiTiet tacGiaChiTiet = dataSnapshot.getValue(TacGiaChiTiet.class);
+                        if (tacGiaChiTiet.getSach_Ma().equals(sach.getSach_Ma())) {
+                            mDatabase.child("TacGia").addChildEventListener(new GetChildFireBase() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                    TacGia tacGia = dataSnapshot.getValue(TacGia.class);
+                                    if (tacGia.getTG_Ma().equals(tacGiaChiTiet.getTG_Ma())) {
+                                        // lấy danh sách đồng tác giả
+                                        listTG.add(tacGia.getTG_Ten());
+                                    }
+                                    super.onChildAdded(dataSnapshot, s);
+                                }
+                            });
+                        }
+                        super.onChildAdded(dataSnapshot, s);
+                    }
+                });
+
+                //lấy danh sách các thể loại
+                mDatabase.child("LoaiSach").addChildEventListener(new GetChildFireBase() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        final LoaiSach loaiSach = dataSnapshot.getValue(LoaiSach.class);
+                        if(loaiSach.getSach_Ma().equals(sach.getSach_Ma())){
+                            mDatabase.child("TheLoai").addChildEventListener(new GetChildFireBase() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                    TheLoai theLoai = dataSnapshot.getValue(TheLoai.class);
+                                    if(theLoai.getTL_Ma() == loaiSach.getTL_Ma()){
+                                        listTL.add(theLoai.getTL_Ten());
+                                    }
+                                    super.onChildAdded(dataSnapshot, s);
+                                }
+                            });
+                        }
+                        super.onChildAdded(dataSnapshot, s);
+                    }
+                });
+
+                // add vào danh sách tất cả sách
+                tatCaSach.add(new TatCaSach(sach.getSach_Ma(),
+                        sach.getSach_Ten(),
+                        sach.getSach_HinhAnh(),
+                        sach.getSach_SoTrang(),
+                        sach.getSach_NamXB(),
+                        sach.getSach_DonGia(),
+                        sach.getSach_GioiThieu(),
+                        sach.getNXB_Ma(),
+                        listTG,
+                        listTL));
+
+                super.onChildAdded(dataSnapshot, s);
+            }
+        });
     }
 
     private void MenuRegisterClick() {
@@ -123,11 +197,11 @@ public class HomePage extends AppCompatActivity {
         });
     }
 
-    private void MenuAllBookClick(){
+    private void MenuAllBookClick() {
         linearLayoutMenuAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentBookList = new Intent(HomePage.this,BookListActivity.class);
+                Intent intentBookList = new Intent(HomePage.this, BookListActivity.class);
                 startActivity(intentBookList);
             }
         });
@@ -568,7 +642,6 @@ public class HomePage extends AppCompatActivity {
         dialog.show();
         isUserOrder = false;
     }
-
 
 
     @Override

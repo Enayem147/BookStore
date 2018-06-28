@@ -36,7 +36,7 @@ public class HistoryActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_History);
         toolbar.setNavigationIcon(R.drawable.ic_menu_back);
         setSupportActionBar(toolbar);
-        setTitle("Lịch sử mua hàng");
+        setTitle(R.string.lich_su_mua_hang);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +44,6 @@ public class HistoryActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
         listViewHistory = findViewById(R.id.listView_History);
     }
 }

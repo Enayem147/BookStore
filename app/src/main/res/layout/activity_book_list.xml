@@ -15,10 +15,9 @@
 
     <SearchView
         android:queryHint="@string/tim_kiem_sach"
-        android:id="@+id/txtSearch_Book"
+        android:id="@+id/txtSearch_BookList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
     </SearchView>
 
     <ListView

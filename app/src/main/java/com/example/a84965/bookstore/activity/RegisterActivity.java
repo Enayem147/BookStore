@@ -1,6 +1,7 @@
 package com.example.a84965.bookstore.activity;
 
 
+import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -44,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void allTextViewEvent() {
         //txtSDT
 
@@ -59,7 +61,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.length() == 0){
-                    Toast.makeText(RegisterActivity.this, "Rỗng", Toast.LENGTH_SHORT).show();
                     txtSDT.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                 }else{
                     txtSDT.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_cancel,0);

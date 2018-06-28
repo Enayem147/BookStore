@@ -61,8 +61,8 @@ public class BooksAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
         convertView = inflater.inflate(R.layout.list_view_books, null);
+
         ImageView imgBooks = convertView.findViewById(R.id.imgBooks);
         TextView txt_Ten = convertView.findViewById(R.id.txtBooks_Ten);
         final TextView txt_TG = convertView.findViewById(R.id.txtBooks_TG);
@@ -85,7 +85,7 @@ public class BooksAdapter extends BaseAdapter {
         });
 
         //Lấy tên tác giả
-        final List<String> listTG = new ArrayList<>();
+        final ArrayList<String> listTG = new ArrayList<>();
         mDatabase.child("TacGiaChiTiet").addChildEventListener(new GetChildFireBase() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -126,11 +126,10 @@ public class BooksAdapter extends BaseAdapter {
                 Intent intent = new Intent(context,BookDetailActivity.class);
                 intent.putExtra("Sach",sach);
                 intent.putExtra("NhaXuatBan",nhaXB);
-                intent.putExtra("TacGia", (Serializable) listTG);
+                intent.putExtra("TacGia", listTG);
                 context.startActivity(intent);
             }
         });
-
         return convertView;
     }
 }
