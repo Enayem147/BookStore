@@ -1,8 +1,10 @@
 package com.example.a84965.bookstore.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +27,8 @@ import android.widget.Toast;
 
 import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.adapter.PagerAdapter;
+import com.example.a84965.bookstore.model.Kho;
+import com.example.a84965.bookstore.model.LichSu;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.GioHang;
 import com.example.a84965.bookstore.model.KhachHang;
@@ -37,6 +41,8 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.a84965.bookstore.R.color.green;
 
 public class BookDetailActivity extends AppCompatActivity {
     ViewPager viewPager;
@@ -52,7 +58,7 @@ public class BookDetailActivity extends AppCompatActivity {
     private int sach_gia = 0 ;
     Button btn_Them;
     ImageView imgHinh;
-    TextView txtTen,txtGia;
+    TextView txtTen,txtGia,txtTrangThai;
     private DatabaseReference mDatabase;
     int soluong = 1;
     private boolean isLogin = false;
@@ -71,8 +77,7 @@ public class BookDetailActivity extends AppCompatActivity {
         initToolBar();
         initBookDetail();
         ButtonThemGioHangClicked();
-
-
+        initBookStatus();
 
 
         //Toast.makeText(this, getTenTG(), Toast.LENGTH_SHORT).show();
@@ -93,11 +98,16 @@ public class BookDetailActivity extends AppCompatActivity {
 
 
     public void DialogDangNhap(){
-        final Dialog dialog  = new Dialog(this);
+        final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_login);
         final TextView txtSDT = dialog.findViewById(R.id.txtLogin_SDT);
         final TextView txtMK = dialog.findViewById(R.id.txtLogin_MK);
+        if (HomePage.isNewUser) {
+            HomePage.isNewUser = false;
+            txtSDT.setText(HomePage.new_SDT);
+            txtMK.setText(HomePage.new_MK);
+        }
         CheckBox cbRemember = dialog.findViewById(R.id.cbLogin);
         Button btnDangNhap = dialog.findViewById(R.id.btnDangNhap);
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
@@ -107,34 +117,35 @@ public class BookDetailActivity extends AppCompatActivity {
                 mDatabase.child("KhachHang").addChildEventListener(new GetChildFireBase() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        KhachHang khachHang = dataSnapshot.getValue(KhachHang.class);
-                        if (khachHang.getKH_SDT().equals(txtSDT.getText().toString()) && khachHang.getKH_MK().equals(txtMK.getText().toString())) {
+                        KhachHang kh = dataSnapshot.getValue(KhachHang.class);
+                        if (kh.getKH_SDT().equals(txtSDT.getText().toString()) && kh.getKH_MK().equals(txtMK.getText().toString())) {
                             isLogin = true;
-                            HomePage.KH_Ten = khachHang.getKH_HoTen();
-                            HomePage.KH_SDT = khachHang.getKH_SDT();
+                            HomePage.KH_Ten = kh.getKH_HoTen();
+                            HomePage.KH_SDT = kh.getKH_SDT();
                             HomePage.updateMenuTitles();
-                            initCart(khachHang.getKH_SDT());
+                            initCart(kh.getKH_SDT());
+                            initHistory(kh.getKH_SDT());
+                            HomePage.khachHang = kh;
                         }
                         super.onChildAdded(dataSnapshot, s);
                     }
                 });
                 final ProgressDialog progressDialog = new ProgressDialog(BookDetailActivity.this);
-                progressDialog.setTitle("Đăng nhập");
                 progressDialog.setMessage("Chờ trong giây lát !!!");
                 progressDialog.show();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if(isLogin){
+                        if (isLogin) {
                             progressDialog.dismiss();
                             Toast.makeText(BookDetailActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
-                        }else{
+                        } else {
                             progressDialog.dismiss();
                             Toast.makeText(BookDetailActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                         }
                     }
-                },3000);
+                }, 3000);
 
             }
         });
@@ -156,13 +167,52 @@ public class BookDetailActivity extends AppCompatActivity {
         }
     }
 
+    public void initHistory(final String sdt) {
+        HomePage.lichSu = new ArrayList<>();
+        if (sdt != null && HomePage.lichSu.size() == 0) {
+            mDatabase.child("LichSu").child(sdt).addChildEventListener(new GetChildFireBase() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    LichSu ls = dataSnapshot.getValue(LichSu.class);
+                    HomePage.lichSu.add(ls);
+                    super.onChildAdded(dataSnapshot, s);
+                }
+            });
+        }
+    }
 
     private void callControls() {
+        txtTrangThai = findViewById(R.id.txtDetail_TrangThai);
         btn_Them = findViewById(R.id.btnThem_Sach);
         txtTen = findViewById(R.id.txtDetail_Ten);
         txtGia = findViewById(R.id.txtDetail_Gia);
         imgHinh = findViewById(R.id.imgBook_Detail);
         handler = new Handler();
+    }
+
+    public void initBookStatus(){
+        mDatabase.child("Kho").addChildEventListener(new GetChildFireBase() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Kho kho = dataSnapshot.getValue(Kho.class);
+                if(kho.getSach_Ma().equals(sach.getSach_Ma())){
+                    if(kho.getKho_SoLuong() >= 5){
+                        txtTrangThai.setText(R.string.con_hang);
+                        txtTrangThai.setTextColor(Color.GREEN);
+                        btn_Them.setEnabled(true);
+                    }else if (kho.getKho_SoLuong() >= 1){
+                        txtTrangThai.setText(R.string.sap_het_hang);
+                        txtTrangThai.setTextColor(Color.YELLOW);
+                        btn_Them.setEnabled(true);
+                    }else{
+                        txtTrangThai.setText(R.string.het_hang);
+                        txtTrangThai.setTextColor(Color.RED);
+                        btn_Them.setEnabled(false);
+                    }
+                }
+                super.onChildAdded(dataSnapshot, s);
+            }
+        });
     }
 
     public void initBookDetail(){
@@ -296,5 +346,11 @@ public class BookDetailActivity extends AppCompatActivity {
 
     public List getTacGia(){
         return  listTG;
+    }
+
+    @Override
+    protected void onRestart() {
+        initBookStatus();
+        super.onRestart();
     }
 }

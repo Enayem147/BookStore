@@ -46,8 +46,7 @@
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:layout_width="wrap_content"
-                        android:layout_height="100dp" />
-
+                        android:layout_height="80dp" />
                 <LinearLayout
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
@@ -57,7 +56,20 @@
                     <TextView
                         android:id="@+id/txtDetail_Gia"
                         android:textStyle="bold"
-                        android:textColor="#D50000"
+                        android:textColor="@color/red"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/txtDetail_TrangThai"
+                        android:textStyle="bold"
                         android:textSize="20sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -65,7 +77,7 @@
                 <Button
                     android:textSize="15sp"
                     android:id="@+id/btnThem_Sach"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="23dp"
                     android:gravity="center"
                     android:textColor="#FFF"
                     android:background="#2979FF"

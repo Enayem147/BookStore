@@ -42,4 +42,7 @@
     <string name="tim_kiem_sach">Nhập tên sách cần tìm kiếm</string>
     <string name="the_loai">Thể loại : </string>
     <string name="lich_su_mua_hang">Lịch sử mua hàng</string>
+    <string name="con_hang">CÒN HÀNG</string>
+    <string name="het_hang">HẾT HÀNG</string>
+    <string name="sap_het_hang">SẮP HẾT HÀNG</string>
 </resources>

@@ -6,6 +6,11 @@ public class LoaiSach {
 
     public LoaiSach(){}
 
+    public LoaiSach(String sach_Ma, int TL_Ma) {
+        Sach_Ma = sach_Ma;
+        this.TL_Ma = TL_Ma;
+    }
+
     public String getSach_Ma() {
         return Sach_Ma;
     }

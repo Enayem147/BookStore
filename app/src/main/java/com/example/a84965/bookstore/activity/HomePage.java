@@ -38,6 +38,7 @@ import android.widget.ViewFlipper;
 import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.adapter.MenuAdapter;
 import com.example.a84965.bookstore.adapter.NewBooksAdapter;
+import com.example.a84965.bookstore.model.Kho;
 import com.example.a84965.bookstore.model.LoaiSach;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.GioHang;
@@ -110,8 +111,9 @@ public class HomePage extends AppCompatActivity {
                     DialogCompleteOrder();
                 }
             }, 500);
-
         }
+
+        //startActivity(new Intent(this,Activity_FireBase.class));
     }
 
     private void initAllBookList() {
@@ -503,7 +505,7 @@ public class HomePage extends AppCompatActivity {
         recyclerView.setAdapter(_new_booksAdapter);
 
         final NewBooksAdapter final_new_booksAdapter = _new_booksAdapter;
-        mDatabase.child("Sach").addChildEventListener(new GetChildFireBase() {
+        mDatabase.child("Sach").limitToLast(6).addChildEventListener(new GetChildFireBase() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Sach sach = dataSnapshot.getValue(Sach.class);
@@ -532,7 +534,7 @@ public class HomePage extends AppCompatActivity {
         }
     }
 
-    private void initHistory(final String sdt) {
+    public void initHistory(final String sdt) {
         lichSu = new ArrayList<>();
         if (sdt != null && lichSu.size() == 0) {
             mDatabase.child("LichSu").child(sdt).addChildEventListener(new GetChildFireBase() {
