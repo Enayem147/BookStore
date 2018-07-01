@@ -82,7 +82,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.length() == 0){
-                    Toast.makeText(RegisterActivity.this, "Rỗng", Toast.LENGTH_SHORT).show();
                     txtMK.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                 }else{
                     txtMK.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_cancel,0);
@@ -103,7 +102,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.length() == 0){
-                    Toast.makeText(RegisterActivity.this, "Rỗng", Toast.LENGTH_SHORT).show();
                     txtTen.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                 }else{
                     txtTen.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_cancel,0);
@@ -124,7 +122,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.length() == 0){
-                    Toast.makeText(RegisterActivity.this, "Rỗng", Toast.LENGTH_SHORT).show();
                     txtDiaChi.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                 }else{
                     txtDiaChi.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_cancel,0);

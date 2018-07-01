@@ -63,6 +63,7 @@ public class HomePage extends AppCompatActivity {
     public static boolean isNewUser = false;
     public static boolean isMainPage = true;
     public static boolean isUserOrder = false;
+    public static boolean isFirst = true;
     private long backPressedTime;
     private Toast backToast;
     private Handler handler;
@@ -94,8 +95,8 @@ public class HomePage extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         setContentView(R.layout.activity_home_page);
         callControls();
-        ActionBar();
         initView();
+        ActionBar();
         initMenu();
         clickMenu();
         GetHinhAnhQuangCao();
@@ -112,8 +113,16 @@ public class HomePage extends AppCompatActivity {
                 }
             }, 500);
         }
+        loadingScreen();
+
 
         //startActivity(new Intent(this,Activity_FireBase.class));
+    }
+
+    private void loadingScreen() {
+        if (isFirst) {
+            startActivity(new Intent(HomePage.this, LoadingScreen.class));
+        }
     }
 
     private void initAllBookList() {
@@ -152,12 +161,12 @@ public class HomePage extends AppCompatActivity {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         final LoaiSach loaiSach = dataSnapshot.getValue(LoaiSach.class);
-                        if(loaiSach.getSach_Ma().equals(sach.getSach_Ma())){
+                        if (loaiSach.getSach_Ma().equals(sach.getSach_Ma())) {
                             mDatabase.child("TheLoai").addChildEventListener(new GetChildFireBase() {
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                                     TheLoai theLoai = dataSnapshot.getValue(TheLoai.class);
-                                    if(theLoai.getTL_Ma() == loaiSach.getTL_Ma()){
+                                    if (theLoai.getTL_Ma() == loaiSach.getTL_Ma()) {
                                         listTL.add(theLoai.getTL_Ten());
                                     }
                                     super.onChildAdded(dataSnapshot, s);

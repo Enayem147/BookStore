@@ -28,7 +28,8 @@
         <activity android:name=".activity.Activity_FireBase" />
         <activity android:name=".activity.InvoiceActivity" />
         <activity android:name=".activity.HistoryActivity" />
-        <activity android:name=".activity.BookListActivity"></activity>
+        <activity android:name=".activity.BookListActivity" />
+        <activity android:name=".activity.LoadingScreen"></activity>
     </application>
 
 </manifest>
