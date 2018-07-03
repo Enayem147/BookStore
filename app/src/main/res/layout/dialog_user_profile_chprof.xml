@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="350dp"
-    android:layout_height="470dp"
+    android:layout_height="320dp"
     android:layout_gravity="center"
     android:background="#FFFF"
     android:orientation="vertical"
@@ -17,11 +17,62 @@
         android:text="X"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold" />
-    <TextView
-        android:text="Đây là trang đổi thông tin"
-        android:layout_gravity="center"
-        android:textSize="30sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:background="@drawable/border_book_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ho_va_ten"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:drawableRight="@drawable/icon_cancel"
+            android:id="@+id/txtProfEdit_HoTen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dia_chi"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:drawableRight="@drawable/icon_cancel"
+            android:id="@+id/txtProfEdit_DiaChi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnProf_XN"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"
+            android:text="@string/xac_nhan"
+            android:textAllCaps="true"
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="50dp" />
+
+    </LinearLayout>
 
 </LinearLayout>

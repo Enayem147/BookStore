@@ -87,7 +87,7 @@ public class BookDetailActivity extends AppCompatActivity {
         btn_Them.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(HomePage.KH_Ten == null || HomePage.KH_Ten.equals("")){
+                if(HomePage.KH_SDT == null || HomePage.KH_SDT.equals("")){
                     DialogDangNhap();
                 }else{
                     DialogThem();
@@ -120,7 +120,6 @@ public class BookDetailActivity extends AppCompatActivity {
                         KhachHang kh = dataSnapshot.getValue(KhachHang.class);
                         if (kh.getKH_SDT().equals(txtSDT.getText().toString()) && kh.getKH_MK().equals(txtMK.getText().toString())) {
                             isLogin = true;
-                            HomePage.KH_Ten = kh.getKH_HoTen();
                             HomePage.KH_SDT = kh.getKH_SDT();
                             HomePage.updateMenuTitles();
                             initCart(kh.getKH_SDT());
@@ -297,7 +296,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.menuDetail_giohang:
-                if(HomePage.KH_Ten == null || HomePage.KH_Ten.equals("")){
+                if(HomePage.KH_SDT == null || HomePage.KH_SDT.equals("")){
                     DialogDangNhap();
                 }else{
                     Intent intentGH = new Intent(this,CartActivity.class);

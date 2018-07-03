@@ -62,7 +62,7 @@
                 android:hint="@string/nhap_mk"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:drawableRight="@drawable/icon_cancel"/>
+                android:drawableRight="@drawable/ic_pass_invisible"/>
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="10dp"

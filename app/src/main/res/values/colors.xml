@@ -5,8 +5,9 @@
     <color name="red">#F00</color>
     <color name="green">#01ff62</color>
     <color name="yellow">#ffff00</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#2979FF</color>
     <color name="whitegray">#EEEEEE</color>
     <color name="bluegray">#B0BEC5</color>
     <color name="black">#000</color>
+    <color name="white">#FFFF</color>
 </resources>

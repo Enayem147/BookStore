@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
@@ -70,22 +71,20 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         //txtMK
+        final boolean[] visible = {false};
         txtMK.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtMK) {
             @Override
             public boolean onDrawableClick() {
-                txtMK.setText("");
-                return true;
-            }
-        });
-
-        txtMK.addTextChangedListener(new OnTextChangeListener() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() == 0){
-                    txtMK.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-                }else{
-                    txtMK.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_cancel,0);
+                if (visible[0]) {
+                    txtMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_invisible, 0);
+                    txtMK.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                    visible[0] = false;
+                } else {
+                    txtMK.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    txtMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_visible, 0);
+                    visible[0] = true;
                 }
+                return true;
             }
         });
 
@@ -135,7 +134,6 @@ public class RegisterActivity extends AppCompatActivity {
         //init drawable invisible
         txtSDT.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
         txtTen.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-        txtMK.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
         txtDiaChi.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
 
     }

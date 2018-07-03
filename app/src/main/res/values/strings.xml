@@ -8,10 +8,11 @@
     <string name="gio_hang_trong">Giỏ hàng trống</string>
     <string name="tong_tien">Tổng :</string>
     <string name="xac_nhan">Xác nhận</string>
-    <string name="nhap_sdt">Nhập số điện thoại</string>
-    <string name="nhap_mk">Nhập mật khẩu</string>
-    <string name="nhap_ten">Nhập họ và tên</string>
-    <string name="nhap_dc">Nhập địa chỉ</string>
+    <string name="nhap_sdt"><font size="15">Nhập số điện thoại</font></string>
+    Nhập họ và tên
+    <string name="nhap_mk"><font size="15">Nhập mật khẩu</font></string>
+    <string name="nhap_ten"><font size="15">Nhập họ và tên</font></string>
+    <string name="nhap_dc"><font size="15">Nhập địa chỉ</font></string>
     <string name="dang_ky">Đăng ký</string>
     <string name="dang_nhap">Đăng nhập</string>
     <string name="ghi_nho_dang_nhap">Ghi nhớ đăng nhập</string>
@@ -46,4 +47,8 @@
     <string name="het_hang">HẾT HÀNG</string>
     <string name="sap_het_hang">SẮP HẾT HÀNG</string>
     <string name="lich_su_trong">Lịch sử trống</string>
+
+    <string name="mk_cu"><font size="15">Nhập mật khẩu cũ</font></string>
+    <string name="mk_moi"><font size="15">Nhập mật khẩu mới</font></string>
+    <string name="mk_moi_conf"><font size="15">Nhập lại mật khẩu mới</font></string>
 </resources>

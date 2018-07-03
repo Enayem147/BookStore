@@ -1,10 +1,12 @@
 package com.example.a84965.bookstore.activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
@@ -19,6 +21,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +41,6 @@ import android.widget.ViewFlipper;
 import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.adapter.MenuAdapter;
 import com.example.a84965.bookstore.adapter.NewBooksAdapter;
-import com.example.a84965.bookstore.model.Kho;
 import com.example.a84965.bookstore.model.LoaiSach;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.GioHang;
@@ -49,14 +51,15 @@ import com.example.a84965.bookstore.model.TacGia;
 import com.example.a84965.bookstore.model.TacGiaChiTiet;
 import com.example.a84965.bookstore.model.TatCaSach;
 import com.example.a84965.bookstore.model.TheLoai;
+import com.example.a84965.bookstore.ultil.DrawableClickListener;
 import com.example.a84965.bookstore.ultil.GetChildFireBase;
+import com.example.a84965.bookstore.ultil.OnTextChangeListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomePage extends AppCompatActivity {
 
@@ -79,31 +82,38 @@ public class HomePage extends AppCompatActivity {
 
     private static Menu menu;
     private DatabaseReference mDatabase;
-    static public String KH_Ten;
+    static public String KH_Ten = "";
     static public KhachHang khachHang = new KhachHang();
     static public String KH_SDT = "";
+    static public String KH_Key = "";
     static public String new_SDT = "";
     static public String new_MK = "";
     static public ArrayList<GioHang> gioHang;
     static public ArrayList<LichSu> lichSu;
     static public ArrayList<TatCaSach> tatCaSach;
     public boolean isLogin = false;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        sharedPreferences = getSharedPreferences("loginData", MODE_PRIVATE);
+        KH_SDT = sharedPreferences.getString("SDT", "");
+        KH_Ten = sharedPreferences.getString("Ten", "");
         setContentView(R.layout.activity_home_page);
         callControls();
         initView();
         ActionBar();
         initMenu();
         clickMenu();
-        GetHinhAnhQuangCao();
+        getHinhAnhQuangCao();
         MenuRegisterClick();
         MenuAllBookClick();
         drawerLayoutChange();
         initAllBookList();
+        loginKhachHangRemembered();
+
         if (isUserOrder) {
             initHistory(KH_SDT);
             handler.postDelayed(new Runnable() {
@@ -119,10 +129,44 @@ public class HomePage extends AppCompatActivity {
         //startActivity(new Intent(this,Activity_FireBase.class));
     }
 
+    private void loginKhachHangRemembered() {
+        //set text share ref
+        if (!KH_SDT.equals("")) {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    initHistory(KH_SDT);
+                    initCart(KH_SDT);
+                    updateMenuTitles();
+                    getKhachHangProfile();
+                }
+            }, 1000);
+
+        }
+    }
+
+
     private void loadingScreen() {
         if (isFirst) {
             startActivity(new Intent(HomePage.this, LoadingScreen.class));
         }
+    }
+
+    public void getKhachHangProfile() {
+        if (!KH_SDT.equals("") && KH_SDT != null) {
+            mDatabase.child("KhachHang").addChildEventListener(new GetChildFireBase() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    KhachHang kh = dataSnapshot.getValue(KhachHang.class);
+                    if (kh.getKH_SDT().equals(KH_SDT)) {
+                        khachHang = kh;
+                        KH_Key = dataSnapshot.getKey();
+                    }
+                    super.onChildAdded(dataSnapshot, s);
+                }
+            });
+        }
+
     }
 
     private void initAllBookList() {
@@ -254,12 +298,12 @@ public class HomePage extends AppCompatActivity {
         if (KH_SDT == null || KH_SDT.equals("")) {
             txtMenuRes.setText(R.string.dang_ky);
             imgMenuRes.setImageResource(R.drawable.icon_menu_register);
-            loginMenuItem.setIcon(R.drawable.icon_menu_login);
+            loginMenuItem.setIcon(R.drawable.ic_menu_login);
             historyMenuItem.setVisible(false);
         } else {
-            txtMenuRes.setText(tachTen());
+            txtMenuRes.setText(tachTen(KH_Ten));
             imgMenuRes.setImageResource(R.drawable.icon_menu_user);
-            loginMenuItem.setIcon(R.drawable.icon_meu_logout);
+            loginMenuItem.setIcon(R.drawable.ic_menu_logout);
             historyMenuItem.setVisible(true);
         }
 
@@ -301,14 +345,14 @@ public class HomePage extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private static String tachTen() {
-        int i = KH_Ten.lastIndexOf(" ");
-        int j = KH_Ten.lastIndexOf(" ", i - 1);
+    private static String tachTen(String kh_ten) {
+        int i = kh_ten.lastIndexOf(" ");
+        int j = kh_ten.lastIndexOf(" ", i - 1);
         String ten = "";
         if (j > 0) {
-            ten = KH_Ten.substring(j + 1);
+            ten = kh_ten.substring(j + 1);
         } else {
-            ten = KH_Ten;
+            ten = kh_ten;
         }
         return ten;
     }
@@ -317,7 +361,7 @@ public class HomePage extends AppCompatActivity {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setMessage("Bạn có muốn đăng xuất không");
         alertDialog.setTitle("Đăng xuất");
-        alertDialog.setIcon(R.drawable.icon_dialog_logout);
+        alertDialog.setIcon(R.drawable.ic_dialog_logout);
         alertDialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -325,7 +369,16 @@ public class HomePage extends AppCompatActivity {
                 updateCart();
                 KH_SDT = "";
                 KH_Ten = "";
+                // cap nhat lich su
                 lichSu.clear();
+                khachHang = new KhachHang();
+                //remove shareRef
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.remove("SDT");
+                editor.remove("MK");
+                editor.remove("Ten");
+                editor.commit();
+
                 Toast.makeText(getApplicationContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
                 updateMenuTitles();
             }
@@ -339,7 +392,7 @@ public class HomePage extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void GetHinhAnhQuangCao() {
+    private void getHinhAnhQuangCao() {
         viewFlipper = findViewById(R.id.imgQuangCao_TrangChinh);
         mDatabase.child("QuangCao").addChildEventListener(new GetChildFireBase() {
             @Override
@@ -364,18 +417,64 @@ public class HomePage extends AppCompatActivity {
         viewFlipper.setOutAnimation(animation_out);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public void DialogDangNhap() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_login);
         final TextView txtSDT = dialog.findViewById(R.id.txtLogin_SDT);
         final TextView txtMK = dialog.findViewById(R.id.txtLogin_MK);
+
+        //event Drawable click txtSDT
+        txtSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_cancel, 0);
+
+        txtSDT.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtSDT) {
+            @Override
+            public boolean onDrawableClick() {
+                txtSDT.setText("");
+                return true;
+            }
+        });
+
+        txtSDT.addTextChangedListener(new OnTextChangeListener() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 0) {
+                    txtSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                } else {
+                    txtSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_cancel, 0);
+                }
+            }
+        });
+
+        txtSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
+        txtMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_invisible, 0);
+        //event Drawable click txtMK
+        final boolean[] visible = {false};
+        txtMK.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtMK) {
+            @Override
+            public boolean onDrawableClick() {
+                if (visible[0]) {
+                    txtMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_invisible, 0);
+                    txtMK.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                    visible[0] = false;
+                } else {
+                    txtMK.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    txtMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_visible, 0);
+                    visible[0] = true;
+                }
+                return true;
+            }
+        });
+
         if (isNewUser) {
             isNewUser = false;
             txtSDT.setText(new_SDT);
             txtMK.setText(new_MK);
         }
-        CheckBox cbRemember = dialog.findViewById(R.id.cbLogin);
+
+        final CheckBox cbRemember = dialog.findViewById(R.id.cbLogin);
         Button btnDangNhap = dialog.findViewById(R.id.btnDangNhap);
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -389,10 +488,18 @@ public class HomePage extends AppCompatActivity {
                             isLogin = true;
                             KH_Ten = kh.getKH_HoTen();
                             KH_SDT = kh.getKH_SDT();
-                            updateMenuTitles();
                             initCart(kh.getKH_SDT());
                             initHistory(kh.getKH_SDT());
-                            khachHang = kh;
+                            updateMenuTitles();
+                            if (cbRemember.isChecked()) {
+                                // lưu sdt và mk lại cho lần sau không cần đăng nhập
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("SDT", kh.getKH_SDT());
+                                editor.putString("Ten", kh.getKH_HoTen());
+                                editor.putString("MK", kh.getKH_MK());
+                                editor.commit();
+
+                            }
                         }
                         super.onChildAdded(dataSnapshot, s);
                     }
@@ -404,9 +511,12 @@ public class HomePage extends AppCompatActivity {
                     @Override
                     public void run() {
                         if (isLogin) {
+                            getKhachHangProfile();
                             progressDialog.dismiss();
                             Toast.makeText(HomePage.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
+
+
                         } else {
                             progressDialog.dismiss();
                             Toast.makeText(HomePage.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
@@ -420,7 +530,6 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void DialogProfile() {
-
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_user_profile);
@@ -428,9 +537,9 @@ public class HomePage extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView txtThoat = dialog.findViewById(R.id.txtProf_Thoat);
-        TextView txtHoTen = dialog.findViewById(R.id.txtProf_HoTen);
+        final TextView txtHoTen = dialog.findViewById(R.id.txtProf_HoTen);
         TextView txtSDT = dialog.findViewById(R.id.txtProf_SDT);
-        TextView txtDiaChi = dialog.findViewById(R.id.txtProf_DiaChi);
+        final TextView txtDiaChi = dialog.findViewById(R.id.txtProf_DiaChi);
 
         if (khachHang != null) {
             txtHoTen.setText(khachHang.getKH_HoTen().toUpperCase());
@@ -448,6 +557,7 @@ public class HomePage extends AppCompatActivity {
         });
 
         btnChangePass.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public void onClick(View v) {
                 final Dialog dialogChangePass = new Dialog(dialog.getContext());
@@ -457,17 +567,80 @@ public class HomePage extends AppCompatActivity {
                 dialogChangePass.setCanceledOnTouchOutside(false);
                 dialogChangePass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 TextView txtThoat = dialogChangePass.findViewById(R.id.txtProf_Thoat);
-                txtThoat.setOnClickListener(new View.OnClickListener() {
+                final TextView txtMK_Cu = dialogChangePass.findViewById(R.id.txtProfEdit_OldPass);
+                final TextView txtMK_Moi = dialogChangePass.findViewById(R.id.txtProfEdit_NewPass);
+                final TextView txtMK_Moi_XN = dialogChangePass.findViewById(R.id.txtProfEdit_NewPassConfirm);
+
+
+                Button btnXN = dialogChangePass.findViewById(R.id.btnProf_XN);
+                txtThoat.setOnClickListener(new View.OnClickListener()
+
+                {
                     @Override
                     public void onClick(View v) {
                         dialogChangePass.dismiss();
+                    }
+                });
+
+                btnXN.setOnClickListener(new View.OnClickListener()
+
+                {
+                    @Override
+                    public void onClick(View v) {
+                        boolean error = false;
+                        if (!txtMK_Cu.getText().toString().equals(khachHang.getKH_MK())) {
+                            txtMK_Cu.setError("Mật khẩu cũ không đúng");
+                            txtMK_Cu.requestFocus();
+                            error = true;
+                        } else {
+                            txtMK_Cu.setError(null);
+                        }
+
+                        if (txtMK_Moi.getText().toString().equals("")) {
+                            txtMK_Moi.setError("Mật khẩu mới không được rỗng");
+                            txtMK_Moi.requestFocus();
+                            error = true;
+                        } else if (txtMK_Moi.length() < 6) {
+                            txtMK_Moi.setError("Mật khẩu mới phải dài hơn 6 ký tự");
+                            txtMK_Moi.requestFocus();
+                            error = true;
+                        } else {
+                            txtMK_Moi.setError(null);
+                        }
+
+                        if (!txtMK_Moi.getText().toString().equals(txtMK_Moi_XN.getText().toString())) {
+                            txtMK_Moi_XN.setError("Mật khẩu không trùng khớp");
+                            txtMK_Moi_XN.requestFocus();
+                            error = true;
+                        } else {
+                            txtMK_Moi_XN.setError(null);
+                        }
+
+                        if (!error) {
+                            final ProgressDialog progressDialog = new ProgressDialog(HomePage.this);
+                            progressDialog.setMessage("Chờ trong giây lát !!!");
+                            progressDialog.show();
+                            DatabaseReference updateKH = FirebaseDatabase.getInstance().getReference("KhachHang").child(KH_Key);
+                            updateKH.setValue(new KhachHang(khachHang.getKH_SDT(), txtMK_Moi.getText().toString(), khachHang.getKH_HoTen(), khachHang.getKH_DiaChi()));
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressDialog.dismiss();
+                                    dialogChangePass.dismiss();
+                                    Toast.makeText(HomePage.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                                }
+                            }, 1000);
+                        }
                     }
                 });
                 dialogChangePass.show();
             }
         });
 
-        btnChangeProf.setOnClickListener(new View.OnClickListener() {
+        btnChangeProf.setOnClickListener(new View.OnClickListener()
+
+        {
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public void onClick(View v) {
                 final Dialog dialogChangeProf = new Dialog(dialog.getContext());
@@ -477,10 +650,103 @@ public class HomePage extends AppCompatActivity {
                 dialogChangeProf.setCanceledOnTouchOutside(false);
                 dialogChangeProf.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 TextView txtThoat = dialogChangeProf.findViewById(R.id.txtProf_Thoat);
+                final TextView txtEditTen = dialogChangeProf.findViewById(R.id.txtProfEdit_HoTen);
+                final TextView txtEditDiaChi = dialogChangeProf.findViewById(R.id.txtProfEdit_DiaChi);
+
+                //Drawable click txtEditTen
+                txtEditTen.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtEditTen) {
+                    @Override
+                    public boolean onDrawableClick() {
+                        txtEditTen.setText("");
+                        txtEditTen.requestFocus();
+                        return true;
+                    }
+                });
+
+                txtEditTen.addTextChangedListener(new OnTextChangeListener() {
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (s.length() == 0) {
+                            txtEditTen.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                        } else {
+                            txtEditTen.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_cancel, 0);
+                        }
+                    }
+                });
+
+                //Drawable click txtEditDiaChi
+                txtEditDiaChi.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtEditDiaChi) {
+                    @Override
+                    public boolean onDrawableClick() {
+                        txtEditDiaChi.setText("");
+                        txtEditDiaChi.requestFocus();
+                        return true;
+                    }
+                });
+
+                txtEditDiaChi.addTextChangedListener(new OnTextChangeListener() {
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (s.length() == 0) {
+                            txtEditDiaChi.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                        } else {
+                            txtEditDiaChi.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_cancel, 0);
+                        }
+                    }
+                });
+
+
+                Button btnXN = dialogChangeProf.findViewById(R.id.btnProf_XN);
+
+                txtEditTen.setText(HomePage.khachHang.getKH_HoTen());
+                txtEditDiaChi.setText(HomePage.khachHang.getKH_DiaChi());
+
                 txtThoat.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialogChangeProf.dismiss();
+                    }
+                });
+
+                btnXN.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final ProgressDialog progressDialog = new ProgressDialog(HomePage.this);
+                        progressDialog.setMessage("Chờ trong giây lát !!!");
+                        progressDialog.show();
+                        if (txtEditDiaChi.getText().toString().equals("") || txtEditTen.getText().toString().equals("")) {
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(HomePage.this, "Thay đổi thất bại", Toast.LENGTH_SHORT).show();
+                                }
+                            }, 1000);
+
+                        } else {
+                            if (txtEditDiaChi.getText().toString().equals(khachHang.getKH_DiaChi()) && txtEditTen.getText().toString().equals(khachHang.getKH_HoTen())) {
+                                dialogChangeProf.dismiss();
+                                progressDialog.dismiss();
+                            } else {
+                                // update thong tin
+                                DatabaseReference updateKH = FirebaseDatabase.getInstance().getReference("KhachHang").child(KH_Key);
+                                updateKH.setValue(new KhachHang(khachHang.getKH_SDT(), khachHang.getKH_MK(), txtEditTen.getText().toString(), txtEditDiaChi.getText().toString()));
+                                //get lại thông tin
+                                getKhachHangProfile();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //set text
+                                        progressDialog.dismiss();
+                                        dialogChangeProf.dismiss();
+                                        txtHoTen.setText(khachHang.getKH_HoTen());
+                                        txtDiaChi.setText(khachHang.getKH_DiaChi());
+                                        txtMenuRes.setText(tachTen(khachHang.getKH_HoTen()));
+                                        Toast.makeText(HomePage.this, "Thay đổi thông tin thành công", Toast.LENGTH_LONG).show();
+                                    }
+                                }, 1000);
+                            }
+                        }
                     }
                 });
                 dialogChangeProf.show();
@@ -529,7 +795,7 @@ public class HomePage extends AppCompatActivity {
 
     private void initCart(final String sdt) {
         gioHang = new ArrayList<>();
-        if (sdt != null && gioHang.size() == 0) {
+        if (sdt != null && !sdt.equals("") && gioHang.size() == 0) {
             mDatabase.child("GioHang").child(sdt).addChildEventListener(new GetChildFireBase() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -545,7 +811,7 @@ public class HomePage extends AppCompatActivity {
 
     public void initHistory(final String sdt) {
         lichSu = new ArrayList<>();
-        if (sdt != null && lichSu.size() == 0) {
+        if (sdt != null && !sdt.equals("") && lichSu.size() == 0) {
             mDatabase.child("LichSu").child(sdt).addChildEventListener(new GetChildFireBase() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -588,7 +854,6 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void callControls() {
-
         txtMenuRes = findViewById(R.id.txtMenuRes);
         imgMenuRes = findViewById(R.id.imgMenuRes);
         linearLayoutMenuRes = findViewById(R.id.linerLayoutMenuRes);
@@ -718,6 +983,6 @@ public class HomePage extends AppCompatActivity {
             public void run() {
                 System.exit(0);
             }
-        }, 3000);
+        }, 2000);
     }
 }
