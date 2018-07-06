@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     //implementation 'com.android.support:appcompat-v7:27.1.1'
     //implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     //noinspection GradleCompatible
@@ -34,12 +34,9 @@ dependencies {
     implementation 'com.android.support:design:27.0.1'
     implementation 'com.android.support:recyclerview-v7:27.0.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
-
-
     implementation 'com.google.firebase:firebase-core:16.0.0'
     implementation 'com.google.firebase:firebase-database:16.0.1'
     implementation 'com.google.firebase:firebase-storage:16.0.1'
-
-
+    implementation files('libs/android-viewbadger.jar')
 }
 apply plugin: 'com.google.gms.google-services'

@@ -30,7 +30,7 @@
             <TextView
                 android:id="@+id/txtCart_TenSach"
                 android:textStyle="bold"
-                android:textColor="#000000"
+                android:textColor="@color/colorPrimary"
                 android:gravity="center"
                 android:textSize="20sp"
                 android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                 android:layout_marginTop="10dp">
                 <TextView
                     android:id="@+id/txtCart_DonGia"
-                    android:textColor="#D50000"
+                    android:textColor="@color/red"
                     android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -55,12 +55,12 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp">
                 <Button
-                    android:background="#2979FF"
+                    android:background="@color/colorPrimary"
                     android:id="@+id/btnCart_Tru"
                     android:textStyle="bold"
                     android:textSize="20sp"
-                    android:textColor="#FFFFFF"
-                    android:text="-"
+                    android:textColor="@color/white"
+                    android:text="@string/tru"
                     android:layout_width="50dp"
                     android:layout_height="50dp" />
                 <TextView
@@ -70,15 +70,15 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:text="1"
-                    android:textColor="#000000"
+                    android:textColor="@color/colorPrimaryDark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <Button
-                    android:background="#2979FF"
+                    android:background="@color/colorPrimary"
                     android:id="@+id/btnCart_Cong"
                     android:textSize="20sp"
-                    android:textColor="#FFFFFF"
-                    android:text="+"
+                    android:textColor="@color/white"
+                    android:text="@string/cong"
                     android:layout_width="50dp"
                     android:layout_height="50dp" />
             </LinearLayout>

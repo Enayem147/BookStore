@@ -47,7 +47,7 @@ public class MenuAdapter extends BaseAdapter {
         convertView = inflater.inflate(R.layout.listview_menu,null);
         txtTheLoai = convertView.findViewById(R.id.txt_TheLoai);
         imgTheLoai = convertView.findViewById(R.id.imageView_TheLoai);
-
+        // Khởi tạo từng thể loại cho listview TheLoai ( menu left )
         TheLoai theLoai = (TheLoai)getItem(position);
         txtTheLoai.setText(theLoai.getTL_Ten());
         Picasso.get()

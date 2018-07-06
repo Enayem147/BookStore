@@ -15,6 +15,9 @@ public class LoadingScreen extends AppCompatActivity {
         goHomePage();
     }
 
+    /**
+     * Đợi 5s và về lại HomePage
+     */
     private void goHomePage(){
         handler = new Handler();
         handler.postDelayed(new Runnable() {

@@ -65,6 +65,7 @@ public class CartAdapter extends BaseAdapter {
 
         final GioHang gioHang = (GioHang) getItem(position);
         soluong = gioHang.getSach_SL();
+        // tăng số lượng 1 quyển sách trong giỏ hàng
         btnCong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +78,7 @@ public class CartAdapter extends BaseAdapter {
             }
         });
 
+        // giảm số lượng 1 quyển sách trong giỏ hàng
         btnTru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +94,7 @@ public class CartAdapter extends BaseAdapter {
             }
         });
 
-
+        // khởi tạo thông tin sách
         txtSoLuong.setText(gioHang.getSach_SL() + "");
         txtTenSach.setText(gioHang.getSach_Ten());
         txtDonGia.setText(decimalFormat.format(gioHang.getSach_DonGia() * gioHang.getSach_SL()) + " đ");
@@ -100,6 +102,7 @@ public class CartAdapter extends BaseAdapter {
                 .load(gioHang.getSach_HinhAnh())
                 .into(imgHinhAnh);
 
+        // event long click - xóa phần tử trong giỏ hàng
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

@@ -28,24 +28,26 @@ public class BooksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__books);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        initActionBar();
+        callControls();
+        initToolbar();
         initBookList();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    /**
+     * Khởi tạo giá trị đầu vào
+     */
+    private void callControls() {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        listView = findViewById(R.id.listView_Books);
     }
 
-
-
+    /**
+     * Khởi tạo danh sách Sách theo từng thể loại
+     */
     private void initBookList(){
         Intent intent = getIntent();
         final int TL_Ma = intent.getIntExtra("TL_Ma",-1);
-        listView = findViewById(R.id.listView_Books);
         final ArrayList<Sach> listBooks = new ArrayList<>();
-
         final BooksAdapter _booksAdapter;
         _booksAdapter = new BooksAdapter(this,listBooks);
         listView.setAdapter(_booksAdapter);
@@ -74,8 +76,10 @@ public class BooksActivity extends AppCompatActivity {
 
     }
 
-
-    private void initActionBar() {
+    /**
+     * Khởi tạo toolbar
+     */
+    private void initToolbar() {
         toolbar = findViewById(R.id.toolbar_Books);
         toolbar.setNavigationIcon(R.drawable.ic_menu_back);
         setSupportActionBar(toolbar);

@@ -112,14 +112,16 @@ public class BooksAdapter extends BaseAdapter {
                 super.onChildAdded(dataSnapshot, s);
             }
         });
-
+        // set giá
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         txt_Gia.setText(decimalFormat.format(sach.getSach_DonGia()) + " đ");
 
+        //set hình
         Picasso.get()
                 .load(sach.getSach_HinhAnh())
                 .into(imgBooks);
 
+        //event click mỗi quyển Sách
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

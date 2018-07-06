@@ -22,11 +22,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
-
-import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -135,45 +134,77 @@ public class BookListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    //Filter Class
-
-
+    /**
+     * Hàm lọc - tìm kiếm
+     * @param charText : chuỗi cần tìm
+     */
     public void filter(String charText) {
         charText =charText.toLowerCase(Locale.getDefault());
         list.clear();
+        ArrayList<TatCaSach> searchByName = new ArrayList<>();
+        ArrayList<TatCaSach> searchByActor = new ArrayList<>();
+        ArrayList<TatCaSach> searchByType = new ArrayList<>();
+
         if (charText.length() == 0) {
             list.addAll(arrayListSearch);
         } else {
             for (int j=0;j<arrayListSearch.size();j++) {
-                TatCaSach all = arrayListSearch.get(j);
-
-                // tìm kiếm theo tên
-                if (removeAccent(all.getSach_Ten().toLowerCase(Locale.getDefault())).contains(charText)) {
-                        list.add(all);
+                TatCaSach sach = arrayListSearch.get(j);
+                // tìm kiếm theo Tên
+                if (removeAccent(sach.getSach_Ten().toLowerCase(Locale.getDefault())).contains(charText)) {
+                    list.add(sach);
+                }
+                // tìm kiếm theo tên Tác Giả
+                for (int i = 0; i < sach.getListTG().size(); i++) {
+                    if(removeAccent(sach.getListTG().get(i).toLowerCase(Locale.getDefault())).contains(charText)){
+                        list.add(sach);
+                    }
                 }
 
-//                // tìm kiếm theo tên Tác Giả
-//                for (int i = 0; i < all.getListTG().size(); i++) {
-//                    if(removeAccent(all.getListTG().get(i).toLowerCase(Locale.getDefault())).contains(charText)){
-//                            list.add(all);
-//                    }
-//                }
-//
-//                // tìm kiếm theo Thể Loại
-//                for (int i = 0; i < all.getListTL().size(); i++) {
-//                    if(removeAccent(all.getListTL().get(i).toLowerCase(Locale.getDefault())).contains(charText)){
-//                            list.add(all);
-//                    }
-//                }
-
+                // tìm kiếm theo Thể Loại
+                for (int i = 0; i < sach.getListTL().size(); i++) {
+                    if(removeAccent(sach.getListTL().get(i).toLowerCase(Locale.getDefault())).contains(charText)){
+                        list.add(sach);
+                    }
+                }
+                list = removeDuplicates(list);
             }
         }
         notifyDataSetChanged();
     }
 
+    /**
+     * xóa các phần tử trùng nhau trong 1 list
+     * @param list : Danh sách tất cả sách
+     * @return
+     */
+    static ArrayList<TatCaSach> removeDuplicates(ArrayList<TatCaSach> list) {
+
+        // khởi tạo kết quả
+        ArrayList<TatCaSach> result = new ArrayList<>();
+
+        // khợi tạo set đựng các Sách kiểm tra
+        HashSet<TatCaSach> set = new HashSet<>();
+
+        for (TatCaSach item : list) {
+            // đưa các item k có trong set vào result và set
+            if (!set.contains(item)) {
+                result.add(item);
+                set.add(item);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Chuyển chuỗi có dấu thành không dấu
+     * @param s : Chuỗi
+     * @return
+     */
     public static String removeAccent(String s) {
         String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(temp).replaceAll("").replace('đ','d').replace('Đ','D');
     }
+
 }

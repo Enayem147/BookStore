@@ -51,8 +51,8 @@ public class HistoryAdapter extends BaseAdapter {
         txtNgayMua = convertView.findViewById(R.id.txtHistory_NgayMua);
         imgHinhAnh = convertView.findViewById(R.id.imgHistory_HinhSach);
 
+        // khởi tạo các giá trị cho list view Lịch Sử
         LichSu lichSu = (LichSu) getItem(position);
-
         txtSoLuong.setText(lichSu.getSach_SL() + "");
         txtTenSach.setText(lichSu.getSach_Ten());
         txtMaHD.setText(lichSu.getHD_Ma());

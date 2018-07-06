@@ -37,7 +37,7 @@ public class InvoiceActivity extends AppCompatActivity {
     TextView txtTotal, txtMaHD, txtTen, txtSDT, txtDiaChi;
     ListView listView;
     Toolbar toolbar;
-    Button btnThanhToan;
+    Button btnDatHang;
     DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
     Calendar calendar = Calendar.getInstance();
     Date date = new Date();
@@ -51,14 +51,16 @@ public class InvoiceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__invoice);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         callControls();
         initCartReview();
         initInvoice();
         GetKeynSoLuong();
-        ButtonThanhToanClick();
+        ButtonDatHangClick();
     }
 
+    /**
+     * Lấy khóa(Firebase) và số lượng của Sách từ Kho
+     */
     private void GetKeynSoLuong() {
         mDatabase.child("Kho").addChildEventListener(new GetChildFireBase() {
             @Override
@@ -73,21 +75,15 @@ public class InvoiceActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        }, 1000);
     }
 
-    private void ButtonThanhToanClick() {
-
+    /**
+     * Event click nút Đặt Hàng
+     */
+    private void ButtonDatHangClick() {
         ngayDat = sdf.format(date);
 
-        btnThanhToan.setOnClickListener(new View.OnClickListener() {
+        btnDatHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 for (int i = 0; i < HomePage.gioHang.size(); i++) {
@@ -133,18 +129,19 @@ public class InvoiceActivity extends AppCompatActivity {
 
                     }
                 }, 3000);
-
-//
             }
         });
     }
 
-
+    /**
+     * Khởi tạo giá trị đầu vào
+     */
     private void callControls() {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         handler = new Handler();
         listView = findViewById(R.id.listView_Invoice);
         toolbar = findViewById(R.id.toolbar_Invoice);
-        btnThanhToan = findViewById(R.id.btnOrder_DatHang);
+        btnDatHang = findViewById(R.id.btnOrder_DatHang);
 
         txtTotal = findViewById(R.id.txtInvoice_Total);
         txtMaHD = findViewById(R.id.txtInv_MaHD);
@@ -165,6 +162,9 @@ public class InvoiceActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Khởi tạo hóa đơn
+     */
     private void initInvoice() {
         txtMaHD.setText("SBS" + calendar.getTimeInMillis());
         txtSDT.setText(HomePage.KH_SDT);
@@ -173,6 +173,9 @@ public class InvoiceActivity extends AppCompatActivity {
         txtDiaChi.setText(HomePage.khachHang.getKH_DiaChi());
     }
 
+    /**
+     * Khởi tạo review giỏ hàng
+     */
     private void initCartReview() {
         final InvoiceAdapter _invoiceAdapter;
         _invoiceAdapter = new InvoiceAdapter(HomePage.gioHang, getApplicationContext());

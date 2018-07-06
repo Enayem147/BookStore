@@ -4,24 +4,31 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,10 +39,13 @@ import com.example.a84965.bookstore.model.LichSu;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.GioHang;
 import com.example.a84965.bookstore.model.KhachHang;
+import com.example.a84965.bookstore.ultil.DrawableClickListener;
 import com.example.a84965.bookstore.ultil.GetChildFireBase;
+import com.example.a84965.bookstore.ultil.OnTextChangeListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.readystatesoftware.viewbadger.BadgeView;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -43,6 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.a84965.bookstore.R.color.green;
+import static com.example.a84965.bookstore.activity.HomePage.isNewUser;
 
 public class BookDetailActivity extends AppCompatActivity {
     ViewPager viewPager;
@@ -62,27 +73,23 @@ public class BookDetailActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     int soluong = 1;
     private boolean isLogin = false;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__book__detail);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        Intent intent = getIntent();
-        sach = (Sach) intent.getSerializableExtra("Sach");
-        nhaXB = intent.getStringExtra("NhaXuatBan");
-        listTG = (ArrayList<String>) intent.getSerializableExtra("TacGia");
-
         callControls();
         initToolBar();
         initBookDetail();
         ButtonThemGioHangClicked();
         initBookStatus();
-
-
         //Toast.makeText(this, getTenTG(), Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Event khi click vào nút THÊM VÀO GIỎ HÀNG
+     */
     private void ButtonThemGioHangClicked(){
         btn_Them.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,35 +103,85 @@ public class BookDetailActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Hiển thị Dialog Đăng nhập
+     */
+    @SuppressLint("ClickableViewAccessibility")
     public void DialogDangNhap(){
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_login);
         final TextView txtSDT = dialog.findViewById(R.id.txtLogin_SDT);
         final TextView txtMK = dialog.findViewById(R.id.txtLogin_MK);
-        if (HomePage.isNewUser) {
-            HomePage.isNewUser = false;
-            txtSDT.setText(HomePage.new_SDT);
-            txtMK.setText(HomePage.new_MK);
-        }
-        CheckBox cbRemember = dialog.findViewById(R.id.cbLogin);
+
+        //event Drawable click txtSDT
+        txtSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_cancel, 0);
+
+        txtSDT.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtSDT) {
+            @Override
+            public boolean onDrawableClick() {
+                txtSDT.setText("");
+                return true;
+            }
+        });
+
+        txtSDT.addTextChangedListener(new OnTextChangeListener() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 0) {
+                    txtSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                } else {
+                    txtSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_cancel, 0);
+                }
+            }
+        });
+
+        txtSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
+        txtMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_invisible, 0);
+        //event Drawable click txtMK
+        txtMK.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtMK) {
+            @Override
+            public boolean onDrawableClick() {
+                if (txtMK.getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                    txtMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_invisible, 0);
+                    txtMK.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                } else {
+                    txtMK.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    txtMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_visible, 0);
+                }
+                return true;
+            }
+        });
+        final CheckBox cbRemember = dialog.findViewById(R.id.cbLogin);
+        cbRemember.setChecked(true);
         Button btnDangNhap = dialog.findViewById(R.id.btnDangNhap);
+        // click vào nút Đăng Nhập
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isLogin = false;
+                //Kiểm tra SDT - MK khách hàng từ Firebase
                 mDatabase.child("KhachHang").addChildEventListener(new GetChildFireBase() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         KhachHang kh = dataSnapshot.getValue(KhachHang.class);
                         if (kh.getKH_SDT().equals(txtSDT.getText().toString()) && kh.getKH_MK().equals(txtMK.getText().toString())) {
                             isLogin = true;
+                            HomePage.KH_Ten = kh.getKH_HoTen();
                             HomePage.KH_SDT = kh.getKH_SDT();
+                            HomePage.initCart(kh.getKH_SDT());
+                            HomePage.initHistory(kh.getKH_SDT());
                             HomePage.updateMenuTitles();
-                            initCart(kh.getKH_SDT());
-                            initHistory(kh.getKH_SDT());
-                            HomePage.khachHang = kh;
+                            if (cbRemember.isChecked()) {
+                                // lưu sdt và mk lại cho lần sau không cần đăng nhập
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("SDT", kh.getKH_SDT());
+                                editor.putString("Ten", kh.getKH_HoTen());
+                                editor.putString("MK", kh.getKH_MK());
+                                editor.commit();
+
+                            }
                         }
                         super.onChildAdded(dataSnapshot, s);
                     }
@@ -136,9 +193,12 @@ public class BookDetailActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if (isLogin) {
+                            HomePage.getKhachHangProfile();
                             progressDialog.dismiss();
                             Toast.makeText(BookDetailActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
+
+
                         } else {
                             progressDialog.dismiss();
                             Toast.makeText(BookDetailActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
@@ -151,36 +211,17 @@ public class BookDetailActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void  initCart(final String sdt){
-        if(sdt != null){
-            mDatabase.child("GioHang").child(sdt).addChildEventListener(new GetChildFireBase() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    if(!dataSnapshot.getKey().equals("default")){
-                        GioHang gh = dataSnapshot.getValue(GioHang.class);
-                        HomePage.gioHang.add(gh);
-                    }
-                    super.onChildAdded(dataSnapshot, s);
-                }
-            });
-        }
-    }
-
-    public void initHistory(final String sdt) {
-        HomePage.lichSu = new ArrayList<>();
-        if (sdt != null && HomePage.lichSu.size() == 0) {
-            mDatabase.child("LichSu").child(sdt).addChildEventListener(new GetChildFireBase() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    LichSu ls = dataSnapshot.getValue(LichSu.class);
-                    HomePage.lichSu.add(ls);
-                    super.onChildAdded(dataSnapshot, s);
-                }
-            });
-        }
-    }
-
+    /**
+     * Khởi tạo các giá trị đầu vào
+     */
     private void callControls() {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        sharedPreferences = getSharedPreferences("loginData", MODE_PRIVATE);
+        Intent intent = getIntent();
+        sach = (Sach) intent.getSerializableExtra("Sach");
+        nhaXB = intent.getStringExtra("NhaXuatBan");
+        listTG = (ArrayList<String>) intent.getSerializableExtra("TacGia");
+
         txtTrangThai = findViewById(R.id.txtDetail_TrangThai);
         btn_Them = findViewById(R.id.btnThem_Sach);
         txtTen = findViewById(R.id.txtDetail_Ten);
@@ -189,6 +230,10 @@ public class BookDetailActivity extends AppCompatActivity {
         handler = new Handler();
     }
 
+
+    /**
+     * Khởi tạo trạng thái số lượng trong kho của Sách
+     */
     public void initBookStatus(){
         mDatabase.child("Kho").addChildEventListener(new GetChildFireBase() {
             @Override
@@ -214,6 +259,9 @@ public class BookDetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Khởi tạo chi tiết Sách
+     */
     public void initBookDetail(){
         final DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         txtTen.setText(sach.getSach_Ten());
@@ -228,6 +276,10 @@ public class BookDetailActivity extends AppCompatActivity {
         sach_hinh = sach.getSach_HinhAnh();
     }
 
+
+    /**
+     * Hiển thị Dialog Thêm số lượng sách vào giỏ hàng
+     */
     private void DialogThem() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -239,6 +291,7 @@ public class BookDetailActivity extends AppCompatActivity {
         Button btnCong = dialog.findViewById(R.id.btnNhap_Cong);
         Button btnXacNhan = dialog.findViewById(R.id.btnNhap_XN);
 
+        // event click nút +
         btnCong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,7 +299,7 @@ public class BookDetailActivity extends AppCompatActivity {
                 txtSoLuong.setText(soluong +"");
             }
         });
-
+        //event click nút -
         btnTru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -257,7 +310,7 @@ public class BookDetailActivity extends AppCompatActivity {
                 txtSoLuong.setText(soluong +"");
             }
         });
-
+        //event click nút Xác nhận
         btnXacNhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -285,17 +338,27 @@ public class BookDetailActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Tạo menu trên toolbar
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.cart_menu,menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
+
+    /**
+     * Event click menu trên toolbar
+     * @param item
+     * @return
+     */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()){
-            case R.id.menuDetail_giohang:
+            case R.id.menuDetail_Giohang:
                 if(HomePage.KH_SDT == null || HomePage.KH_SDT.equals("")){
                     DialogDangNhap();
                 }else{
@@ -308,7 +371,9 @@ public class BookDetailActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Khởi tạo toolbar
+     */
     private void initToolBar() {
         toolbar = findViewById(R.id.toolBar);
         toolbar.setNavigationIcon(R.drawable.ic_menu_back);
@@ -330,11 +395,10 @@ public class BookDetailActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
+    /**
+     * Hàm public để cho fragment gọi lấy thông tin Sách - nhà xuất bản - danh sách tác giả
+     * @return
+     */
     public Sach getThongTinSach(){
         return sach;
     }
@@ -347,6 +411,9 @@ public class BookDetailActivity extends AppCompatActivity {
         return  listTG;
     }
 
+    /**
+     * Restart activity sẽ khởi tạo lại trạng thái số lượng Sách còn lại trong kho
+     */
     @Override
     protected void onRestart() {
         initBookStatus();

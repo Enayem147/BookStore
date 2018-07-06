@@ -38,6 +38,7 @@ public class ThongTin extends Fragment {
         txtNamXB = view.findViewById(R.id.txt_tt_namxb);
         txtSoTrang = view.findViewById(R.id.txt_tt_sotrang);
 
+        // Lấy thông tin sách từ trang BookDetail
         final BookDetailActivity activity = (BookDetailActivity) getActivity();
         final Sach sach = activity.getThongTinSach();
 
@@ -55,14 +56,6 @@ public class ThongTin extends Fragment {
             strTG += " , " + listTG.get(i);
         }
         txtTG.setText(strTG);
-
-
-        txtTG.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), txtTG.getText().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
 
         return view;
     }

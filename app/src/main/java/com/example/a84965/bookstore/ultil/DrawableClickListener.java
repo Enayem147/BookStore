@@ -71,9 +71,10 @@ public abstract class DrawableClickListener implements View.OnTouchListener {
      *                      <br />
      *                      <i>use one of the values:
      *                      <b>DrawableOnTouchListener.DRAWABLE_INDEX_*</b></i>
-     * @param fuzzOverride  The number of pixels of &quot;fuzz&quot; that should be
+     * @param fuzz  The number of pixels of &quot;fuzz&quot; that should be
      *                      included to account for the size of a finger.
      */
+
     public DrawableClickListener(final TextView view, final int drawableIndex, final int fuzz) {
         super();
         this.fuzz = fuzz;

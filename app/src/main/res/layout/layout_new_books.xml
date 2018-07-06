@@ -26,7 +26,7 @@
             android:textSize="15sp"
             android:gravity="center"
             android:id="@+id/txt_NewBook_Ten"
-            android:textColor="#6200EA"
+            android:textColor="@color/colorPrimary"
             android:layout_gravity="center"
             android:layout_width="150dp"
             android:layout_height="wrap_content" />
@@ -35,7 +35,7 @@
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:id="@+id/txt_NewBook_TG"
-            android:textColor="#7c7b7a"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_gravity="center"
             android:text="Tác giả"
             android:layout_width="100dp"

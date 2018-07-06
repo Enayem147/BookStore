@@ -13,6 +13,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         super(fm);
     }
 
+    /**
+     * event chuyển fragment
+     * @param position
+     * @return
+     */
     @Override
     public Fragment getItem(int position) {
         Fragment frag = null;
@@ -31,6 +36,10 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return 2;
     }
+
+    /**
+     * Set tittle cho từng tag
+     */
     @Override
     public CharSequence getPageTitle(int position){
         String title = "";

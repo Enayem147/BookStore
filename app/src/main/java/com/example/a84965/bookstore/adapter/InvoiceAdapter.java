@@ -50,7 +50,7 @@ public class InvoiceAdapter extends BaseAdapter {
         txtTenSach = convertView.findViewById(R.id.txtInvoice_TenSach);
         txtSoLuong = convertView.findViewById(R.id.txtInvoice_SoLuong);
         imgHinhAnh = convertView.findViewById(R.id.imgInvoice_HinhSach);
-
+        // Khởi tạo từng sản phẩm cho listview Giỏ hàng review ( trang invoice )
         final GioHang gioHang = (GioHang)getItem(position);
         txtSoLuong.setText(gioHang.getSach_SL()+"");
         txtTenSach.setText(gioHang.getSach_Ten());

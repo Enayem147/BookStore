@@ -25,6 +25,9 @@ public class HistoryActivity extends AppCompatActivity {
         initHistory();
     }
 
+    /**
+     * Khởi tạo lịch sử mua hàng
+     */
     private void initHistory() {
         if(HomePage.lichSu.size() > 0){
             Collections.reverse(HomePage.lichSu);
@@ -36,6 +39,9 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Khởi tạo giá trị đầu vào
+     */
     private void callControls() {
         toolbar = findViewById(R.id.toolbar_History);
         toolbar.setNavigationIcon(R.drawable.ic_menu_back);

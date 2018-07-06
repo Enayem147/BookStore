@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:background="#FFF"
     android:layout_margin="10dp"
-    android:gravity="center">
+    android:background="#FFF"
+    android:gravity="center"
+    android:orientation="horizontal">
+
     <LinearLayout
-        android:layout_marginLeft="10dp"
         android:layout_width="120dp"
-        android:layout_height="150dp">
+        android:layout_height="150dp"
+        android:layout_marginLeft="10dp">
+
         <ImageView
             android:id="@+id/imgBooks"
-            android:background="@drawable/loading_img"
             android:layout_width="100dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/loading_img" />
     </LinearLayout>
 
     <LinearLayout
@@ -27,8 +29,9 @@
             android:id="@+id/txtBooks_Ten"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="#000000"
+            android:textColor="@color/colorPrimary"
             android:textSize="20sp" />
 
         <LinearLayout
@@ -40,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tac_gia"
-                android:textColor="#000000"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="15sp" />
 
             <TextView
@@ -61,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nha_xb"
-                android:textColor="#000000"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="15sp" />
 
             <TextView
@@ -82,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/gia"
-                android:textColor="#000000"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="15sp" />
 
             <TextView

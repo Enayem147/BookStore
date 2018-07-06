@@ -17,13 +17,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class CartActivity extends AppCompatActivity {
     private CartAdapter _cartAdapter;
     Handler handler;
     ListView listViewCart;
     Toolbar toolbar;
-    Button btnTiepTuc, btnThanhToan;
+    Button btnTiepTuc, btnDatHang;
     static public TextView txtEmpty, txtCart1;
     static public TextView txtTotal;
     static long invoice_tongtien;
@@ -33,13 +34,15 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__cart);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         callControls();
         initCart();
         setTotal();
         AllButtonClick();
     }
 
+    /**
+     * Event khi click vào nút Tiếp Tục Mua Hàng và Đặt Hàng
+     */
     private void AllButtonClick(){
         btnTiepTuc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +51,7 @@ public class CartActivity extends AppCompatActivity {
             }
         });
 
-        btnThanhToan.setOnClickListener(new View.OnClickListener() {
+        btnDatHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (HomePage.gioHang.size() > 0) {
@@ -62,12 +65,9 @@ public class CartActivity extends AppCompatActivity {
         });
     }
 
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
+    /**
+     * Hàm set giá trị cho text Tổng Tiền
+     */
     public static void setTotal() {
         long tongTien = 0;
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
@@ -78,13 +78,17 @@ public class CartActivity extends AppCompatActivity {
         invoice_tongtien = tongTien;
     }
 
+    /**
+     * Khởi tạo giá trị đầu vào
+     */
     private void callControls() {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         handler = new Handler();
         listViewCart = findViewById(R.id.listView_Cart);
         listViewCart.setVisibility(View.INVISIBLE);
         toolbar = findViewById(R.id.toolbar_Cart);
         btnTiepTuc = findViewById(R.id.btnCart_TiepTuc);
-        btnThanhToan = findViewById(R.id.btnCart_ThanhToan);
+        btnDatHang = findViewById(R.id.btnCart_DatHang);
         txtEmpty = findViewById(R.id.txt_emptyCart);
         txtTotal = findViewById(R.id.txtCart_TongTien);
         txtCart1 = findViewById(R.id.txtCart1);
@@ -104,7 +108,12 @@ public class CartActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Khởi tạo Giỏ Hàng
+     */
     private void initCart() {
+        if(HomePage.gioHang == null)
+            HomePage.gioHang = new ArrayList<>();
         if (HomePage.gioHang.size() > 0) {
             _cartAdapter = new CartAdapter(HomePage.gioHang, this);
             txtEmpty.setVisibility(View.INVISIBLE);

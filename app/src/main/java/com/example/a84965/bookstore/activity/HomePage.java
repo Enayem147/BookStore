@@ -81,7 +81,7 @@ public class HomePage extends AppCompatActivity {
     static ImageView imgMenuRes;
 
     private static Menu menu;
-    private DatabaseReference mDatabase;
+    private static DatabaseReference mDatabase;
     static public String KH_Ten = "";
     static public KhachHang khachHang = new KhachHang();
     static public String KH_SDT = "";
@@ -97,14 +97,10 @@ public class HomePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        sharedPreferences = getSharedPreferences("loginData", MODE_PRIVATE);
-        KH_SDT = sharedPreferences.getString("SDT", "");
-        KH_Ten = sharedPreferences.getString("Ten", "");
         setContentView(R.layout.activity_home_page);
         callControls();
         initView();
-        ActionBar();
+        initToolbar();
         initMenu();
         clickMenu();
         getHinhAnhQuangCao();
@@ -113,22 +109,14 @@ public class HomePage extends AppCompatActivity {
         drawerLayoutChange();
         initAllBookList();
         loginKhachHangRemembered();
-
-        if (isUserOrder) {
-            initHistory(KH_SDT);
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    DialogCompleteOrder();
-                }
-            }, 500);
-        }
+        DialogCompleteOrder();
         loadingScreen();
-
-
         //startActivity(new Intent(this,Activity_FireBase.class));
     }
 
+    /**
+     * Tự login khi mà lần trước khách hàng login check vào checkbox Ghi nhớ đăng nhập
+     */
     private void loginKhachHangRemembered() {
         //set text share ref
         if (!KH_SDT.equals("")) {
@@ -145,14 +133,19 @@ public class HomePage extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Khi bắt đầu apps chuyển sang trang loading
+     */
     private void loadingScreen() {
         if (isFirst) {
             startActivity(new Intent(HomePage.this, LoadingScreen.class));
         }
     }
 
-    public void getKhachHangProfile() {
+    /**
+     * Khởi tạo profile của khách hàng
+     */
+    public static void getKhachHangProfile() {
         if (!KH_SDT.equals("") && KH_SDT != null) {
             mDatabase.child("KhachHang").addChildEventListener(new GetChildFireBase() {
                 @Override
@@ -169,6 +162,9 @@ public class HomePage extends AppCompatActivity {
 
     }
 
+    /**
+     * Khởi tạo danh sách tất cả Sách ( để qua trang tất cả sản phẩm )
+     */
     private void initAllBookList() {
         tatCaSach = new ArrayList<>();
 
@@ -238,6 +234,9 @@ public class HomePage extends AppCompatActivity {
         });
     }
 
+    /**
+     * Event click  đăng ký / profile của menu left
+     */
     private void MenuRegisterClick() {
         linearLayoutMenuRes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,6 +251,9 @@ public class HomePage extends AppCompatActivity {
         });
     }
 
+    /**
+     * Event click tất cả sản phẩm của menu left
+     */
     private void MenuAllBookClick() {
         linearLayoutMenuAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,6 +264,9 @@ public class HomePage extends AppCompatActivity {
         });
     }
 
+    /**
+     * Event khi mà menu left đóng hoặc mở
+     */
     private void drawerLayoutChange() {
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -292,6 +297,9 @@ public class HomePage extends AppCompatActivity {
         });
     }
 
+    /**
+     * update các icon - trạng thái của Đăng nhập / Đăng xuất và Đăng ký / Profile
+     */
     public static void updateMenuTitles() {
         MenuItem loginMenuItem = menu.findItem(R.id.menu_dangnhap);
         MenuItem historyMenuItem = menu.findItem(R.id.menu_history);
@@ -310,6 +318,11 @@ public class HomePage extends AppCompatActivity {
 
     }
 
+    /**
+     * Tạo menu đăng nhập
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_page_menu, menu);
@@ -318,6 +331,11 @@ public class HomePage extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Event click nút đăng nhập / đăng xuất
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -345,6 +363,12 @@ public class HomePage extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    /**
+     * Tách tên ( chỉ lấy tên và chữ lót kề tên ) cho menu left
+     * @param kh_ten : Tên khách hàng
+     * @return
+     */
     private static String tachTen(String kh_ten) {
         int i = kh_ten.lastIndexOf(" ");
         int j = kh_ten.lastIndexOf(" ", i - 1);
@@ -357,6 +381,10 @@ public class HomePage extends AppCompatActivity {
         return ten;
     }
 
+
+    /**
+     * Hiển thị dialog khi nhấn vào icon Đăng xuất
+     */
     private void DialogDangXuat() {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setMessage("Bạn có muốn đăng xuất không");
@@ -392,6 +420,9 @@ public class HomePage extends AppCompatActivity {
         alertDialog.show();
     }
 
+    /**
+     * Khởi tạo các hình ảnh quảng cáo
+     */
     private void getHinhAnhQuangCao() {
         viewFlipper = findViewById(R.id.imgQuangCao_TrangChinh);
         mDatabase.child("QuangCao").addChildEventListener(new GetChildFireBase() {
@@ -417,6 +448,9 @@ public class HomePage extends AppCompatActivity {
         viewFlipper.setOutAnimation(animation_out);
     }
 
+    /**
+     * Hiển thị dialog Đăng Nhập
+     */
     @SuppressLint("ClickableViewAccessibility")
     public void DialogDangNhap() {
         final Dialog dialog = new Dialog(this);
@@ -451,18 +485,15 @@ public class HomePage extends AppCompatActivity {
 
         txtMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_invisible, 0);
         //event Drawable click txtMK
-        final boolean[] visible = {false};
         txtMK.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtMK) {
             @Override
             public boolean onDrawableClick() {
-                if (visible[0]) {
+                if (txtMK.getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
                     txtMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_invisible, 0);
                     txtMK.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
-                    visible[0] = false;
                 } else {
                     txtMK.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     txtMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_visible, 0);
-                    visible[0] = true;
                 }
                 return true;
             }
@@ -475,6 +506,7 @@ public class HomePage extends AppCompatActivity {
         }
 
         final CheckBox cbRemember = dialog.findViewById(R.id.cbLogin);
+        cbRemember.setChecked(true);
         Button btnDangNhap = dialog.findViewById(R.id.btnDangNhap);
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -529,6 +561,10 @@ public class HomePage extends AppCompatActivity {
         dialog.show();
     }
 
+
+    /**
+     * Hiển thị dialog Profile khách hàng
+     */
     private void DialogProfile() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -571,6 +607,49 @@ public class HomePage extends AppCompatActivity {
                 final TextView txtMK_Moi = dialogChangePass.findViewById(R.id.txtProfEdit_NewPass);
                 final TextView txtMK_Moi_XN = dialogChangePass.findViewById(R.id.txtProfEdit_NewPassConfirm);
 
+                //event Drawable click
+                txtMK_Cu.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtMK_Cu) {
+                    @Override
+                    public boolean onDrawableClick() {
+                        if (txtMK_Cu.getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                            txtMK_Cu.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_invisible, 0);
+                            txtMK_Cu.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                        } else {
+                            txtMK_Cu.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                            txtMK_Cu.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_visible, 0);
+                        }
+                        return true;
+                    }
+                });
+
+                txtMK_Moi.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtMK_Moi) {
+                    @Override
+                    public boolean onDrawableClick() {
+                        if (txtMK_Moi.getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                            txtMK_Moi.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_invisible, 0);
+                            txtMK_Moi.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                        } else {
+                            txtMK_Moi.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                            txtMK_Moi.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_visible, 0);
+                        }
+                        return true;
+                    }
+                });
+
+                txtMK_Moi_XN.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtMK_Moi_XN) {
+                    @Override
+                    public boolean onDrawableClick() {
+                        if (txtMK_Moi_XN.getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                            txtMK_Moi_XN.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_invisible, 0);
+                            txtMK_Moi_XN.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                        } else {
+                            txtMK_Moi_XN.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                            txtMK_Moi_XN.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_visible, 0);
+                        }
+                        return true;
+                    }
+                });
+
 
                 Button btnXN = dialogChangePass.findViewById(R.id.btnProf_XN);
                 txtThoat.setOnClickListener(new View.OnClickListener()
@@ -587,36 +666,51 @@ public class HomePage extends AppCompatActivity {
                 {
                     @Override
                     public void onClick(View v) {
+                        String mk_cu = txtMK_Cu.getText().toString();
+                        String mk_moi = txtMK_Moi.getText().toString();
+                        String mk_moi_xn = txtMK_Moi_XN.getText().toString();
+
                         boolean error = false;
-                        if (!txtMK_Cu.getText().toString().equals(khachHang.getKH_MK())) {
-                            txtMK_Cu.setError("Mật khẩu cũ không đúng");
-                            txtMK_Cu.requestFocus();
-                            error = true;
-                        } else {
-                            txtMK_Cu.setError(null);
+                        boolean blank = false;
+                        String strErr = "";
+
+                        if (mk_cu.length() == 0 || mk_moi.length() == 0 || mk_moi_xn.length() == 0) {
+                            blank = true;
                         }
 
-                        if (txtMK_Moi.getText().toString().equals("")) {
-                            txtMK_Moi.setError("Mật khẩu mới không được rỗng");
-                            txtMK_Moi.requestFocus();
+                        int i = 0;
+                        if (!mk_cu.equals(khachHang.getKH_MK())) {
+                            if (++i == 1) {
+                                strErr += "Mật khẩu cũ không đúng";
+                            } else {
+                                strErr += "\nMật khẩu cũ không đúng";
+                            }
                             error = true;
-                        } else if (txtMK_Moi.length() < 6) {
-                            txtMK_Moi.setError("Mật khẩu mới phải dài hơn 6 ký tự");
-                            txtMK_Moi.requestFocus();
-                            error = true;
-                        } else {
-                            txtMK_Moi.setError(null);
                         }
 
-                        if (!txtMK_Moi.getText().toString().equals(txtMK_Moi_XN.getText().toString())) {
-                            txtMK_Moi_XN.setError("Mật khẩu không trùng khớp");
-                            txtMK_Moi_XN.requestFocus();
+                        if (mk_moi.length() < 6) {
+                            if (++i == 1) {
+                                strErr += "Mật khẩu mới phải dài hơn 6 ký tự";
+                            } else {
+                                strErr += "\nMật khẩu mới phải dài hơn 6 ký tự";
+                            }
                             error = true;
-                        } else {
-                            txtMK_Moi_XN.setError(null);
                         }
 
-                        if (!error) {
+                        if (!mk_moi.equals(mk_moi_xn)) {
+                            if (++i == 1) {
+                                strErr += "Mật khẩu xác nhận không trùng khớp";
+                            } else {
+                                strErr += "\nMật khẩu xác nhận không trùng khớp";
+                            }
+                            error = true;
+                        }
+
+                        if (blank) {
+                            Toast.makeText(HomePage.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                        } else if (error) {
+                            Toast.makeText(HomePage.this, strErr, Toast.LENGTH_SHORT).show();
+                        } else {
                             final ProgressDialog progressDialog = new ProgressDialog(HomePage.this);
                             progressDialog.setMessage("Chờ trong giây lát !!!");
                             progressDialog.show();
@@ -631,6 +725,7 @@ public class HomePage extends AppCompatActivity {
                                 }
                             }, 1000);
                         }
+
                     }
                 });
                 dialogChangePass.show();
@@ -756,7 +851,10 @@ public class HomePage extends AppCompatActivity {
         dialog.show();
     }
 
-    private void ActionBar() {
+    /**
+     * khởi tạo toolbar
+     */
+    private void initToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationIcon(R.drawable.ic_format_list_bulleted_black_24dp);
@@ -768,6 +866,9 @@ public class HomePage extends AppCompatActivity {
         });
     }
 
+    /**
+     * khởi tạo 6 quyển sách mới nhất
+     */
     private void initView() {
         final ArrayList<Sach> listBook = new ArrayList<>();
         final NewBooksAdapter _new_booksAdapter;
@@ -792,8 +893,11 @@ public class HomePage extends AppCompatActivity {
 
     }
 
-
-    private void initCart(final String sdt) {
+    /**
+     * Khởi tạo giỏ hàng
+     * @param sdt : Số điện thoại của khách hàng
+     */
+    public static void initCart(final String sdt) {
         gioHang = new ArrayList<>();
         if (sdt != null && !sdt.equals("") && gioHang.size() == 0) {
             mDatabase.child("GioHang").child(sdt).addChildEventListener(new GetChildFireBase() {
@@ -809,7 +913,12 @@ public class HomePage extends AppCompatActivity {
         }
     }
 
-    public void initHistory(final String sdt) {
+    /**
+     * khởi tạo Lịch sử mua hàng
+     * @param sdt : Số điện thoại của khách hàng
+     */
+
+    public static void initHistory(final String sdt) {
         lichSu = new ArrayList<>();
         if (sdt != null && !sdt.equals("") && lichSu.size() == 0) {
             mDatabase.child("LichSu").child(sdt).addChildEventListener(new GetChildFireBase() {
@@ -822,6 +931,10 @@ public class HomePage extends AppCompatActivity {
             });
         }
     }
+
+    /**
+     * khởi tạo menu các thể loại Sách trong menu left
+     */
 
     private void initMenu() {
         final MenuAdapter _menuAdapter;
@@ -840,6 +953,10 @@ public class HomePage extends AppCompatActivity {
 
     }
 
+    /**
+     * Event click vào mỗi thể loại trong menu left
+     */
+
     private void clickMenu() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -853,7 +970,15 @@ public class HomePage extends AppCompatActivity {
         });
     }
 
+    /**
+     * Khởi tạo giá trị đầu vào
+     */
+
     private void callControls() {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        sharedPreferences = getSharedPreferences("loginData", MODE_PRIVATE);
+        KH_SDT = sharedPreferences.getString("SDT", "");
+        KH_Ten = sharedPreferences.getString("Ten", "");
         txtMenuRes = findViewById(R.id.txtMenuRes);
         imgMenuRes = findViewById(R.id.imgMenuRes);
         linearLayoutMenuRes = findViewById(R.id.linerLayoutMenuRes);
@@ -875,6 +1000,9 @@ public class HomePage extends AppCompatActivity {
         }
     }
 
+    /**
+     * Click BACK 2 lần để thoát
+     */
     @Override
     public void onBackPressed() {
         if (isMainPage) {
@@ -900,23 +1028,30 @@ public class HomePage extends AppCompatActivity {
         super.onPause();
     }
 
-
+    /**
+     * Hiển thị dialog chi tiết Order của khách hàng khi họ vừa đặt hàng xong
+     */
     private void DialogCompleteOrder() {
-
-        Intent intent = getIntent();
-        String maHD = intent.getStringExtra("MaHD");
-        String ngayLapHD = intent.getStringExtra("NgayLap");
-
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_complete_invoice);
-
-        TextView txtMaHD = dialog.findViewById(R.id.txtInvoiceComp_MaHD);
-        TextView txtNgayLap = dialog.findViewById(R.id.txtInvoiceComp_NgayLap);
-        txtMaHD.setText(maHD);
-        txtNgayLap.setText(ngayLapHD);
-        dialog.show();
-        isUserOrder = false;
+        if (isUserOrder) {
+            initHistory(KH_SDT);
+            Intent intent = getIntent();
+            final String maHD = intent.getStringExtra("MaHD");
+            final String ngayLapHD = intent.getStringExtra("NgayLap");
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    final Dialog dialog = new Dialog(HomePage.this);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.dialog_complete_invoice);
+                    TextView txtMaHD = dialog.findViewById(R.id.txtInvoiceComp_MaHD);
+                    TextView txtNgayLap = dialog.findViewById(R.id.txtInvoiceComp_NgayLap);
+                    txtMaHD.setText(maHD);
+                    txtNgayLap.setText(ngayLapHD);
+                    dialog.show();
+                    isUserOrder = false;
+                }
+            }, 500);
+        }
     }
 
 
@@ -948,6 +1083,7 @@ public class HomePage extends AppCompatActivity {
 
             }
         });
+        // Khi khách hàng vừa đăng ký thì hiển thị dialog đăng nhập ( tự điền SDT + MK )
         if (isNewUser) {
             handler.postDelayed(new Runnable() {
                 @Override
@@ -955,12 +1091,15 @@ public class HomePage extends AppCompatActivity {
                     DialogDangNhap();
                     drawerLayout.closeDrawers();
                 }
-            }, 1000);
+            }, 300);
         }
-
         super.onRestart();
     }
 
+
+    /**
+     * Update lại giỏ hàng ( xóa cái cũ , thêm cái mới )
+     */
     private void updateCart() {
         if (KH_SDT != null && !KH_SDT.equals("")) {
             DatabaseReference dataCart = FirebaseDatabase.getInstance().getReference("GioHang").child(HomePage.KH_SDT);
@@ -973,6 +1112,9 @@ public class HomePage extends AppCompatActivity {
         }
     }
 
+    /**
+     * khi thoát khỏi apps thì update giỏ hàng , xóa lịch sử mua hàng
+     */
     @Override
     protected void onDestroy() {
         updateCart();

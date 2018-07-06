@@ -29,7 +29,7 @@ public class GioiThieu extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         txtGioiThieu = view.findViewById(R.id.txtGioithieu);
         txtGioiThieu.setMovementMethod(new ScrollingMovementMethod());
-
+        // Lấy thông tin sách từ trang BookDetail
         final BookDetailActivity activity = (BookDetailActivity)getActivity();
         Sach sach = activity.getThongTinSach();
         txtGioiThieu.setText(sach.getSach_GioiThieu());

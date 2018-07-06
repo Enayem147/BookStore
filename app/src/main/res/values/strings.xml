@@ -40,14 +40,13 @@
     <string name="ma_don_hang">Mã đơn hàng</string>
     <string name="cam_on">Cảm ơn đã đặt hàng ở BOOK STORE</string>
     <string name="tat_ca_sp">Tất cả sản phẩm</string>
-    <string name="tim_kiem_sach">Nhập tên sách cần tìm kiếm</string>
+    <string name="tim_kiem_sach"><font size="14">Nhập tên sách , tác giả , thể loại cần tìm </font></string>
     <string name="the_loai">Thể loại : </string>
     <string name="lich_su_mua_hang">Lịch sử mua hàng</string>
     <string name="con_hang">CÒN HÀNG</string>
     <string name="het_hang">HẾT HÀNG</string>
     <string name="sap_het_hang">SẮP HẾT HÀNG</string>
     <string name="lich_su_trong">Lịch sử trống</string>
-
     <string name="mk_cu"><font size="15">Nhập mật khẩu cũ</font></string>
     <string name="mk_moi"><font size="15">Nhập mật khẩu mới</font></string>
     <string name="mk_moi_conf"><font size="15">Nhập lại mật khẩu mới</font></string>
