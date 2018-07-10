@@ -24,8 +24,6 @@
         <activity android:name=".activity.CartActivity" />
         <activity android:name=".activity.BooksActivity" />
         <activity android:name=".activity.BookDetailActivity" />
-        <activity android:name=".activity.Activity_Book_Upload" />
-        <activity android:name=".activity.Activity_FireBase" />
         <activity android:name=".activity.InvoiceActivity" />
         <activity android:name=".activity.HistoryActivity" />
         <activity android:name=".activity.BookListActivity" />

@@ -348,7 +348,7 @@ public class HomePage extends AppCompatActivity {
                     break;
                 }
             case R.id.menu_giohang:
-                if (KH_Ten == null || KH_Ten.equals("")) {
+                if (KH_SDT == null || KH_SDT.equals("")) {
                     DialogDangNhap();
                 } else {
                     Intent intent3 = new Intent(this, CartActivity.class);
@@ -406,7 +406,6 @@ public class HomePage extends AppCompatActivity {
                 editor.remove("MK");
                 editor.remove("Ten");
                 editor.commit();
-
                 Toast.makeText(getApplicationContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
                 updateMenuTitles();
             }
@@ -528,7 +527,6 @@ public class HomePage extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("SDT", kh.getKH_SDT());
                                 editor.putString("Ten", kh.getKH_HoTen());
-                                editor.putString("MK", kh.getKH_MK());
                                 editor.commit();
 
                             }
@@ -824,6 +822,9 @@ public class HomePage extends AppCompatActivity {
                                 progressDialog.dismiss();
                             } else {
                                 // update thong tin
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("Ten", txtEditTen.getText().toString());
+                                editor.commit();
                                 DatabaseReference updateKH = FirebaseDatabase.getInstance().getReference("KhachHang").child(KH_Key);
                                 updateKH.setValue(new KhachHang(khachHang.getKH_SDT(), khachHang.getKH_MK(), txtEditTen.getText().toString(), txtEditDiaChi.getText().toString()));
                                 //get lại thông tin

@@ -180,7 +180,6 @@ public class BookDetailActivity extends AppCompatActivity {
                                 editor.putString("Ten", kh.getKH_HoTen());
                                 editor.putString("MK", kh.getKH_MK());
                                 editor.commit();
-
                             }
                         }
                         super.onChildAdded(dataSnapshot, s);
