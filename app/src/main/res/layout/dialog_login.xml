@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="#FFF">
+    android:background="@color/white">
     <LinearLayout
         android:layout_width="350dp"
         android:layout_height="400dp"
@@ -25,6 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <EditText
+                android:maxLength="11"
                 android:inputType="number"
                 android:layout_gravity="center"
                 android:id="@+id/txtLogin_SDT"
@@ -33,7 +34,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -44,6 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <EditText
+                android:maxLength="12"
                 android:layout_gravity="center"
                 android:inputType="textPassword"
                 android:id="@+id/txtLogin_MK"
@@ -54,14 +56,14 @@
 
         <CheckBox
             android:id="@+id/cbLogin"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginTop="@dimen/margin_15dp"
+            android:layout_marginLeft="@dimen/margin_30dp"
             android:text="@string/ghi_nho_dang_nhap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <LinearLayout
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

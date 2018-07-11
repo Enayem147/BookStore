@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.activity.CartActivity;
@@ -23,24 +24,26 @@ import java.util.ArrayList;
 
 
 public class CartAdapter extends BaseAdapter {
-    ArrayList<GioHang> list;
+    ArrayList<GioHang> listGioHang;
+    ArrayList<Integer> listSoLuongKho;
     Activity context;
     DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-    int soluong = 1;
+    int soLuong = 1;
 
-    public CartAdapter(ArrayList<GioHang> list, Activity context) {
-        this.list = list;
+    public CartAdapter(ArrayList<GioHang> listGioHang, ArrayList<Integer> listSoLuongKho, Activity context) {
+        this.listGioHang = listGioHang;
+        this.listSoLuongKho = listSoLuongKho;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return listGioHang.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return list.get(position);
+        return listGioHang.get(position);
     }
 
     @Override
@@ -53,7 +56,6 @@ public class CartAdapter extends BaseAdapter {
         final TextView txtTenSach, txtDonGia, txtSoLuong;
         Button btnCong, btnTru;
         ImageView imgHinhAnh;
-
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.list_view_cart, null);
         txtTenSach = convertView.findViewById(R.id.txtCart_TenSach);
@@ -64,14 +66,18 @@ public class CartAdapter extends BaseAdapter {
         imgHinhAnh = convertView.findViewById(R.id.imgCart_HinhSach);
 
         final GioHang gioHang = (GioHang) getItem(position);
-        soluong = gioHang.getSach_SL();
+        final int soLuongKho = listSoLuongKho.get(position);
+        soLuong = gioHang.getSach_SL();
         // tăng số lượng 1 quyển sách trong giỏ hàng
         btnCong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soluong = gioHang.getSach_SL();
-                soluong++;
-                gioHang.setSach_SL(soluong);
+                soLuong = gioHang.getSach_SL();
+                soLuong++;
+                if(soLuong > soLuongKho){
+                    soLuong = soLuongKho;
+                }
+                gioHang.setSach_SL(soLuong);
                 txtSoLuong.setText(gioHang.getSach_SL() + "");
                 txtDonGia.setText(decimalFormat.format(gioHang.getSach_DonGia() * gioHang.getSach_SL())+ " đ");
                 CartActivity.setTotal();
@@ -82,12 +88,12 @@ public class CartAdapter extends BaseAdapter {
         btnTru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soluong = gioHang.getSach_SL();
-                soluong--;
-                if (soluong == 0) {
-                    soluong = 1;
+                soLuong = gioHang.getSach_SL();
+                soLuong--;
+                if (soLuong == 0) {
+                    soLuong = 1;
                 }
-                gioHang.setSach_SL(soluong);
+                gioHang.setSach_SL(soLuong);
                 txtSoLuong.setText(gioHang.getSach_SL() + "");
                 txtDonGia.setText(decimalFormat.format(gioHang.getSach_DonGia() * gioHang.getSach_SL()) + " đ");
                 CartActivity.setTotal();
@@ -95,6 +101,9 @@ public class CartAdapter extends BaseAdapter {
         });
 
         // khởi tạo thông tin sách
+        if(gioHang.getSach_SL() > soLuongKho){
+            gioHang.setSach_SL(soLuongKho);
+        }
         txtSoLuong.setText(gioHang.getSach_SL() + "");
         txtTenSach.setText(gioHang.getSach_Ten());
         txtDonGia.setText(decimalFormat.format(gioHang.getSach_DonGia() * gioHang.getSach_SL()) + " đ");
@@ -118,6 +127,7 @@ public class CartAdapter extends BaseAdapter {
                             CartActivity.txtCart1.setVisibility(View.INVISIBLE);
                             CartActivity.txtTotal.setVisibility(View.INVISIBLE);
                         } else {
+                            HomePage.listSoLuongKho.remove(position);
                             HomePage.gioHang.remove(position);
                             notifyDataSetChanged();
                             CartActivity.setTotal();
@@ -144,7 +154,6 @@ public class CartAdapter extends BaseAdapter {
                 return true;
             }
         });
-
 
         return convertView;
     }

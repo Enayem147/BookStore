@@ -216,7 +216,6 @@ public class RegisterActivity extends AppCompatActivity {
                             KhachHang khachHang = new KhachHang(sdt, mk, ten, diachi);
                             mDatabase.child("KhachHang").push().setValue(khachHang);
                             HomePage.new_SDT = sdt;
-                            HomePage.new_MK = mk;
                             HomePage.isNewUser = true;
                             finish();
                         }

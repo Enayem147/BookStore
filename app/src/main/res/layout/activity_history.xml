@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".activity.HistoryActivity">
 
@@ -15,7 +15,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/margin_5dp"
         android:orientation="vertical">
 
         <FrameLayout
@@ -28,14 +28,33 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/lich_su_trong"
-                android:textColor="#2979FF"
-                android:textSize="35sp" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_35sp" />
+            <LinearLayout
+                android:id="@+id/linerLayoutHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_margin="@dimen/margin_10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <Spinner
+                        android:layout_marginLeft="@dimen/margin_5dp"
+                        android:id="@+id/spinnerHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></Spinner>
+                </LinearLayout>
 
-            <ListView
-                android:id="@+id/listView_History"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"></ListView>
+                <ListView
+                    android:id="@+id/listView_History"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin_10dp">
+                </ListView>
+            </LinearLayout>
+
         </FrameLayout>
 
     </LinearLayout>

@@ -115,7 +115,7 @@ public class CartActivity extends AppCompatActivity {
         if(HomePage.gioHang == null)
             HomePage.gioHang = new ArrayList<>();
         if (HomePage.gioHang.size() > 0) {
-            _cartAdapter = new CartAdapter(HomePage.gioHang, this);
+            _cartAdapter = new CartAdapter(HomePage.gioHang,HomePage.listSoLuongKho, this);
             txtEmpty.setVisibility(View.INVISIBLE);
             listViewCart.setVisibility(View.VISIBLE);
             txtCart1.setVisibility(View.VISIBLE);

@@ -41,6 +41,7 @@ import android.widget.ViewFlipper;
 import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.adapter.MenuAdapter;
 import com.example.a84965.bookstore.adapter.NewBooksAdapter;
+import com.example.a84965.bookstore.model.Kho;
 import com.example.a84965.bookstore.model.LoaiSach;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.GioHang;
@@ -60,6 +61,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HomePage extends AppCompatActivity {
 
@@ -76,7 +78,7 @@ public class HomePage extends AppCompatActivity {
     ListView listView;
     DrawerLayout drawerLayout;
     ViewFlipper viewFlipper;
-    LinearLayout linearLayoutMenuRes, linearLayoutMenuAll;
+    LinearLayout linearLayoutMenuRes, linearLayoutMenuAll , linearLayoutMenuContact;
     static TextView txtMenuRes;
     static ImageView imgMenuRes;
 
@@ -87,10 +89,11 @@ public class HomePage extends AppCompatActivity {
     static public String KH_SDT = "";
     static public String KH_Key = "";
     static public String new_SDT = "";
-    static public String new_MK = "";
     static public ArrayList<GioHang> gioHang;
+    static public ArrayList<Integer> listSoLuongKho;
     static public ArrayList<LichSu> lichSu;
     static public ArrayList<TatCaSach> tatCaSach;
+    static public ArrayList<String> listMaDH;
     public boolean isLogin = false;
     SharedPreferences sharedPreferences;
 
@@ -102,16 +105,13 @@ public class HomePage extends AppCompatActivity {
         initView();
         initToolbar();
         initMenu();
-        clickMenu();
+        clickEventMenuLeft();
         getHinhAnhQuangCao();
-        MenuRegisterClick();
-        MenuAllBookClick();
         drawerLayoutChange();
         initAllBookList();
         loginKhachHangRemembered();
         DialogCompleteOrder();
         loadingScreen();
-        //startActivity(new Intent(this,Activity_FireBase.class));
     }
 
     /**
@@ -167,7 +167,6 @@ public class HomePage extends AppCompatActivity {
      */
     private void initAllBookList() {
         tatCaSach = new ArrayList<>();
-
         mDatabase.child("Sach").addChildEventListener(new GetChildFireBase() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -235,9 +234,39 @@ public class HomePage extends AppCompatActivity {
     }
 
     /**
-     * Event click  đăng ký / profile của menu left
+     * Event click của menu left
      */
-    private void MenuRegisterClick() {
+    private void clickEventMenuLeft(){
+        //menu tất cả sản phẩm
+        linearLayoutMenuAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentBookList = new Intent(HomePage.this, BookListActivity.class);
+                startActivity(intentBookList);
+            }
+        });
+
+        //menu liên hệ
+        linearLayoutMenuContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(HomePage.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_contact);
+                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogSile;
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                TextView txtThoat = dialog.findViewById(R.id.txtContact_Thoat);
+                txtThoat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+        // menu đăng ký / profile
         linearLayoutMenuRes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -249,19 +278,19 @@ public class HomePage extends AppCompatActivity {
                 }
             }
         });
-    }
 
-    /**
-     * Event click tất cả sản phẩm của menu left
-     */
-    private void MenuAllBookClick() {
-        linearLayoutMenuAll.setOnClickListener(new View.OnClickListener() {
+        //menu từng thể loại
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intentBookList = new Intent(HomePage.this, BookListActivity.class);
-                startActivity(intentBookList);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TheLoai theLoai = (TheLoai) parent.getItemAtPosition(position);
+                Intent intent = new Intent(getApplicationContext(), BooksActivity.class);
+                intent.putExtra("TL_Ma", theLoai.getTL_Ma());
+                intent.putExtra("TL_Ten", theLoai.getTL_Ten());
+                startActivity(intent);
             }
         });
+
     }
 
     /**
@@ -314,10 +343,7 @@ public class HomePage extends AppCompatActivity {
             loginMenuItem.setIcon(R.drawable.ic_menu_logout);
             historyMenuItem.setVisible(true);
         }
-
-
     }
-
     /**
      * Tạo menu đăng nhập
      * @param menu
@@ -501,7 +527,6 @@ public class HomePage extends AppCompatActivity {
         if (isNewUser) {
             isNewUser = false;
             txtSDT.setText(new_SDT);
-            txtMK.setText(new_MK);
         }
 
         final CheckBox cbRemember = dialog.findViewById(R.id.cbLogin);
@@ -899,14 +924,25 @@ public class HomePage extends AppCompatActivity {
      * @param sdt : Số điện thoại của khách hàng
      */
     public static void initCart(final String sdt) {
+        listSoLuongKho = new ArrayList<>();
         gioHang = new ArrayList<>();
         if (sdt != null && !sdt.equals("") && gioHang.size() == 0) {
             mDatabase.child("GioHang").child(sdt).addChildEventListener(new GetChildFireBase() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     if (!dataSnapshot.getKey().equals("default")) {
-                        GioHang gh = dataSnapshot.getValue(GioHang.class);
+                        final GioHang gh = dataSnapshot.getValue(GioHang.class);
                         gioHang.add(gh);
+                        mDatabase.child("Kho").addChildEventListener(new GetChildFireBase() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                Kho kho = dataSnapshot.getValue(Kho.class);
+                                if(gh.getSach_Ma().equals(kho.getSach_Ma())){
+                                    listSoLuongKho.add(kho.getKho_SoLuong());
+                                }
+                                super.onChildAdded(dataSnapshot, s);
+                            }
+                        });
                     }
                     super.onChildAdded(dataSnapshot, s);
                 }
@@ -921,17 +957,22 @@ public class HomePage extends AppCompatActivity {
 
     public static void initHistory(final String sdt) {
         lichSu = new ArrayList<>();
+        listMaDH = new ArrayList<>();
+        listMaDH.addAll(0, Collections.singleton("Mã đơn hàng"));
         if (sdt != null && !sdt.equals("") && lichSu.size() == 0) {
             mDatabase.child("LichSu").child(sdt).addChildEventListener(new GetChildFireBase() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     LichSu ls = dataSnapshot.getValue(LichSu.class);
                     lichSu.add(ls);
+                    listMaDH.add(1,ls.getHD_Ma());
                     super.onChildAdded(dataSnapshot, s);
                 }
             });
         }
     }
+
+
 
     /**
      * khởi tạo menu các thể loại Sách trong menu left
@@ -955,23 +996,6 @@ public class HomePage extends AppCompatActivity {
     }
 
     /**
-     * Event click vào mỗi thể loại trong menu left
-     */
-
-    private void clickMenu() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TheLoai theLoai = (TheLoai) parent.getItemAtPosition(position);
-                Intent intent = new Intent(getApplicationContext(), BooksActivity.class);
-                intent.putExtra("TL_Ma", theLoai.getTL_Ma());
-                intent.putExtra("TL_Ten", theLoai.getTL_Ten());
-                startActivity(intent);
-            }
-        });
-    }
-
-    /**
      * Khởi tạo giá trị đầu vào
      */
 
@@ -984,7 +1008,7 @@ public class HomePage extends AppCompatActivity {
         imgMenuRes = findViewById(R.id.imgMenuRes);
         linearLayoutMenuRes = findViewById(R.id.linerLayoutMenuRes);
         linearLayoutMenuAll = findViewById(R.id.linerLayoutMenuAll);
-
+        linearLayoutMenuContact = findViewById(R.id.linerLayoutMenuContact);
         handler = new Handler();
         toolbar = findViewById(R.id.toolBar_TrangChinh);
         setTitle("Book Store");
@@ -996,8 +1020,16 @@ public class HomePage extends AppCompatActivity {
             gioHang = new ArrayList<>();
         }
 
+        if(listSoLuongKho == null){
+            listSoLuongKho = new ArrayList<>();
+        }
+
         if (lichSu == null) {
             lichSu = new ArrayList<>();
+        }
+
+        if(listMaDH == null){
+            listMaDH = new ArrayList<>();
         }
     }
 
@@ -1094,6 +1126,12 @@ public class HomePage extends AppCompatActivity {
                 }
             }, 300);
         }
+
+        // init lại History và BookList ( tránh trường hợp search xong quay lại HomePage làm thay đổi History và BookList )
+        if(!KH_SDT.equals("") && KH_SDT != null){
+            initHistory(KH_SDT);
+            initAllBookList();
+        }
         super.onRestart();
     }
 
@@ -1110,6 +1148,7 @@ public class HomePage extends AppCompatActivity {
                 mDatabase.child("GioHang").child(KH_SDT).push().setValue(gioHang.get(i));
             }
             gioHang.clear();
+            listSoLuongKho.clear();
         }
     }
 

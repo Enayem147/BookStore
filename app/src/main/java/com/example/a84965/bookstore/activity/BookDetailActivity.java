@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -21,21 +20,16 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.adapter.PagerAdapter;
 import com.example.a84965.bookstore.model.Kho;
-import com.example.a84965.bookstore.model.LichSu;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.GioHang;
 import com.example.a84965.bookstore.model.KhachHang;
@@ -45,15 +39,11 @@ import com.example.a84965.bookstore.ultil.OnTextChangeListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.readystatesoftware.viewbadger.BadgeView;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.a84965.bookstore.R.color.green;
-import static com.example.a84965.bookstore.activity.HomePage.isNewUser;
 
 public class BookDetailActivity extends AppCompatActivity {
     ViewPager viewPager;
@@ -63,15 +53,16 @@ public class BookDetailActivity extends AppCompatActivity {
     private Sach sach = null;
     private String nhaXB = "";
     private List<String> listTG = new ArrayList<>();
-    private String sach_ma = "";
-    private String sach_hinh = "";
-    private String sach_ten = "";
-    private int sach_gia = 0 ;
-    Button btn_Them;
+    private String sachMa = "";
+    private String sachHinh = "";
+    private String sachTen = "";
+    private int sachGia = 0 ;
+    private int soLuongKho = 1;
+    Button btnThem;
     ImageView imgHinh;
     TextView txtTen,txtGia,txtTrangThai;
     private DatabaseReference mDatabase;
-    int soluong = 1;
+    int soLuong = 1;
     private boolean isLogin = false;
     SharedPreferences sharedPreferences;
 
@@ -84,14 +75,13 @@ public class BookDetailActivity extends AppCompatActivity {
         initBookDetail();
         ButtonThemGioHangClicked();
         initBookStatus();
-        //Toast.makeText(this, getTenTG(), Toast.LENGTH_SHORT).show();
     }
 
     /**
      * Event khi click vào nút THÊM VÀO GIỎ HÀNG
      */
     private void ButtonThemGioHangClicked(){
-        btn_Them.setOnClickListener(new View.OnClickListener() {
+        btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(HomePage.KH_SDT == null || HomePage.KH_SDT.equals("")){
@@ -222,7 +212,7 @@ public class BookDetailActivity extends AppCompatActivity {
         listTG = (ArrayList<String>) intent.getSerializableExtra("TacGia");
 
         txtTrangThai = findViewById(R.id.txtDetail_TrangThai);
-        btn_Them = findViewById(R.id.btnThem_Sach);
+        btnThem = findViewById(R.id.btnThem_Sach);
         txtTen = findViewById(R.id.txtDetail_Ten);
         txtGia = findViewById(R.id.txtDetail_Gia);
         imgHinh = findViewById(R.id.imgBook_Detail);
@@ -239,18 +229,19 @@ public class BookDetailActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Kho kho = dataSnapshot.getValue(Kho.class);
                 if(kho.getSach_Ma().equals(sach.getSach_Ma())){
+                    soLuongKho = kho.getKho_SoLuong();
                     if(kho.getKho_SoLuong() >= 5){
                         txtTrangThai.setText(R.string.con_hang);
-                        txtTrangThai.setTextColor(Color.GREEN);
-                        btn_Them.setEnabled(true);
+                        txtTrangThai.setTextColor(Color.rgb(0,238,0));
+                        btnThem.setEnabled(true);
                     }else if (kho.getKho_SoLuong() >= 1){
                         txtTrangThai.setText(R.string.sap_het_hang);
-                        txtTrangThai.setTextColor(Color.YELLOW);
-                        btn_Them.setEnabled(true);
+                        txtTrangThai.setTextColor(Color.rgb(220,216,0));
+                        btnThem.setEnabled(true);
                     }else{
                         txtTrangThai.setText(R.string.het_hang);
-                        txtTrangThai.setTextColor(Color.RED);
-                        btn_Them.setEnabled(false);
+                        txtTrangThai.setTextColor(Color.GRAY);
+                        btnThem.setEnabled(false);
                     }
                 }
                 super.onChildAdded(dataSnapshot, s);
@@ -269,10 +260,10 @@ public class BookDetailActivity extends AppCompatActivity {
                 .load(sach.getSach_HinhAnh())
                 .into(imgHinh);
 
-        sach_ma = sach.getSach_Ma();
-        sach_ten = sach.getSach_Ten();
-        sach_gia = sach.getSach_DonGia();
-        sach_hinh = sach.getSach_HinhAnh();
+        sachMa = sach.getSach_Ma();
+        sachTen = sach.getSach_Ten();
+        sachGia = sach.getSach_DonGia();
+        sachHinh = sach.getSach_HinhAnh();
     }
 
 
@@ -285,7 +276,7 @@ public class BookDetailActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog_cart);
 
         final TextView txtSoLuong = dialog.findViewById(R.id.txtNhap_SL);
-        txtSoLuong.setText(soluong+"");
+        txtSoLuong.setText(soLuong +"");
         Button btnTru = dialog.findViewById(R.id.btnNhap_Tru);
         Button btnCong = dialog.findViewById(R.id.btnNhap_Cong);
         Button btnXacNhan = dialog.findViewById(R.id.btnNhap_XN);
@@ -294,19 +285,22 @@ public class BookDetailActivity extends AppCompatActivity {
         btnCong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soluong++;
-                txtSoLuong.setText(soluong +"");
+                soLuong++;
+                if(soLuong > soLuongKho){
+                    soLuong = soLuongKho;
+                }
+                txtSoLuong.setText(soLuong +"");
             }
         });
         //event click nút -
         btnTru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soluong--;
-                if(soluong <= 0){
-                    soluong=1;
+                soLuong--;
+                if(soLuong <= 0){
+                    soLuong =1;
                 }
-                txtSoLuong.setText(soluong +"");
+                txtSoLuong.setText(soLuong +"");
             }
         });
         //event click nút Xác nhận
@@ -314,19 +308,21 @@ public class BookDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(HomePage.gioHang.size() == 0){
-                    HomePage.gioHang.add(new GioHang(sach_ma,sach_ten,sach_hinh,sach_gia,soluong));
+                    HomePage.gioHang.add(new GioHang(sachMa, sachTen, sachHinh, sachGia, soLuong));
+                    HomePage.listSoLuongKho.add(soLuongKho);
                 }else{
                     boolean exist = false;
                     for(int i=0;i<HomePage.gioHang.size();i++){
-                        if(sach_ma.equals(HomePage.gioHang.get(i).getSach_Ma())){
+                        if(sachMa.equals(HomePage.gioHang.get(i).getSach_Ma())){
                             int sl = HomePage.gioHang.get(i).getSach_SL();
-                            sl+=soluong;
+                            sl+= soLuong;
                             HomePage.gioHang.get(i).setSach_SL(sl);
                             exist = true;
                         }
                     }
                     if(!exist){
-                        HomePage.gioHang.add(new GioHang(sach_ma,sach_ten,sach_hinh,sach_gia,soluong));
+                        HomePage.gioHang.add(new GioHang(sachMa, sachTen, sachHinh, sachGia, soLuong));
+                        HomePage.listSoLuongKho.add(soLuongKho);
                     }
                 }
                 Toast.makeText(BookDetailActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();

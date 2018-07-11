@@ -3,7 +3,6 @@ package com.example.a84965.bookstore.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Handler;
-import android.renderscript.RenderScript;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +23,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,14 +52,14 @@ public class InvoiceActivity extends AppCompatActivity {
         callControls();
         initCartReview();
         initInvoice();
-        GetKeynSoLuong();
-        ButtonDatHangClick();
+        getKeynSoLuong();
+        clickButtonDatHang();
     }
 
     /**
      * Lấy khóa(Firebase) và số lượng của Sách từ Kho
      */
-    private void GetKeynSoLuong() {
+    private void getKeynSoLuong() {
         mDatabase.child("Kho").addChildEventListener(new GetChildFireBase() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -80,7 +78,7 @@ public class InvoiceActivity extends AppCompatActivity {
     /**
      * Event click nút Đặt Hàng
      */
-    private void ButtonDatHangClick() {
+    private void clickButtonDatHang() {
         ngayDat = sdf.format(date);
 
         btnDatHang.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +166,6 @@ public class InvoiceActivity extends AppCompatActivity {
     private void initInvoice() {
         txtMaHD.setText("SBS" + calendar.getTimeInMillis());
         txtSDT.setText(HomePage.KH_SDT);
-
         txtTen.setText(HomePage.khachHang.getKH_HoTen().toUpperCase());
         txtDiaChi.setText(HomePage.khachHang.getKH_DiaChi());
     }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.RegisterActivity"
-    android:background="#FFF"
+    android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical">
     <include
@@ -25,47 +25,7 @@
             android:layout_width="200dp"
             android:layout_height="150dp"/>
         <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
-            <ImageView
-                android:layout_gravity="center"
-                android:background="@drawable/icon_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <EditText
-                android:inputType="number"
-                android:layout_gravity="center"
-                android:id="@+id/txtRes_SDT"
-                android:hint="@string/nhap_sdt"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/icon_cancel" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
-            <ImageView
-                android:layout_gravity="center"
-                android:background="@drawable/icon_pass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <EditText
-                android:inputType="textPassword"
-                android:layout_gravity="center"
-                android:id="@+id/txtRes_MK"
-                android:hint="@string/nhap_mk"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/ic_pass_invisible"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -83,9 +43,29 @@
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/icon_cancel"/>
         </LinearLayout>
-
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <ImageView
+                android:layout_gravity="center"
+                android:background="@drawable/icon_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:maxLength="11"
+                android:inputType="number"
+                android:layout_gravity="center"
+                android:id="@+id/txtRes_SDT"
+                android:hint="@string/nhap_sdt"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/icon_cancel" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="@dimen/margin_10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -104,16 +84,37 @@
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/icon_cancel"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <ImageView
+                android:layout_gravity="center"
+                android:background="@drawable/icon_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:maxLength="12"
+                android:inputType="textPassword"
+                android:layout_gravity="center"
+                android:id="@+id/txtRes_MK"
+                android:hint="@string/nhap_mk"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_pass_invisible"/>
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center">
             <Button
                 android:id="@+id/btnRegister"
-                android:textColor="#FFF"
+                android:textColor="@color/white"
                 android:background="@color/colorPrimary"
                 android:text="@string/dang_ky"
                 android:layout_width="100dp"

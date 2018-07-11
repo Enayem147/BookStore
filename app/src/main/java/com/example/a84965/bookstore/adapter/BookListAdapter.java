@@ -174,7 +174,7 @@ public class BookListAdapter extends BaseAdapter {
     }
 
     /**
-     * xóa các phần tử trùng nhau trong 1 list
+     * xóa các phần tử trùng nhau trong 1 listGioHang
      * @param list : Danh sách tất cả sách
      * @return
      */

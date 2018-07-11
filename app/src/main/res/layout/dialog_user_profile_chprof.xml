@@ -3,9 +3,9 @@
     android:layout_width="350dp"
     android:layout_height="320dp"
     android:layout_gravity="center"
-    android:background="#FFFF"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="@dimen/margin_5dp">
 
     <TextView
         android:id="@+id/txtProf_Thoat"
@@ -22,18 +22,18 @@
         android:background="@drawable/border_book_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/margin_5dp"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="@dimen/margin_5dp">
 
         <TextView
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginLeft="@dimen/margin_5dp"
+            android:layout_marginTop="@dimen/margin_20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ho_va_ten"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_size_17sp"
             android:textStyle="bold" />
 
         <EditText
@@ -42,16 +42,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
+            android:textSize="@dimen/text_size_15sp" />
 
         <TextView
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="@dimen/margin_5dp"
+            android:layout_marginTop="@dimen/margin_5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dia_chi"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_size_17sp"
             android:textStyle="bold" />
 
         <EditText
@@ -60,11 +60,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
+            android:textSize="@dimen/text_size_15sp" />
 
         <Button
             android:id="@+id/btnProf_XN"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_10dp"
             android:textColor="@color/white"
             android:background="@color/colorPrimary"
             android:text="@string/xac_nhan"

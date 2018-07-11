@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.BookDetailActivity"
-    android:background="#FFF"
+    android:background="@color/white"
     android:orientation="vertical">
     <include
         android:id="@+id/toolBar"
@@ -15,18 +15,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFF"
+        android:background="@color/white"
         android:orientation="vertical"
-        android:layout_margin="10dp">
+        android:layout_margin="@dimen/margin_10dp">
         <LinearLayout
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
                 android:background="@drawable/border_book_detail"
                 android:id="@+id/imgBook_Detail"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="@dimen/margin_10dp"
                 android:layout_gravity="center"
                 android:src="@drawable/loading_img"
                 android:layout_width="150dp"
@@ -40,15 +40,15 @@
                     <TextView
                         android:gravity="center_horizontal"
                         android:layout_gravity="center"
-                        android:layout_margin="5dp"
+                        android:layout_margin="@dimen/margin_5dp"
                         android:id="@+id/txtDetail_Ten"
-                        android:textColor="#2979FF"
+                        android:textColor="@color/colorPrimary"
                         android:textStyle="bold"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/text_size_20sp"
                         android:layout_width="wrap_content"
                         android:layout_height="80dp" />
                 <LinearLayout
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/margin_10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -57,12 +57,12 @@
                         android:id="@+id/txtDetail_Gia"
                         android:textStyle="bold"
                         android:textColor="@color/red"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/text_size_20sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/margin_10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -70,17 +70,17 @@
                     <TextView
                         android:id="@+id/txtDetail_TrangThai"
                         android:textStyle="bold"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/text_size_20sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
                 <Button
-                    android:textSize="15sp"
+                    android:textSize="@dimen/text_size_15sp"
                     android:id="@+id/btnThem_Sach"
-                    android:layout_marginTop="23dp"
+                    android:layout_marginTop="@dimen/margin_20dp"
                     android:gravity="center"
-                    android:textColor="#FFF"
-                    android:background="#2979FF"
+                    android:textColor="@color/white"
+                    android:background="@color/colorPrimary"
                     android:text="@string/them_gio_hang"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

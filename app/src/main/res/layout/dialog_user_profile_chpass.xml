@@ -3,9 +3,9 @@
     android:layout_width="350dp"
     android:layout_height="320dp"
     android:layout_gravity="center"
-    android:background="#FFFF"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="@dimen/margin_5dp">
 
     <TextView
         android:id="@+id/txtProf_Thoat"
@@ -21,14 +21,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/margin_5dp"
         android:background="@drawable/border_book_detail"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="@dimen/margin_5dp">
 
 
         <EditText
+            android:maxLength="12"
             android:id="@+id/txtProfEdit_OldPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,43 +37,45 @@
             android:hint="@string/mk_cu"
             android:inputType="textPassword"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
+            android:textSize="@dimen/text_size_15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="@dimen/margin_15dp"
+            android:layout_marginTop="@dimen/margin_15dp"
             android:background="@color/colorPrimaryDark" />
 
         <EditText
+            android:maxLength="12"
             android:id="@+id/txtProfEdit_NewPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/margin_5dp"
             android:drawableRight="@drawable/ic_pass_invisible"
             android:hint="@string/mk_moi"
             android:inputType="textPassword"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
+            android:textSize="@dimen/text_size_15sp" />
 
         <EditText
+            android:maxLength="12"
             android:id="@+id/txtProfEdit_NewPassConfirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/margin_5dp"
             android:drawableRight="@drawable/ic_pass_invisible"
             android:hint="@string/mk_moi_conf"
             android:inputType="textPassword"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
+            android:textSize="@dimen/text_size_15sp" />
 
         <Button
             android:id="@+id/btnProf_XN"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_10dp"
             android:background="@color/colorPrimary"
             android:text="@string/xac_nhan"
             android:textAllCaps="true"

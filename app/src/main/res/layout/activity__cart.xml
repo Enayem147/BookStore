@@ -23,8 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:textColor="#2979FF"
-                android:textSize="35sp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_35sp"
                 android:layout_gravity="center"
                 android:text="@string/gio_hang_trong"
                 android:id="@+id/txt_emptyCart"
@@ -43,40 +43,40 @@
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <LinearLayout
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/margin_5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/txtCart1"
                 android:textStyle="bold"
-                android:textColor="#000"
-                android:textSize="30sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_30sp"
                 android:text="@string/tong_tien"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="@dimen/margin_5dp"
                 android:textStyle="bold"
-                android:textColor="#D50000"
-                android:textSize="30sp"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_size_30sp"
                 android:id="@+id/txtCart_TongTien"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <Button
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/margin_10dp"
             android:id="@+id/btnCart_DatHang"
-            android:textColor="#FFF"
+            android:textColor="@color/white"
             android:background="@color/colorPrimary"
             android:text="@string/dat_hang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button
             android:id="@+id/btnCart_TiepTuc"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="#FFF"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:layout_marginBottom="@dimen/margin_10dp"
+            android:textColor="@color/white"
             android:background="@color/colorPrimary"
             android:text="@string/tiep_tuc_mua_hang"
             android:layout_width="match_parent"

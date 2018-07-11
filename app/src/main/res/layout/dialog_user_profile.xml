@@ -3,10 +3,10 @@
     android:layout_width="350dp"
     android:layout_height="470dp"
     android:layout_gravity="center"
-    android:background="#FFFF"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:padding="5dp"
-    android:paddingBottom="10dp">
+    android:padding="@dimen/margin_5dp"
+    android:paddingBottom="@dimen/margin_10dp">
 
     <TextView
         android:id="@+id/txtProf_Thoat"
@@ -22,12 +22,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/margin_20dp"
+        android:layout_marginTop="@dimen/margin_10dp"
         android:gravity="center"
         android:text="@string/thong_tin_khach_hang"
         android:textColor="@color/colorPrimary"
-        android:textSize="26sp"
+        android:textSize="@dimen/text_size_25sp"
         android:textStyle="bold" />
 
     <ScrollView
@@ -37,18 +37,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/margin_5dp"
             android:background="@drawable/border_book_detail"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="@dimen/margin_5dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/margin_20dp"
                 android:text="@string/ho_va_ten"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_size_17sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -56,14 +56,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="15sp" />
+                android:textSize="@dimen/text_size_15sp" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:layout_marginTop="@dimen/margin_20dp"
                 android:background="@color/colorPrimary" />
 
             <TextView
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sdt"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_size_17sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -79,13 +79,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="15sp" />
+                android:textSize="@dimen/text_size_15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:layout_marginTop="@dimen/margin_20dp"
                 android:background="@color/colorPrimary" />
 
             <TextView
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/dia_chi"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_size_17sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -101,13 +101,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="15sp" />
+                android:textSize="@dimen/text_size_15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:layout_marginTop="@dimen/margin_20dp"
                 android:background="@color/colorPrimary" />
 
             <LinearLayout
@@ -121,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/doi_thong_tin"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/text_size_17sp"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -134,15 +134,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:layout_marginTop="@dimen/margin_20dp"
                 android:background="@color/colorPrimary" />
 
             <LinearLayout
                 android:id="@+id/btnProf_ChangePass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/margin_20dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -150,13 +150,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/doi_mk"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/text_size_17sp"
                     android:textStyle="bold" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="@dimen/margin_20dp"
                     android:layout_marginLeft="160dp"
                     android:src="@drawable/ic_right_blue" />
             </LinearLayout>

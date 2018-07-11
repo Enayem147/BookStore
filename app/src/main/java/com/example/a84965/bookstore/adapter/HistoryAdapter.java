@@ -10,18 +10,25 @@ import android.widget.TextView;
 
 import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.model.LichSu;
+import com.example.a84965.bookstore.model.TatCaSach;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class HistoryAdapter extends BaseAdapter {
 
     ArrayList<LichSu> list ;
+    ArrayList<LichSu> arrayListSearch;
     Context context;
-
+    DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
     public HistoryAdapter(ArrayList<LichSu> list, Context context) {
         this.list = list;
         this.context = context;
+        arrayListSearch = new ArrayList<>();
+        arrayListSearch.addAll(list);
     }
 
     @Override
@@ -41,21 +48,21 @@ public class HistoryAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final TextView txtTenSach, txtSoLuong, txtMaHD , txtNgayMua;
+        final TextView txtTenSach, txtSoLuong, txtGia , txtNgayMua;
         ImageView imgHinhAnh;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.list_view_history, null);
         txtTenSach = convertView.findViewById(R.id.txtHistory_TenSach);
         txtSoLuong = convertView.findViewById(R.id.txtHistory_SL);
-        txtMaHD = convertView.findViewById(R.id.txtHistory_MaHD);
+        txtGia = convertView.findViewById(R.id.txtHistory_Gia);
         txtNgayMua = convertView.findViewById(R.id.txtHistory_NgayMua);
         imgHinhAnh = convertView.findViewById(R.id.imgHistory_HinhSach);
 
-        // khởi tạo các giá trị cho list view Lịch Sử
+        // khởi tạo các giá trị cho listGioHang view Lịch Sử
         LichSu lichSu = (LichSu) getItem(position);
         txtSoLuong.setText(lichSu.getSach_SL() + "");
         txtTenSach.setText(lichSu.getSach_Ten());
-        txtMaHD.setText(lichSu.getHD_Ma());
+        txtGia.setText(decimalFormat.format(lichSu.getSach_DonGia())+ " đ");
         txtNgayMua.setText(lichSu.getLichSu_NgayDat());
 
         Picasso.get()
@@ -63,5 +70,25 @@ public class HistoryAdapter extends BaseAdapter {
                 .into(imgHinhAnh);
 
         return convertView;
+    }
+
+    /**
+     * Hàm lọc - tìm kiếm
+     * @param charText : chuỗi cần tìm
+     */
+    public void filter(String charText) {
+        list.clear();
+        if (charText.equals("Mã đơn hàng")) {
+            list.addAll(arrayListSearch);
+        } else {
+            for (int j=0;j<arrayListSearch.size();j++) {
+                LichSu lichSu = arrayListSearch.get(j);
+                // tìm kiếm theo mã hóa đơn
+                if ((lichSu.getHD_Ma().equals(charText))) {
+                    list.add(lichSu);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

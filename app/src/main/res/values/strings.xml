@@ -8,8 +8,7 @@
     <string name="gio_hang_trong">Giỏ hàng trống</string>
     <string name="tong_tien">Tổng :</string>
     <string name="xac_nhan">Xác nhận</string>
-    <string name="nhap_sdt"><font size="15">Nhập số điện thoại</font></string>
-    Nhập họ và tên
+    <string name="nhap_sdt"><font size="15">Nhập số điện thoại (tên đăng nhập)</font></string>
     <string name="nhap_mk"><font size="15">Nhập mật khẩu</font></string>
     <string name="nhap_ten"><font size="15">Nhập họ và tên</font></string>
     <string name="nhap_dc"><font size="15">Nhập địa chỉ</font></string>
@@ -21,6 +20,14 @@
     <string name="cong">+</string>
     <string name="tru">-</string>
     <string name="thong_tin_khach_hang">THÔNG TIN KHÁCH HÀNG</string>
+    <string name="thong_tin_lien_he">THÔNG TIN LIÊN HỆ</string>
+    <string name="lien_he_intro">Quý khách có nhu cầu liên hệ, trao đổi hoặc đóng góp ý kiến, vui lòng tham khảo các thông tin sau:</string>
+    <string name="lien_he_sdt_l">Liên hệ qua điện thoại: </string>
+    <string name="lien_he_sdt_r">0965707573</string>
+    <string name="lien_he_email_l">Liên hệ qua email: </string>
+    <string name="lien_he_email_r">hoang.nam@bookstore.com</string>
+    <string name="lien_he_diachi_l">Địa chỉ cửa hàng: </string>
+    <string name="lien_he_diachi_r">Số 1 , đường 3/2 , quận Ninh Kiều , TP.Cần Thơ</string>
     <string name="doi_mk">Thay đổi mật khẩu</string>
     <string name="doi_thong_tin">Thay đổi thông tin</string>
     <string name="ho_va_ten">Họ và tên</string>

@@ -35,12 +35,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:layout_marginLeft="@dimen/margin_10dp"
                     android:text="@string/san_pham_moi"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="25sp" />
+                    android:textSize="@dimen/text_size_25sp" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView"
@@ -65,7 +65,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="@dimen/margin_30dp"
                     android:src="@drawable/logo" />
 
                 <LinearLayout
@@ -79,7 +79,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:layout_weight="2"
                         android:gravity="center">
 
@@ -94,7 +94,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:layout_weight="8">
 
                         <TextView
@@ -105,7 +105,7 @@
                             android:gravity="center"
                             android:text="@string/dang_ky"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="@dimen/text_size_15sp" />
                     </LinearLayout>
                 </LinearLayout>
 
