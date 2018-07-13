@@ -23,7 +23,7 @@
             <ViewFlipper
                 android:id="@+id/imgQuangCao_TrangChinh"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="@dimen/home_view_flipper_height"
                 android:background="@color/whitegray"></ViewFlipper>
 
             <LinearLayout
@@ -35,12 +35,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_20dp"
-                    android:layout_marginBottom="@dimen/margin_10dp"
-                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:layout_marginTop="@dimen/home_new_book_text_margin_top"
+                    android:layout_marginBottom="@dimen/home_new_book_text_margin_left"
+                    android:layout_marginLeft="@dimen/home_new_book_text_margin_left"
                     android:text="@string/san_pham_moi"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/text_size_25sp" />
+                    android:textSize="@dimen/home_new_book_text_size" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView"
@@ -64,37 +64,37 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_marginLeft="@dimen/margin_30dp"
+                    android:layout_height="@dimen/menu_left_icon_height"
+                    android:layout_marginLeft="@dimen/menu_left_icon_margin_left"
                     android:src="@drawable/logo" />
 
                 <LinearLayout
                     android:id="@+id/linerLayoutMenuRes"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="@dimen/menu_left_layout_height"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="10">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/menu_left_layout_width"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:layout_marginTop="@dimen/menu_left_layout_margin_top"
                         android:layout_weight="2"
                         android:gravity="center">
 
                         <ImageView
                             android:id="@+id/imgMenuRes"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                            android:layout_width="@dimen/menu_left_img_size"
+                            android:layout_height="@dimen/menu_left_img_size"
                             android:layout_gravity="center"
                             android:src="@drawable/icon_menu_register" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/menu_left_layout_width"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:layout_marginTop="@dimen/menu_left_layout_margin_top"
                         android:layout_weight="8">
 
                         <TextView
@@ -105,38 +105,38 @@
                             android:gravity="center"
                             android:text="@string/dang_ky"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_15sp" />
+                            android:textSize="@dimen/menu_left_text_size" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0.2dp"
+                    android:layout_height="@dimen/menu_left_divide_height"
                     android:background="@color/bluegray" />
 
                 <LinearLayout
                     android:id="@+id/linerLayoutMenuContact"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="@dimen/menu_left_layout_height"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="10">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/menu_left_layout_width"
                         android:layout_height="match_parent"
                         android:layout_weight="2"
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                            android:layout_width="@dimen/menu_left_img_size"
+                            android:layout_height="@dimen/menu_left_img_size"
                             android:layout_gravity="center"
                             android:src="@drawable/icon_menu_contact" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/menu_left_layout_width"
                         android:layout_height="match_parent"
                         android:layout_weight="8">
                         <TextView
@@ -146,41 +146,41 @@
                             android:gravity="center"
                             android:text="@string/lien_he"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="@dimen/menu_left_text_size" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/menu_left_divide_big_height"
                     android:background="@color/colorPrimaryDark" />
 
                 <LinearLayout
                     android:id="@+id/linerLayoutMenuAll"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="@dimen/menu_left_layout_height"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="10">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/menu_left_layout_width"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/menu_left_layout_margin_top"
                         android:layout_weight="2"
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                            android:layout_width="@dimen/menu_left_img_size"
+                            android:layout_height="@dimen/menu_left_img_size"
                             android:layout_gravity="center"
                             android:src="@drawable/icon_menu_tat_ca" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/menu_left_layout_width"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/menu_left_layout_margin_top"
                         android:layout_weight="8">
 
                         <TextView
@@ -190,13 +190,13 @@
                             android:gravity="center"
                             android:text="@string/tat_ca_sp"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="@dimen/menu_left_text_size" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0.2dp"
+                    android:layout_height="@dimen/menu_left_divide_height"
                     android:background="@color/bluegray" />
 
                 <ListView
@@ -204,7 +204,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@color/bluegray"
-                    android:dividerHeight="0.2dp"></ListView>
+                    android:dividerHeight="@dimen/menu_left_divide_height"></ListView>
             </LinearLayout>
 
         </android.support.design.widget.NavigationView>

@@ -11,33 +11,33 @@
     <LinearLayout
         android:background="@color/white"
         android:orientation="vertical"
-        android:layout_margin="@dimen/margin_10dp"
-        android:layout_width="160dp"
-        android:layout_height="270dp">
+        android:layout_margin="@dimen/new_book_layout_margin"
+        android:layout_width="@dimen/new_book_layout_width"
+        android:layout_height="@dimen/new_book_layout_height">
         <ImageView
-            android:layout_marginTop="@dimen/margin_20dp"
+            android:layout_marginTop="@dimen/new_book_img_margin_top"
             android:layout_gravity="center"
             android:src="@drawable/loading_img"
             android:id="@+id/img_NewBook"
-            android:layout_width="100dp"
-            android:layout_height="150dp" />
+            android:layout_width="@dimen/new_book_img_width"
+            android:layout_height="@dimen/new_book_img_height" />
         <TextView
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:textSize="@dimen/text_size_15sp"
+            android:layout_marginTop="@dimen/new_book_name_margin_top"
+            android:textSize="@dimen/new_book_name_text_size"
             android:gravity="center"
             android:id="@+id/txt_NewBook_Ten"
             android:textColor="@color/colorPrimary"
             android:layout_gravity="center"
-            android:layout_width="150dp"
+            android:layout_width="@dimen/new_book_name_width"
             android:layout_height="wrap_content" />
         <TextView
-            android:textSize="@dimen/text_size_10sp"
-            android:layout_marginTop="@dimen/margin_5dp"
+            android:textSize="@dimen/new_book_author_text_size"
+            android:layout_marginTop="@dimen/new_book_author_margin_top"
             android:gravity="center"
             android:id="@+id/txt_NewBook_TG"
             android:textColor="@color/colorPrimaryDark"
             android:layout_gravity="center"
-            android:layout_width="100dp"
+            android:layout_width="@dimen/new_book_author_width"
             android:layout_height="wrap_content" />
     </LinearLayout>
 

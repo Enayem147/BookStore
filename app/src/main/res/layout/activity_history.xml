@@ -15,7 +15,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_5dp"
+        android:layout_margin="@dimen/history_margin"
         android:orientation="vertical">
 
         <FrameLayout
@@ -29,19 +29,18 @@
                 android:layout_gravity="center"
                 android:text="@string/lich_su_trong"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_size_35sp" />
+                android:textSize="@dimen/history_empty_text_size" />
             <LinearLayout
                 android:id="@+id/linerLayoutHistory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <LinearLayout
-                    android:layout_margin="@dimen/margin_10dp"
+                    android:layout_margin="@dimen/history_spinner_margin_top"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <Spinner
-                        android:layout_marginLeft="@dimen/margin_5dp"
                         android:id="@+id/spinnerHistory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"></Spinner>
@@ -51,7 +50,7 @@
                     android:id="@+id/listView_History"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/margin_10dp">
+                    android:layout_marginTop="@dimen/history_list_view_margin_top">
                 </ListView>
             </LinearLayout>
 

@@ -7,14 +7,14 @@
     android:gravity="center">
 
     <LinearLayout
-        android:layout_width="230dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/list_view_invoice_layout_width"
+        android:layout_height="@dimen/list_view_invoice_layout_height"
         android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/margin_10dp">
+        android:layout_marginBottom="@dimen/list_view_invoice_img_margin">
         <LinearLayout
-            android:layout_width="60dp"
-            android:layout_height="90dp"
-            android:layout_margin="@dimen/margin_10dp">
+            android:layout_width="@dimen/list_view_invoice_img_width"
+            android:layout_height="@dimen/list_view_invoice_img_height"
+            android:layout_margin="@dimen/list_view_invoice_img_margin">
             <ImageView
                 android:id="@+id/imgInvoice_HinhSach"
                 android:layout_width="wrap_content"
@@ -24,18 +24,18 @@
         <LinearLayout
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginRight="@dimen/margin_10dp"
-            android:layout_marginTop="@dimen/margin_10dp"
+            android:layout_height="@dimen/list_view_invoice_img_height"
+            android:layout_marginRight="@dimen/list_view_invoice_margin_right"
+            android:layout_marginTop="@dimen/list_view_invoice_margin_top"
             android:orientation="vertical">
 
             <TextView
                 android:layout_gravity="center"
                 android:id="@+id/txtInvoice_TenSach"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="@dimen/list_view_invoice_book_name_height"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_size_15sp"
+                android:textSize="@dimen/list_view_invoice_book_name_text_size"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -47,10 +47,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/margin_5dp"
+                    android:layout_marginRight="@dimen/list_view_invoice_description_margin_right"
                     android:text="@string/so_luong"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_14sp"
+                    android:textSize="@dimen/list_view_invoice_description_text_size"
                     android:textStyle="bold" />
 
                 <TextView
@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_14sp"
+                    android:textSize="@dimen/list_view_invoice_description_text_size"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>

@@ -1,5 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+
+    // Home page / Menu left (NavigationView)
+    <dimen name="menu_left_img_size">32dp</dimen>
+    <dimen name="menu_left_img_margin">5dp</dimen>
+    <dimen name="menu_left_layout_width">0dp</dimen>
+    <dimen name="menu_left_layout_height">80dp</dimen>
+    <dimen name="menu_left_layout_margin">10dp</dimen>
+    <dimen name="menu_left_text_size">15sp</dimen>
+    <dimen name="menu_left_divide_height">0.2dp</dimen>
+    <dimen name="menu_left_divide_big_height">1dp</dimen>
+    <dimen name="menu_left_layout_margin_top">10dp</dimen>
+    <dimen name="menu_left_icon_height">150dp</dimen>
+    <dimen name="menu_left_icon_margin_left">30dp</dimen>
+
+    <dimen name="home_new_book_text_margin_top">20dp</dimen>
+    <dimen name="home_new_book_text_margin_bottom">10dp</dimen>
+    <dimen name="home_new_book_text_margin_left">10dp</dimen>
+    <dimen name="home_new_book_text_size">25sp</dimen>
+    <dimen name="home_view_flipper_height">200dp</dimen>
+
+    //List view cart
+    <dimen name="list_view_cart_layout_margin">10dp</dimen>
+    <dimen name="list_view_cart_layout_margin_top">10dp</dimen>
+    <dimen name="list_view_cart_layout_margin_bottom">10dp</dimen>
+    <dimen name="list_view_cart_layout_margin_right">10dp</dimen>
+    <dimen name="list_view_cart_layout_height">170dp</dimen>
+    <dimen name="list_view_cart_img_width">120dp</dimen>
+    <dimen name="list_view_cart_book_name_text_size">18sp</dimen>
+    <dimen name="list_view_cart_book_name_height">60dp</dimen>
+    <dimen name="list_view_cart_book_price_text_size">20sp</dimen>
+
+    //list view invoice
+    <dimen name="list_view_invoice_layout_height">100dp</dimen>
+    <dimen name="list_view_invoice_layout_width">230dp</dimen>
+    <dimen name="list_view_invoice_img_height">90dp</dimen>
+    <dimen name="list_view_invoice_img_width">60dp</dimen>
+    <dimen name="list_view_invoice_img_margin">10dp</dimen>
+    <dimen name="list_view_invoice_margin_top">10dp</dimen>
+    <dimen name="list_view_invoice_margin_right">10dp</dimen>
+    <dimen name="list_view_invoice_book_name_text_size">15sp</dimen>
+    <dimen name="list_view_invoice_book_name_height">60dp</dimen>
+    <dimen name="list_view_invoice_description_text_size">14sp</dimen>
+    <dimen name="list_view_invoice_description_margin_right">5sp</dimen>
+
+    //list view history
+    <dimen name="list_view_history_layout_margin">10dp</dimen>
+    <dimen name="list_view_history_layout_margin_right">10dp</dimen>
+    <dimen name="list_view_history_img_height">130dp</dimen>
+    <dimen name="list_view_history_img_width">100dp</dimen>
+    <dimen name="list_view_history_text_height">170dp</dimen>
+    <dimen name="list_view_history_book_name_text_size">18sp</dimen>
+    <dimen name="list_view_history_book_name_height">50dp</dimen>
+    <dimen name="list_view_history_description_text_size">14sp</dimen>
+    <dimen name="list_view_history_description_margin_right">5sp</dimen>
+    <dimen name="list_view_history_description_margin_top">10dp</dimen>
+    <dimen name="list_view_history_description_margin_left">10dp</dimen>
+
+    //activity history
+    <dimen name="history_empty_text_size">35sp</dimen>
+    <dimen name="history_spinner_margin_top">10dp</dimen>
+    <dimen name="history_list_view_margin_top">10dp</dimen>
+    <dimen name="history_margin">5dp</dimen>
+
+    //list view books ( theo thể loại) , book list
+    <dimen name="list_view_books_layout_margin">10dp</dimen>
+    <dimen name="list_view_books_img_height">150dp</dimen>
+    <dimen name="list_view_books_img_width">120dp</dimen>
+    <dimen name="list_view_books_img_width100">100dp</dimen>
+    <dimen name="list_view_books_text_height">220dp</dimen>
+    <dimen name="list_view_books_text_margin_right">10dp</dimen>
+    <dimen name="list_view_books_book_name_height">100dp</dimen>
+    <dimen name="list_view_books_book_name_text_size">18sp</dimen>
+    <dimen name="list_view_books_description_text_size">14sp</dimen>
+    <dimen name="list_view_books_description_margin_left">5dp</dimen>
+    <dimen name="list_view_books_description_margin_top">5dp</dimen>
+
+    //book list
+    <dimen name="spinner_text_size">18sp</dimen>
+
+    //layout new book
+    <dimen name="new_book_layout_margin">10dp</dimen>
+    <dimen name="new_book_layout_height">270dp</dimen>
+    <dimen name="new_book_layout_width">160dp</dimen>
+    <dimen name="new_book_img_margin_top">20dp</dimen>
+    <dimen name="new_book_img_height">150dp</dimen>
+    <dimen name="new_book_img_width">100dp</dimen>
+    <dimen name="new_book_name_text_size">15dp</dimen>
+    <dimen name="new_book_name_width">150dp</dimen>
+    <dimen name="new_book_name_margin_top">10dp</dimen>
+    <dimen name="new_book_author_text_size">10dp</dimen>
+    <dimen name="new_book_author_width">100dp</dimen>
+    <dimen name="new_book_author_margin_top">5dp</dimen>
+
+    //fragment thông tin
+    <dimen name="fragment_description_margin_top">10dp</dimen>
+    <dimen name="fragment_description_margin_left">5dp</dimen>
+    <dimen name="fragment_description_text_size">18sp</dimen>
+    //fragment giới thiệu
+    <dimen name="fragment_introduce_margin_top_left">20dp</dimen>
+    <dimen name="fragment_introduce_margin_right_bottom">10dp</dimen>
+
+
+
+
+    //dialog profile , contact
+    <dimen name="profile_layout_width">350dp</dimen>
+    <dimen name="profile_layout_height">470dp</dimen>
+    <dimen name="profile_exit_width">30dp</dimen>
+    <dimen name="profile_exit_height">30dp</dimen>
+    <dimen name="profile_padding">5dp</dimen>
+    <dimen name="profile_margin">5dp</dimen>
+    <dimen name="profile_padding_bottom">10dp</dimen>
+    <dimen name="profile_title_margin_top">10dp</dimen>
+    <dimen name="profile_title_margin_bottom">20dp</dimen>
+    <dimen name="profile_title_text_size">25sp</dimen>
+    <dimen name="profile_field_text_size">17dp</dimen>
+    <dimen name="profile_value_text_size">15dp</dimen>
+    <dimen name="profile_text_margin_top_1st">20dp</dimen>
+    <dimen name="profile_divide_margin">20dp</dimen>
+    <dimen name="profile_divide_height">1dp</dimen>
+    <dimen name="profile_icon_margin_left">160dp</dimen>
+    <dimen name="contact_margin_top">10dp</dimen>
+    <dimen name="contact_margin_bottom">10dp</dimen>
+    
+    //dialog profile - change profile / change pass
+    <dimen name="profile_change_layout_height">320dp</dimen>
+    <dimen name="profile_text_margin_top">5dp</dimen>
+    <dimen name="profile_text_margin_left">5dp</dimen>
+    <dimen name="profile_btn_margin_top">10dp</dimen>
+
+    //dialog login and register
+    <dimen name="login_layout_height">400dp</dimen>
+    <dimen name="login_layout_width">350dp</dimen>
+    <dimen name="login_logo_height">150dp</dimen>
+    <dimen name="login_logo_width">200dp</dimen>
+    <dimen name="login_text_width">250dp</dimen>
+    <dimen name="login_margin_top">15dp</dimen>
+    <dimen name="login_check_box_margin_left">30dp</dimen>
+    <dimen name="login_register_text_margin">10dp</dimen>
+    <dimen name="login_btn_margin_top">20dp</dimen>
+    <dimen name="register_margin_top">10dp</dimen>
+    <dimen name="register_title_margin_bottom">30dp</dimen>
+
+
+    //dialog complete invoice
+    <dimen name="dialog_complete_height">400dp</dimen>
+    <dimen name="dialog_complete_width">350dp</dimen>
+    <dimen name="dialog_complete_icon_height">150dp</dimen>
+    <dimen name="dialog_complete_icon_width">200dp</dimen>
+    <dimen name="dialog_complete_title_text_size">20sp</dimen>
+    <dimen name="dialog_complete_text_size">17sp</dimen>
+    <dimen name="dialog_complete_field_margin_top">10dp</dimen>
+    <dimen name="dialog_complete_value_margin_top">5dp</dimen>
+
+
+    //activity invoice
+    <dimen name="invoice_logo_width">130dp</dimen>
+    <dimen name="invoice_logo_height">100dp</dimen>
+    <dimen name="invoice_layout_margin_top">10dp</dimen>
+    <dimen name="invoice_layout_margin_left">40dp</dimen>
+    <dimen name="invoice_text_margin_left">10dp</dimen>
+    <dimen name="invoice_text_size">15sp</dimen>
+    <dimen name="invoice_list_view_width">250dp</dimen>
+    <dimen name="invoice_list_view_height">130dp</dimen>
+    <dimen name="invoice_lis_view_margin_left">10dp</dimen>
+    <dimen name="invoice_layout_edit_text_size">300dp</dimen>
+
+    //activity cart
+    <dimen name="cart_btn_margin_top">10dp</dimen>
+    <dimen name="cart_btn_margin_bottom">10dp</dimen>
+    <dimen name="cart_price_text_size">30sp</dimen>
+    <dimen name="cart_price_margin_left">5dp</dimen>
+    <dimen name="cart_empty_tex_size">35sp</dimen>
+
+    //activity detail book
+    <dimen name="detail_layout_margin">10dp</dimen>
+    <dimen name="detail_layout_margin_top">20dp</dimen>
+    <dimen name="detail_book_name_text_size">20sp</dimen>
+    <dimen name="detail_price_status_text_size">20sp</dimen>
+    <dimen name="detail_book_name_height">80dp</dimen>
+    <dimen name="detail_book_name_margin">5dp</dimen>
+    <dimen name="detail_img_margin_right">10dp</dimen>
+    <dimen name="detail_img_width">150dp</dimen>
+    <dimen name="detail_img_height">240dp</dimen>
+    <dimen name="detail_tab_layout_margin">20dp</dimen>
+    <dimen name="detail_btn_margin_top">20dp</dimen>
+    <dimen name="detail_btn_text_size">15sp</dimen>
+    <dimen name="detail_layout_text_margin_top">10dp</dimen>
+
+    //dialog thêm vào giỏ hàng
+    <dimen name="dialog_add_cart_layout_height">220dp</dimen>
+    <dimen name="dialog_add_cart_layout_width">250dp</dimen>
+    <dimen name="dialog_add_cart_text_size">30sp</dimen>
+    <dimen name="dialog_btn_confirm_margin_top">20dp</dimen>
+    //Button cộng/trừ
+    <dimen name="btn_cong_tru_height">40dp</dimen>
+    <dimen name="btn_cong_tru_width">40dp</dimen>
+    <dimen name="btn_cong_tru_text_size">20sp</dimen>
+    <dimen name="btn_cong_tru_margin_top">10sp</dimen>
+    <dimen name="btn_cong_tru_margin_right">10sp</dimen>
+    <dimen name="btn_cong_tru_margin_left">10sp</dimen>
+
     <dimen name="margin_5dp">5dp</dimen>
     <dimen name="margin_10dp">10dp</dimen>
     <dimen name="margin_15dp">15dp</dimen>
@@ -15,4 +218,7 @@
     <dimen name="text_size_17sp">17sp</dimen>
     <dimen name="text_size_18sp">18sp</dimen>
     <dimen name="text_size_10sp">10sp</dimen>
+
+    <dimen name="list_view_description_field_text_size"></dimen>
+    <dimen name="list_view_description_value_text_size"></dimen>
 </resources>

@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,7 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a84965.bookstore.R;
-import com.example.a84965.bookstore.adapter.PagerAdapter;
+import com.example.a84965.bookstore.adapter.FragmentPagerAdapter;
 import com.example.a84965.bookstore.model.Kho;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.GioHang;
@@ -44,6 +45,8 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BookDetailActivity extends AppCompatActivity {
     ViewPager viewPager;
@@ -103,7 +106,8 @@ public class BookDetailActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog_login);
         final TextView txtSDT = dialog.findViewById(R.id.txtLogin_SDT);
         final TextView txtMK = dialog.findViewById(R.id.txtLogin_MK);
-
+        final TextView txtDangKy = dialog.findViewById(R.id.txtLogin_Register);
+        txtDangKy.setPaintFlags(txtDangKy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         //event Drawable click txtSDT
         txtSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_cancel, 0);
 
@@ -141,6 +145,135 @@ public class BookDetailActivity extends AppCompatActivity {
                     txtMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_visible, 0);
                 }
                 return true;
+            }
+        });
+
+        //event click nút đăng ký nhanh
+        txtDangKy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialogRes = new Dialog(BookDetailActivity.this);
+                dialogRes.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialogRes.setContentView(R.layout.dialog_register);
+                final TextView txtResSDT = dialogRes.findViewById(R.id.txtDialogRegister_SDT);
+                final TextView txtResMK = dialogRes.findViewById(R.id.txtDialogRegister_MK);
+                Button btnRegister = dialogRes.findViewById(R.id.txtDialogRegister);
+
+                //event Drawable click txtResSDT
+                txtResSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_cancel, 0);
+                txtResSDT.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtResSDT) {
+                    @Override
+                    public boolean onDrawableClick() {
+                        txtResSDT.setText("");
+                        return true;
+                    }
+                });
+
+                txtResSDT.addTextChangedListener(new OnTextChangeListener() {
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (s.length() == 0) {
+                            txtResSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                        } else {
+                            txtResSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_cancel, 0);
+                        }
+                    }
+                });
+
+                txtResSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
+                txtResMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_invisible, 0);
+                //event Drawable click txtResMK
+                txtResMK.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtMK) {
+                    @Override
+                    public boolean onDrawableClick() {
+                        if (txtResMK.getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                            txtResMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_invisible, 0);
+                            txtResMK.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                        } else {
+                            txtResMK.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                            txtResMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_visible, 0);
+                        }
+                        return true;
+                    }
+                });
+
+                btnRegister.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String sdt = txtResSDT.getText().toString();
+                        final String mk = txtResMK.getText().toString();
+
+                        //bắt lỗi tồn tại sdt
+                        final boolean[] exist = {false};
+                        mDatabase.child("KhachHang").addChildEventListener(new GetChildFireBase() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                KhachHang khachHang = dataSnapshot.getValue(KhachHang.class);
+                                if(khachHang.getKH_SDT().equals(sdt)){
+                                    exist[0] = true;
+                                }
+                                super.onChildAdded(dataSnapshot, s);
+                            }
+                        });
+
+                        final ProgressDialog progressDialog = new ProgressDialog(BookDetailActivity.this);
+                        progressDialog.setMessage("Chờ trong giây lát !!!");
+                        progressDialog.show();
+
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                boolean blank = false;
+                                boolean error = false;
+                                // bắt lỗi rỗng , hợp lệ
+                                String strErr = "";
+                                if (sdt.length() == 0 || mk.length() == 0) {
+                                    blank = true;
+                                }
+
+                                int i = 0;
+                                if (!checkPhone(sdt)) {
+                                    if(++i == 1){
+                                        strErr+="Số điện thoại không hợp lệ";
+                                    }else{
+                                        strErr+="\nSố điện thoại không hợp lệ";
+                                    }
+                                    error = true;
+                                }
+                                if (mk.length() < 6) {
+                                    if(++i == 1){
+                                        strErr+="Độ dài mật khẩu phải trên 6 ký tự";
+                                    }else{
+                                        strErr+="\nĐộ dài mật khẩu phải trên 6 ký tự";
+                                    }
+                                    error = true;
+                                }
+
+                                // kiểm tra
+                                if (blank) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(BookDetailActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                                } else if (error) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(BookDetailActivity.this, strErr, Toast.LENGTH_SHORT).show();
+                                }else if(exist[0]){
+                                    progressDialog.dismiss();
+                                    Toast.makeText(BookDetailActivity.this, "Số điện thoại đã tồn tại", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(BookDetailActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                                    KhachHang khachHang = new KhachHang(sdt, mk, "", "");
+                                    mDatabase.child("KhachHang").push().setValue(khachHang);
+                                    HomePage.new_SDT = sdt;
+                                    txtSDT.setText(sdt);
+                                    progressDialog.dismiss();
+                                    dialogRes.dismiss();
+                                }
+                            }
+                        },1500);
+                    }
+                });
+                dialogRes.show();
             }
         });
         final CheckBox cbRemember = dialog.findViewById(R.id.cbLogin);
@@ -198,6 +331,33 @@ public class BookDetailActivity extends AppCompatActivity {
             }
         });
         dialog.show();
+    }
+
+    /**
+     * Kiểm tra số điện thoại ( 09 - 10 số , 01 - 11 số , chỉ có thể là số )
+     * @param number : Số điện thoại
+     * @return
+     */
+    private boolean checkPhone(String number) {
+        Pattern pattern = Pattern.compile("^[0-9]*$");
+        Matcher matcher = pattern.matcher(number);
+        if (!matcher.matches()) {
+            return false;
+        } else if (number.length() == 10 || number.length() == 11) {
+            if (number.length() == 10) {
+                if (number.substring(0, 2).equals("09")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else if (number.substring(0, 2).equals("01")) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -378,7 +538,7 @@ public class BookDetailActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
         FragmentManager manager = getSupportFragmentManager();
-        PagerAdapter adapter  = new PagerAdapter(manager);
+        FragmentPagerAdapter adapter  = new FragmentPagerAdapter(manager);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

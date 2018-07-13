@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -62,6 +63,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class HomePage extends AppCompatActivity {
 
@@ -399,7 +402,9 @@ public class HomePage extends AppCompatActivity {
         int i = kh_ten.lastIndexOf(" ");
         int j = kh_ten.lastIndexOf(" ", i - 1);
         String ten = "";
-        if (j > 0) {
+        if(kh_ten.equals("")){
+            ten = "Người dùng mới";
+        }else if (j > 0) {
             ten = kh_ten.substring(j + 1);
         } else {
             ten = kh_ten;
@@ -483,10 +488,10 @@ public class HomePage extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog_login);
         final TextView txtSDT = dialog.findViewById(R.id.txtLogin_SDT);
         final TextView txtMK = dialog.findViewById(R.id.txtLogin_MK);
-
+        final TextView txtDangKy = dialog.findViewById(R.id.txtLogin_Register);
+        txtDangKy.setPaintFlags(txtDangKy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         //event Drawable click txtSDT
         txtSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_cancel, 0);
-
         txtSDT.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtSDT) {
             @Override
             public boolean onDrawableClick() {
@@ -524,10 +529,141 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
+        //event click nút đăng ký nhanh
+        txtDangKy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialogRes = new Dialog(HomePage.this);
+                dialogRes.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialogRes.setContentView(R.layout.dialog_register);
+                final TextView txtResSDT = dialogRes.findViewById(R.id.txtDialogRegister_SDT);
+                final TextView txtResMK = dialogRes.findViewById(R.id.txtDialogRegister_MK);
+                Button btnRegister = dialogRes.findViewById(R.id.txtDialogRegister);
+
+                //event Drawable click txtResSDT
+                txtResSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_cancel, 0);
+                txtResSDT.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtResSDT) {
+                    @Override
+                    public boolean onDrawableClick() {
+                        txtResSDT.setText("");
+                        return true;
+                    }
+                });
+
+                txtResSDT.addTextChangedListener(new OnTextChangeListener() {
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (s.length() == 0) {
+                            txtResSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                        } else {
+                            txtResSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_cancel, 0);
+                        }
+                    }
+                });
+
+                txtResSDT.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
+                txtResMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_invisible, 0);
+                //event Drawable click txtResMK
+                txtResMK.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtMK) {
+                    @Override
+                    public boolean onDrawableClick() {
+                        if (txtResMK.getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                            txtResMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_invisible, 0);
+                            txtResMK.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                        } else {
+                            txtResMK.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                            txtResMK.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pass_visible, 0);
+                        }
+                        return true;
+                    }
+                });
+
+                btnRegister.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String sdt = txtResSDT.getText().toString();
+                        final String mk = txtResMK.getText().toString();
+
+                        //bắt lỗi tồn tại sdt
+                        final boolean[] exist = {false};
+                        mDatabase.child("KhachHang").addChildEventListener(new GetChildFireBase() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                KhachHang khachHang = dataSnapshot.getValue(KhachHang.class);
+                                if(khachHang.getKH_SDT().equals(sdt)){
+                                    exist[0] = true;
+                                }
+                                super.onChildAdded(dataSnapshot, s);
+                            }
+                        });
+
+                        final ProgressDialog progressDialog = new ProgressDialog(HomePage.this);
+                        progressDialog.setMessage("Chờ trong giây lát !!!");
+                        progressDialog.show();
+
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                boolean blank = false;
+                                boolean error = false;
+                                // bắt lỗi rỗng , hợp lệ
+                                String strErr = "";
+                                if (sdt.length() == 0 || mk.length() == 0) {
+                                    blank = true;
+                                }
+
+                                int i = 0;
+                                if (!checkPhone(sdt)) {
+                                    if(++i == 1){
+                                        strErr+="Số điện thoại không hợp lệ";
+                                    }else{
+                                        strErr+="\nSố điện thoại không hợp lệ";
+                                    }
+                                    error = true;
+                                }
+                                if (mk.length() < 6) {
+                                    if(++i == 1){
+                                        strErr+="Độ dài mật khẩu phải trên 6 ký tự";
+                                    }else{
+                                        strErr+="\nĐộ dài mật khẩu phải trên 6 ký tự";
+                                    }
+                                    error = true;
+                                }
+
+                                // kiểm tra
+                                if (blank) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(HomePage.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                                } else if (error) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(HomePage.this, strErr, Toast.LENGTH_SHORT).show();
+                                }else if(exist[0]){
+                                    progressDialog.dismiss();
+                                    Toast.makeText(HomePage.this, "Số điện thoại đã tồn tại", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(HomePage.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                                    KhachHang khachHang = new KhachHang(sdt, mk, "", "");
+                                    mDatabase.child("KhachHang").push().setValue(khachHang);
+                                    new_SDT = sdt;
+                                    txtSDT.setText(sdt);
+                                    progressDialog.dismiss();
+                                    dialogRes.dismiss();
+                                }
+                            }
+                        },1500);
+                    }
+                });
+                dialogRes.show();
+            }
+        });
+
         if (isNewUser) {
             isNewUser = false;
             txtSDT.setText(new_SDT);
         }
+
+
 
         final CheckBox cbRemember = dialog.findViewById(R.id.cbLogin);
         cbRemember.setChecked(true);
@@ -584,6 +720,32 @@ public class HomePage extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Kiểm tra số điện thoại ( 09 - 10 số , 01 - 11 số , chỉ có thể là số )
+     * @param number : Số điện thoại
+     * @return
+     */
+    private boolean checkPhone(String number) {
+        Pattern pattern = Pattern.compile("^[0-9]*$");
+        Matcher matcher = pattern.matcher(number);
+        if (!matcher.matches()) {
+            return false;
+        } else if (number.length() == 10 || number.length() == 11) {
+            if (number.length() == 10) {
+                if (number.substring(0, 2).equals("09")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else if (number.substring(0, 2).equals("01")) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Hiển thị dialog Profile khách hàng

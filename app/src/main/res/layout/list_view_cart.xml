@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="horizontal"
-    android:layout_margin="@dimen/margin_10dp">
+    android:layout_margin="@dimen/list_view_cart_layout_margin">
     <LinearLayout
-        android:layout_marginTop="@dimen/margin_10dp"
-        android:layout_marginBottom="@dimen/margin_10dp"
+        android:layout_marginTop="@dimen/list_view_cart_layout_margin_top"
+        android:layout_marginBottom="@dimen/list_view_cart_layout_margin_bottom"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:layout_marginRight="@dimen/margin_10dp"
-            android:layout_width="120dp"
-            android:layout_height="170dp">
+            android:layout_marginRight="@dimen/list_view_cart_layout_margin_right"
+            android:layout_width="@dimen/list_view_cart_img_width"
+            android:layout_height="@dimen/list_view_cart_layout_height">
             <ImageView
                 android:id="@+id/imgCart_HinhSach"
                 android:background="@drawable/loading_img"
@@ -25,7 +26,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="@dimen/list_view_cart_layout_height"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/txtCart_TenSach"
@@ -33,19 +34,19 @@
                 android:textColor="@color/colorPrimary"
                 android:layout_gravity="center"
                 android:gravity="center_horizontal"
-                android:textSize="@dimen/text_size_18sp"
+                android:textSize="@dimen/list_view_cart_book_name_text_size"
                 android:layout_width="match_parent"
-                android:layout_height="60dp" />
+                android:layout_height="@dimen/list_view_cart_book_name_height" />
             <LinearLayout
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/margin_10dp">
+                android:layout_marginTop="@dimen/list_view_cart_layout_margin_top">
                 <TextView
                     android:id="@+id/txtCart_DonGia"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:textSize="@dimen/list_view_cart_book_price_text_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -54,21 +55,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/margin_10dp">
+                android:layout_marginTop="@dimen/btn_cong_tru_margin_top">
                 <Button
                     android:background="@color/colorPrimary"
                     android:id="@+id/btnCart_Tru"
                     android:textStyle="bold"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:textSize="@dimen/btn_cong_tru_text_size"
                     android:textColor="@color/white"
                     android:text="@string/tru"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp" />
+                    android:layout_width="@dimen/btn_cong_tru_width"
+                    android:layout_height="@dimen/btn_cong_tru_height" />
                 <TextView
                     android:id="@+id/txtCart_SoLuong"
-                    android:layout_marginLeft="@dimen/margin_10dp"
-                    android:layout_marginRight="@dimen/margin_10dp"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:layout_marginLeft="@dimen/btn_cong_tru_margin_left"
+                    android:layout_marginRight="@dimen/btn_cong_tru_margin_right"
+                    android:textSize="@dimen/btn_cong_tru_text_size"
                     android:textStyle="bold"
                     android:text="1"
                     android:textColor="@color/colorPrimaryDark"
@@ -77,11 +78,11 @@
                 <Button
                     android:background="@color/colorPrimary"
                     android:id="@+id/btnCart_Cong"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:textSize="@dimen/btn_cong_tru_text_size"
                     android:textColor="@color/white"
                     android:text="@string/cong"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp" />
+                    android:layout_width="@dimen/btn_cong_tru_width"
+                    android:layout_height="@dimen/btn_cong_tru_height" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

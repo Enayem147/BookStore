@@ -17,38 +17,38 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical"
-        android:layout_margin="@dimen/margin_10dp">
+        android:layout_margin="@dimen/detail_layout_margin">
         <LinearLayout
-            android:layout_marginTop="@dimen/margin_20dp"
+            android:layout_marginTop="@dimen/detail_layout_margin_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
                 android:background="@drawable/border_book_detail"
                 android:id="@+id/imgBook_Detail"
-                android:layout_marginRight="@dimen/margin_10dp"
+                android:layout_marginRight="@dimen/detail_img_margin_right"
                 android:layout_gravity="center"
                 android:src="@drawable/loading_img"
-                android:layout_width="150dp"
-                android:layout_height="240dp" />
+                android:layout_width="@dimen/detail_img_width"
+                android:layout_height="@dimen/detail_img_height" />
             <LinearLayout
                 android:background="@drawable/border_book_detail"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="@dimen/detail_img_height"
                 android:orientation="vertical"
                 android:layout_gravity="center">
                     <TextView
                         android:gravity="center_horizontal"
                         android:layout_gravity="center"
-                        android:layout_margin="@dimen/margin_5dp"
+                        android:layout_margin="@dimen/detail_book_name_margin"
                         android:id="@+id/txtDetail_Ten"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold"
-                        android:textSize="@dimen/text_size_20sp"
+                        android:textSize="@dimen/detail_book_name_text_size"
                         android:layout_width="wrap_content"
-                        android:layout_height="80dp" />
+                        android:layout_height="@dimen/detail_book_name_height" />
                 <LinearLayout
-                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:layout_marginTop="@dimen/detail_layout_text_margin_top"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -57,12 +57,12 @@
                         android:id="@+id/txtDetail_Gia"
                         android:textStyle="bold"
                         android:textColor="@color/red"
-                        android:textSize="@dimen/text_size_20sp"
+                        android:textSize="@dimen/detail_price_status_text_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:layout_marginTop="@dimen/detail_layout_text_margin_top"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -70,14 +70,14 @@
                     <TextView
                         android:id="@+id/txtDetail_TrangThai"
                         android:textStyle="bold"
-                        android:textSize="@dimen/text_size_20sp"
+                        android:textSize="@dimen/detail_price_status_text_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
                 <Button
-                    android:textSize="@dimen/text_size_15sp"
+                    android:textSize="@dimen/detail_btn_text_size"
                     android:id="@+id/btnThem_Sach"
-                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:layout_marginTop="@dimen/detail_btn_margin_top"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:background="@color/colorPrimary"
@@ -88,13 +88,13 @@
         </LinearLayout>
     <LinearLayout
         android:background="@drawable/border_book_detail"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/detail_tab_layout_margin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="@dimen/detail_tab_layout_margin">
         <android.support.design.widget.TabLayout
-            app:tabIndicatorColor="#2979FF"
+            app:tabIndicatorColor="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"

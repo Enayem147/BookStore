@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/margin_10dp"
+    android:layout_margin="@dimen/list_view_history_layout_margin"
     android:background="@color/white"
     android:orientation="horizontal">
 
@@ -10,14 +10,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/margin_10dp">
+        android:layout_margin="@dimen/list_view_history_layout_margin">
 
         <LinearLayout
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_width="100dp"
-            android:layout_height="130dp"
-            android:layout_marginRight="@dimen/margin_10dp">
+            android:layout_width="@dimen/list_view_history_img_width"
+            android:layout_height="@dimen/list_view_history_img_height"
+            android:layout_marginRight="@dimen/list_view_history_layout_margin_right">
 
             <ImageView
                 android:id="@+id/imgHistory_HinhSach"
@@ -28,23 +28,23 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="@dimen/list_view_history_text_height"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtHistory_TenSach"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/list_view_history_book_name_height"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_size_18sp"
+                android:textSize="@dimen/list_view_history_book_name_text_size"
                 android:textStyle="bold" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginLeft="@dimen/list_view_history_description_margin_left"
+                android:layout_marginTop="@dimen/list_view_history_description_margin_top"
                 android:orientation="horizontal">
 
                 <TextView
@@ -52,22 +52,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/gia"
+                    android:layout_marginRight="@dimen/list_view_history_description_margin_right"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_14sp" />
+                    android:textSize="@dimen/list_view_history_description_text_size" />
 
                 <TextView
                     android:id="@+id/txtHistory_Gia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_5dp"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_14sp" />
+                    android:textSize="@dimen/list_view_history_description_text_size" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginLeft="@dimen/list_view_history_description_margin_left"
+                android:layout_marginTop="@dimen/list_view_history_description_margin_top"
                 android:orientation="horizontal">
 
                 <TextView
@@ -75,22 +75,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/so_luong"
+                    android:layout_marginRight="@dimen/list_view_history_description_margin_right"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_14sp" />
+                    android:textSize="@dimen/list_view_history_description_text_size" />
 
                 <TextView
                     android:id="@+id/txtHistory_SL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_5dp"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_14sp" />
+                    android:textSize="@dimen/list_view_history_description_text_size" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginLeft="@dimen/list_view_history_description_margin_left"
+                android:layout_marginTop="@dimen/list_view_history_description_margin_top"
                 android:orientation="vertical">
 
                 <TextView
@@ -99,14 +99,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/thoi_gian_mua"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_14sp" />
+                    android:textSize="@dimen/list_view_history_description_text_size" />
 
                 <TextView
                     android:id="@+id/txtHistory_NgayMua"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_14sp" />
+                    android:textSize="@dimen/list_view_history_description_text_size" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

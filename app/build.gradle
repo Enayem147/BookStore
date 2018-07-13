@@ -12,6 +12,8 @@ android {
     }
     buildTypes {
         release {
+            aaptOptions.cruncherEnabled = false
+            aaptOptions.useNewCruncher = false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -37,6 +39,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.0'
     implementation 'com.google.firebase:firebase-database:16.0.1'
     implementation 'com.google.firebase:firebase-storage:16.0.1'
-    implementation files('libs/android-viewbadger.jar')
 }
 apply plugin: 'com.google.gms.google-services'

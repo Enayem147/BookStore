@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
-    android:layout_height="320dp"
+    android:layout_width="@dimen/profile_layout_width"
+    android:layout_height="@dimen/profile_change_layout_height"
     android:layout_gravity="center"
     android:background="@color/white"
     android:orientation="vertical"
-    android:padding="@dimen/margin_5dp">
+    android:padding="@dimen/profile_padding">
 
     <TextView
         android:id="@+id/txtProf_Thoat"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/profile_exit_width"
+        android:layout_height="@dimen/profile_exit_height"
         android:layout_gravity="end"
         android:background="@drawable/circle"
         android:gravity="center"
@@ -22,18 +22,18 @@
         android:background="@drawable/border_book_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_5dp"
+        android:layout_margin="@dimen/profile_margin"
         android:orientation="vertical"
-        android:padding="@dimen/margin_5dp">
+        android:padding="@dimen/profile_padding">
 
         <TextView
-            android:layout_marginLeft="@dimen/margin_5dp"
-            android:layout_marginTop="@dimen/margin_20dp"
+            android:layout_marginLeft="@dimen/profile_text_margin_left"
+            android:layout_marginTop="@dimen/profile_text_margin_top_1st"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ho_va_ten"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/text_size_17sp"
+            android:textSize="@dimen/profile_field_text_size"
             android:textStyle="bold" />
 
         <EditText
@@ -42,16 +42,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/text_size_15sp" />
+            android:textSize="@dimen/profile_value_text_size" />
 
         <TextView
-            android:layout_marginLeft="@dimen/margin_5dp"
-            android:layout_marginTop="@dimen/margin_5dp"
+            android:layout_marginLeft="@dimen/profile_text_margin_left"
+            android:layout_marginTop="@dimen/profile_text_margin_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dia_chi"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/text_size_17sp"
+            android:textSize="@dimen/profile_field_text_size"
             android:textStyle="bold" />
 
         <EditText
@@ -60,18 +60,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/text_size_15sp" />
+            android:textSize="@dimen/profile_value_text_size" />
 
         <Button
             android:id="@+id/btnProf_XN"
-            android:layout_marginTop="@dimen/margin_10dp"
+            android:layout_marginTop="@dimen/profile_btn_margin_top"
             android:textColor="@color/white"
             android:background="@color/colorPrimary"
             android:text="@string/xac_nhan"
             android:textAllCaps="true"
             android:layout_gravity="center"
-            android:layout_width="100dp"
-            android:layout_height="50dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

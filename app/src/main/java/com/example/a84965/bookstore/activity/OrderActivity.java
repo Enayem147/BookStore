@@ -28,8 +28,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class InvoiceActivity extends AppCompatActivity {
+public class OrderActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     Handler handler;
     TextView txtTotal, txtMaHD, txtTen, txtSDT, txtDiaChi;
@@ -44,11 +46,12 @@ public class InvoiceActivity extends AppCompatActivity {
     ArrayList<Integer> listSoLuong = new ArrayList<>();
     ArrayList<String> listKey = new ArrayList<>();
     boolean error = false;
+    boolean blank = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity__invoice);
+        setContentView(R.layout.activity__order);
         callControls();
         initCartReview();
         initInvoice();
@@ -84,25 +87,40 @@ public class InvoiceActivity extends AppCompatActivity {
         btnDatHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final String sdt = txtSDT.getText().toString();
+                String diachi = txtDiaChi.getText().toString();
+                String hoten = txtTen.getText().toString();
                 for (int i = 0; i < HomePage.gioHang.size(); i++) {
-                    if(HomePage.gioHang.get(i).getSach_SL() > listSoLuong.get(i)){
+                    if (HomePage.gioHang.get(i).getSach_SL() > listSoLuong.get(i)) {
                         error = true;
                     }
                 }
-                final ProgressDialog progressDialog = new ProgressDialog(InvoiceActivity.this);
+
+                if (sdt.length() == 0 || hoten.length() == 0 || diachi.length() == 0) {
+                    blank = true;
+                }
+
+
+                final ProgressDialog progressDialog = new ProgressDialog(OrderActivity.this);
                 progressDialog.setMessage("Chờ trong giây lát !!!");
                 progressDialog.show();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (error){
+                        if (error) {
                             progressDialog.dismiss();
-                            Toast.makeText(InvoiceActivity.this, "Có lỗi xảy ra !! Xin kiểm tra lại giỏ hàng", Toast.LENGTH_SHORT).show();
-                        }else{
+                            Toast.makeText(OrderActivity.this, "Có sản phẩm vượt quá số lượng trong kho!", Toast.LENGTH_SHORT).show();
+                        } else if (blank) {
+                            progressDialog.dismiss();
+                            Toast.makeText(OrderActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                        } else if (!checkPhone(sdt)) {
+                            progressDialog.dismiss();
+                            Toast.makeText(OrderActivity.this, "Số điện thoại không phù hợp", Toast.LENGTH_SHORT).show();
+                        } else {
                             for (int i = 0; i < HomePage.gioHang.size(); i++) {
                                 //update số lượng sản phẩm
                                 DatabaseReference updateKho = FirebaseDatabase.getInstance().getReference("Kho").child(listKey.get(i));
-                                updateKho.setValue(new Kho(HomePage.gioHang.get(i).getSach_Ma(),listSoLuong.get(i) - HomePage.gioHang.get(i).getSach_SL()));
+                                updateKho.setValue(new Kho(HomePage.gioHang.get(i).getSach_Ma(), listSoLuong.get(i) - HomePage.gioHang.get(i).getSach_SL()));
                                 //thêm giỏ hàng vào lịch sử mua hàng
                                 LichSu lichSu = new LichSu(txtMaHD.getText().toString(),
                                         HomePage.gioHang.get(i).getSach_Ma(),
@@ -132,20 +150,48 @@ public class InvoiceActivity extends AppCompatActivity {
     }
 
     /**
+     * Kiểm tra số điện thoại ( 09 - 10 số , 01 - 11 số , chỉ có thể là số )
+     *
+     * @param number : Số điện thoại
+     * @return
+     */
+    private boolean checkPhone(String number) {
+        Pattern pattern = Pattern.compile("^[0-9]*$");
+        Matcher matcher = pattern.matcher(number);
+        if (!matcher.matches()) {
+            return false;
+        } else if (number.length() == 10 || number.length() == 11) {
+            if (number.length() == 10) {
+                if (number.substring(0, 2).equals("09")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else if (number.substring(0, 2).equals("01")) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Khởi tạo giá trị đầu vào
      */
     private void callControls() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         handler = new Handler();
-        listView = findViewById(R.id.listView_Invoice);
-        toolbar = findViewById(R.id.toolbar_Invoice);
+        listView = findViewById(R.id.listView_Order);
+        toolbar = findViewById(R.id.toolbarOrder);
         btnDatHang = findViewById(R.id.btnOrder_DatHang);
 
         txtTotal = findViewById(R.id.txtInvoice_Total);
-        txtMaHD = findViewById(R.id.txtInv_MaHD);
-        txtSDT = findViewById(R.id.txtInv_SDT);
-        txtTen = findViewById(R.id.txtInv_Ten);
-        txtDiaChi = findViewById(R.id.txtInv_DiaChi);
+        txtMaHD = findViewById(R.id.txtOrder_MaHD);
+        txtSDT = findViewById(R.id.txtOrder_SDT);
+        txtTen = findViewById(R.id.txtOrder_Ten);
+        txtDiaChi = findViewById(R.id.txtOrder_DiaChi);
 
 
         toolbar.setNavigationIcon(R.drawable.ic_menu_back);

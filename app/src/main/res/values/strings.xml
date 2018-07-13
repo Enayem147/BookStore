@@ -13,6 +13,7 @@
     <string name="nhap_ten"><font size="15">Nhập họ và tên</font></string>
     <string name="nhap_dc"><font size="15">Nhập địa chỉ</font></string>
     <string name="dang_ky">Đăng ký</string>
+    <string name="dang_ky_nhanh">Đăng ký nhanh</string>
     <string name="dang_nhap">Đăng nhập</string>
     <string name="ghi_nho_dang_nhap">Ghi nhớ đăng nhập</string>
     <string name="lien_he">Liên hệ</string>

@@ -2,37 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/margin_10dp"
+    android:layout_margin="@dimen/list_view_books_layout_margin"
     android:background="@color/white"
     android:gravity="center"
     android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="120dp"
-        android:layout_height="150dp"
-        android:layout_marginLeft="@dimen/margin_10dp">
-
+        android:layout_width="@dimen/list_view_books_img_width"
+        android:layout_height="@dimen/list_view_books_img_height"
+        android:layout_marginLeft="@dimen/list_view_books_layout_margin">
         <ImageView
             android:id="@+id/imgBooks"
-            android:layout_width="100dp"
+            android:layout_width="@dimen/list_view_books_img_width100"
             android:layout_height="wrap_content"
             android:background="@drawable/loading_img" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_marginRight="@dimen/margin_10dp"
+        android:layout_height="@dimen/list_view_books_text_height"
+        android:layout_marginRight="@dimen/list_view_books_text_margin_right"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/txtBooks_Ten"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/list_view_books_book_name_height"
             android:layout_gravity="center"
             android:gravity="center"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_size_18sp" />
+            android:textSize="@dimen/list_view_books_book_name_text_size" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -44,20 +43,20 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tac_gia"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/text_size_15sp" />
+                android:textSize="@dimen/list_view_books_description_text_size" />
 
             <TextView
                 android:id="@+id/txtBooks_TG"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:textSize="@dimen/text_size_14sp" />
+                android:layout_marginLeft="@dimen/list_view_books_description_margin_left"
+                android:textSize="@dimen/list_view_books_description_text_size" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_5dp"
+            android:layout_marginTop="@dimen/list_view_books_description_margin_top"
             android:orientation="horizontal">
 
             <TextView
@@ -65,20 +64,20 @@
                 android:layout_height="wrap_content"
                 android:text="@string/nha_xb"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/text_size_15sp" />
+                android:textSize="@dimen/list_view_books_description_text_size" />
 
             <TextView
                 android:id="@+id/txtBooks_NXB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:textSize="@dimen/text_size_14sp" />
+                android:layout_marginLeft="@dimen/list_view_books_description_margin_left"
+                android:textSize="@dimen/list_view_books_description_text_size" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_5dp"
+            android:layout_marginTop="@dimen/list_view_books_description_margin_top"
             android:orientation="horizontal">
 
             <TextView
@@ -86,14 +85,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/gia"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/text_size_15sp" />
+                android:textSize="@dimen/list_view_books_description_text_size" />
 
             <TextView
                 android:id="@+id/txtBooks_Gia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:textSize="@dimen/text_size_14sp" />
+                android:layout_marginLeft="@dimen/list_view_books_description_margin_left"
+                android:textSize="@dimen/list_view_books_description_text_size" />
 
         </LinearLayout>
     </LinearLayout>

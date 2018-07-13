@@ -55,7 +55,7 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (HomePage.gioHang.size() > 0) {
-                    Intent intentInvoice = new Intent(getApplicationContext(), InvoiceActivity.class);
+                    Intent intentInvoice = new Intent(getApplicationContext(), OrderActivity.class);
                     startActivity(intentInvoice);
                 } else {
                     Toast.makeText(CartActivity.this, "Bạn không có hàng để thanh toán !!!", Toast.LENGTH_SHORT).show();

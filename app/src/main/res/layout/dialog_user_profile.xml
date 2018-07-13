@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
-    android:layout_height="470dp"
+    android:layout_width="@dimen/profile_layout_width"
+    android:layout_height="@dimen/profile_layout_height"
     android:layout_gravity="center"
     android:background="@color/white"
     android:orientation="vertical"
-    android:padding="@dimen/margin_5dp"
-    android:paddingBottom="@dimen/margin_10dp">
+    android:padding="@dimen/profile_padding"
+    android:paddingBottom="@dimen/profile_padding_bottom">
 
     <TextView
         android:id="@+id/txtProf_Thoat"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/profile_exit_width"
+        android:layout_height="@dimen/profile_exit_height"
         android:layout_gravity="end"
         android:background="@drawable/circle"
         android:gravity="center"
@@ -22,12 +22,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_20dp"
-        android:layout_marginTop="@dimen/margin_10dp"
+        android:layout_marginBottom="@dimen/profile_title_margin_bottom"
+        android:layout_marginTop="@dimen/profile_title_margin_top"
         android:gravity="center"
         android:text="@string/thong_tin_khach_hang"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_size_25sp"
+        android:textSize="@dimen/profile_title_text_size"
         android:textStyle="bold" />
 
     <ScrollView
@@ -37,18 +37,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_5dp"
+            android:layout_margin="@dimen/profile_margin"
             android:background="@drawable/border_book_detail"
             android:orientation="vertical"
-            android:padding="@dimen/margin_5dp">
+            android:padding="@dimen/profile_padding">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_20dp"
+                android:layout_marginTop="@dimen/profile_text_margin_top_1st"
                 android:text="@string/ho_va_ten"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/text_size_17sp"
+                android:textSize="@dimen/profile_field_text_size"
                 android:textStyle="bold" />
 
             <TextView
@@ -56,14 +56,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/text_size_15sp" />
+                android:textSize="@dimen/profile_value_text_size" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="@dimen/margin_20dp"
-                android:layout_marginTop="@dimen/margin_20dp"
+                android:layout_height="@dimen/profile_divide_height"
+                android:layout_marginBottom="@dimen/profile_divide_margin"
+                android:layout_marginTop="@dimen/profile_divide_margin"
                 android:background="@color/colorPrimary" />
 
             <TextView
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sdt"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/text_size_17sp"
+                android:textSize="@dimen/profile_field_text_size"
                 android:textStyle="bold" />
 
             <TextView
@@ -79,13 +79,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/text_size_15sp" />
+                android:textSize="@dimen/profile_value_text_size" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="@dimen/margin_20dp"
-                android:layout_marginTop="@dimen/margin_20dp"
+                android:layout_height="@dimen/profile_divide_height"
+                android:layout_marginBottom="@dimen/profile_divide_margin"
+                android:layout_marginTop="@dimen/profile_divide_margin"
                 android:background="@color/colorPrimary" />
 
             <TextView
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/dia_chi"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/text_size_17sp"
+                android:textSize="@dimen/profile_field_text_size"
                 android:textStyle="bold" />
 
             <TextView
@@ -101,13 +101,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/text_size_15sp" />
+                android:textSize="@dimen/profile_value_text_size" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="@dimen/margin_20dp"
-                android:layout_marginTop="@dimen/margin_20dp"
+                android:layout_height="@dimen/profile_divide_height"
+                android:layout_marginBottom="@dimen/profile_divide_margin"
+                android:layout_marginTop="@dimen/profile_divide_margin"
                 android:background="@color/colorPrimary" />
 
             <LinearLayout
@@ -121,28 +121,27 @@
                     android:layout_height="wrap_content"
                     android:text="@string/doi_thong_tin"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_17sp"
+                    android:textSize="@dimen/profile_field_text_size"
                     android:textStyle="bold" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="160dp"
+                    android:layout_marginLeft="@dimen/profile_icon_margin_left"
                     android:src="@drawable/ic_right_blue" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="@dimen/margin_20dp"
-                android:layout_marginTop="@dimen/margin_20dp"
+                android:layout_height="@dimen/profile_divide_height"
+                android:layout_marginBottom="@dimen/profile_divide_margin"
+                android:layout_marginTop="@dimen/profile_divide_margin"
                 android:background="@color/colorPrimary" />
 
             <LinearLayout
                 android:id="@+id/btnProf_ChangePass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_20dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -150,14 +149,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/doi_mk"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_17sp"
+                    android:textSize="@dimen/profile_field_text_size"
                     android:textStyle="bold" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_20dp"
-                    android:layout_marginLeft="160dp"
+                    android:layout_marginLeft="@dimen/profile_icon_margin_left"
                     android:src="@drawable/ic_right_blue" />
             </LinearLayout>
 

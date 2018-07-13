@@ -11,17 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/margin_10dp">
+        android:layout_marginTop="@dimen/fragment_description_margin_top">
         <TextView
             android:textColor="#000000"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/fragment_description_text_size"
             android:text="@string/tac_gia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/txt_tt_tacgia"
-            android:layout_marginLeft="@dimen/margin_5dp"
-            android:textSize="@dimen/text_size_18sp"
+            android:layout_marginLeft="@dimen/fragment_description_margin_left"
+            android:textSize="@dimen/fragment_description_text_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -29,17 +29,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/margin_10dp">
+        android:layout_marginTop="@dimen/fragment_description_margin_top">
         <TextView
             android:text="@string/nha_xb"
             android:textColor="#000000"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/fragment_description_text_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/txt_tt_nhaxb"
-            android:layout_marginLeft="@dimen/margin_5dp"
-            android:textSize="@dimen/text_size_18sp"
+            android:layout_marginLeft="@dimen/fragment_description_margin_left"
+            android:textSize="@dimen/fragment_description_text_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -47,17 +47,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/margin_10dp">
+        android:layout_marginTop="@dimen/fragment_description_margin_top">
         <TextView
             android:textColor="#000000"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/fragment_description_text_size"
             android:text="@string/nam_xb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/txt_tt_namxb"
-            android:layout_marginLeft="@dimen/margin_5dp"
-            android:textSize="@dimen/text_size_18sp"
+            android:layout_marginLeft="@dimen/fragment_description_margin_left"
+            android:textSize="@dimen/fragment_description_text_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -65,17 +65,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/margin_10dp">
+        android:layout_marginTop="@dimen/fragment_description_margin_top">
         <TextView
             android:textColor="#000000"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/fragment_description_text_size"
             android:text="@string/so_trang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/txt_tt_sotrang"
-            android:layout_marginLeft="@dimen/margin_5dp"
-            android:textSize="@dimen/text_size_18sp"
+            android:layout_marginLeft="@dimen/fragment_description_margin_left"
+            android:textSize="@dimen/fragment_description_text_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

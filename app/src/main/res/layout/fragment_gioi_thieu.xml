@@ -9,10 +9,10 @@
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:scrollbars="vertical"
-        android:layout_marginTop="@dimen/margin_20dp"
-        android:layout_marginLeft="@dimen/margin_20dp"
-        android:layout_marginRight="@dimen/margin_10dp"
-        android:layout_marginBottom="@dimen/margin_10dp"
+        android:layout_marginTop="@dimen/fragment_introduce_margin_top_left"
+        android:layout_marginLeft="@dimen/fragment_introduce_margin_top_left"
+        android:layout_marginRight="@dimen/fragment_introduce_margin_right_bottom"
+        android:layout_marginBottom="@dimen/fragment_introduce_margin_right_bottom"
         android:id="@+id/txtGioithieu"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

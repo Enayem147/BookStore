@@ -8,12 +8,19 @@
         android:layout_width="@dimen/login_layout_width"
         android:layout_height="@dimen/login_layout_height"
         android:orientation="vertical"
+        android:gravity="center"
         >
-        <ImageView
-            android:layout_gravity="center"
-            android:background="@drawable/logo"
-            android:layout_width="@dimen/login_logo_width"
-            android:layout_height="@dimen/login_logo_height" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/register_title_margin_bottom"
+            android:layout_marginTop="@dimen/profile_title_margin_top"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:text="@string/dang_ky_nhanh"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/profile_title_text_size"
+            android:textStyle="bold" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,7 +35,7 @@
                 android:maxLength="11"
                 android:inputType="number"
                 android:layout_gravity="center"
-                android:id="@+id/txtLogin_SDT"
+                android:id="@+id/txtDialogRegister_SDT"
                 android:hint="@string/nhap_sdt"
                 android:layout_width="@dimen/login_text_width"
                 android:layout_height="wrap_content" />
@@ -48,35 +55,9 @@
                 android:maxLength="12"
                 android:layout_gravity="center"
                 android:inputType="textPassword"
-                android:id="@+id/txtLogin_MK"
+                android:id="@+id/txtDialogRegister_MK"
                 android:hint="@string/nhap_mk"
                 android:layout_width="@dimen/login_text_width"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/login_margin_top"
-            android:layout_marginLeft="@dimen/login_check_box_margin_left">
-            <CheckBox
-                android:id="@+id/cbLogin"
-                android:text="@string/ghi_nho_dang_nhap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:background="@color/colorPrimaryDark"
-                android:layout_marginRight="@dimen/login_register_text_margin"
-                android:layout_marginLeft="@dimen/login_register_text_margin"
-                android:layout_width="@dimen/menu_left_divide_big_height"
-                android:layout_height="match_parent"></LinearLayout>
-            <TextView
-                android:id="@+id/txtLogin_Register"
-                android:layout_gravity="center"
-                android:textColor="@color/colorPrimary"
-                android:text="@string/dang_ky_nhanh"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
@@ -88,10 +69,10 @@
             android:orientation="horizontal"
             android:layout_gravity="center">
             <Button
-                android:id="@+id/btnDangNhap"
+                android:id="@+id/txtDialogRegister"
                 android:textColor="@color/white"
                 android:background="@color/colorPrimary"
-                android:text="@string/dang_nhap"
+                android:text="@string/dang_ky"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
