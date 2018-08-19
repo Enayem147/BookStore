@@ -35,6 +35,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -72,8 +73,6 @@ public class HomePage extends AppCompatActivity {
     public static boolean isMainPage = true;
     public static boolean isUserOrder = false;
     public static boolean isFirst = true;
-    private long backPressedTime;
-    private Toast backToast;
     private Handler handler;
     Toolbar toolbar;
     RecyclerView recyclerView;
@@ -1196,20 +1195,37 @@ public class HomePage extends AppCompatActivity {
     }
 
     /**
-     * Click BACK 2 lần để thoát
+     * Click BACK để thoát khỏi ứng dụng
      */
     @Override
     public void onBackPressed() {
         if (isMainPage) {
-            if (backPressedTime + 2000 > System.currentTimeMillis()) {
-                backToast.cancel();
-                super.onBackPressed();
-                return;
-            } else {
-                backToast = Toast.makeText(this, "Nhấn nút BACK lần nữa để THOÁT ! ", Toast.LENGTH_SHORT);
-                backToast.show();
-            }
-            backPressedTime = System.currentTimeMillis();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Bạn có chắc chắn muốn thoát khỏi ứng dụng không ? ");
+            builder.setCancelable(false);
+            builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    updateCart();
+                    lichSu.clear();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.exit(0);
+                        }
+                    }, 2000);
+                }
+            });
+
+            builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         } else {
             drawerLayout.closeDrawers();
             isMainPage = true;
@@ -1246,6 +1262,7 @@ public class HomePage extends AppCompatActivity {
                     isUserOrder = false;
                 }
             }, 500);
+            isMainPage = true;
         }
     }
 
@@ -1312,21 +1329,5 @@ public class HomePage extends AppCompatActivity {
             gioHang.clear();
             listSoLuongKho.clear();
         }
-    }
-
-    /**
-     * khi thoát khỏi apps thì update giỏ hàng , xóa lịch sử mua hàng
-     */
-    @Override
-    protected void onDestroy() {
-        updateCart();
-        lichSu.clear();
-        super.onDestroy();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                System.exit(0);
-            }
-        }, 2000);
     }
 }

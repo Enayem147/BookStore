@@ -140,6 +140,7 @@ public class OrderActivity extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), HomePage.class);
                             intent.putExtra("MaHD", txtMaHD.getText());
                             intent.putExtra("NgayLap", ngayDat);
+                            finish();
                             startActivity(intent);
                         }
 

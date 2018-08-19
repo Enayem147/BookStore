@@ -4,156 +4,196 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.OrderActivity"
+    android:layout_gravity="center"
     android:orientation="vertical"
-    android:layout_gravity="center">
+    android:weightSum="100"
+    tools:context=".activity.OrderActivity">
+
     <include
         android:id="@+id/toolbarOrder"
-        layout="@layout/layout_toolbar"
-        >
-    </include>
-    <ImageView
-        android:layout_gravity="center"
-        android:src="@drawable/logo"
-        android:layout_width="@dimen/invoice_logo_width"
-        android:layout_height="@dimen/invoice_logo_height" />
+        layout="@layout/layout_toolbar"></include>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/invoice_layout_margin_top"
+        android:layout_height="0dp"
+        android:layout_weight="20"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="@dimen/invoice_logo_width"
+            android:layout_height="@dimen/invoice_logo_height"
+            android:src="@drawable/logo" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="70"
+
         >
 
         <LinearLayout
-            android:layout_marginLeft="@dimen/invoice_layout_margin_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <ImageView
-                android:background="@drawable/ic_invoice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/txtOrder_MaHD"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_marginLeft="@dimen/invoice_text_margin_left"
-                android:layout_gravity="center"
-                android:textSize="@dimen/invoice_text_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginLeft="@dimen/invoice_layout_margin_left"
-            android:layout_marginTop="@dimen/invoice_layout_margin_top"
-            android:layout_width="@dimen/invoice_layout_edit_text_size"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:background="@drawable/icon_menu_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <EditText
-                android:id="@+id/txtOrder_Ten"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_marginLeft="@dimen/invoice_text_margin_left"
-                android:textSize="@dimen/invoice_text_size"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginLeft="@dimen/invoice_layout_margin_left"
-            android:layout_marginTop="@dimen/invoice_layout_margin_top"
-            android:layout_width="@dimen/invoice_layout_edit_text_size"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <ImageView
-                android:background="@drawable/icon_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <EditText
-                android:id="@+id/txtOrder_SDT"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_marginLeft="@dimen/invoice_text_margin_left"
-                android:layout_gravity="center"
-                android:textSize="@dimen/invoice_text_size"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginLeft="@dimen/invoice_layout_margin_left"
-            android:layout_marginTop="@dimen/invoice_layout_margin_top"
-            android:layout_width="@dimen/invoice_layout_edit_text_size"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:background="@drawable/icon_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <EditText
-                android:id="@+id/txtOrder_DiaChi"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_marginLeft="@dimen/invoice_text_margin_left"
-                android:layout_gravity="center"
-                android:textSize="@dimen/invoice_text_size"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginLeft="@dimen/invoice_layout_margin_left"
-            android:layout_marginTop="@dimen/invoice_layout_margin_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:background="@drawable/ic_invoice_cart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <ListView
-                android:id="@+id/listView_Order"
-                android:layout_marginLeft="@dimen/invoice_lis_view_margin_left"
-                android:layout_width="@dimen/invoice_list_view_width"
-                android:layout_height="@dimen/invoice_list_view_height"></ListView>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_marginLeft="@dimen/invoice_layout_margin_left"
-            android:layout_marginTop="@dimen/invoice_layout_margin_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:background="@drawable/ic_money"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/txtInvoice_Total"
-                android:textColor="@color/red"
-                android:layout_marginLeft="@dimen/invoice_text_margin_left"
-                android:layout_gravity="center"
-                android:textSize="@dimen/invoice_text_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="@dimen/invoice_layout_margin_top"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-            <Button
-                android:id="@+id/btnOrder_DatHang"
-                android:textColor="@color/white"
-                android:background="@color/colorPrimary"
-                android:text="@string/xac_nhan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/invoice_layout_margin_left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ma_don_hang"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/invoice_text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtOrder_MaHD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/invoice_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/invoice_layout_edit_text_size"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/invoice_layout_margin_left"
+                android:layout_marginTop="@dimen/invoice_layout_margin_top"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ten_nguoi_nhan"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/invoice_text_size"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/txtOrder_Ten"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/invoice_text_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/invoice_layout_edit_text_size"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/invoice_layout_margin_left"
+                android:layout_marginTop="@dimen/invoice_layout_margin_top"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sdt_nguoi_nhan"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/invoice_text_size"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/txtOrder_SDT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/invoice_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/invoice_layout_edit_text_size"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/invoice_layout_margin_left"
+                android:layout_marginTop="@dimen/invoice_layout_margin_top"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dia_chi_nguoi_nhan"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/invoice_text_size"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/txtOrder_DiaChi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/invoice_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/invoice_layout_margin_left"
+                android:layout_marginTop="@dimen/invoice_layout_margin_top"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gio_hang_cua_ban"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/invoice_text_size"
+                    android:textStyle="bold" />
+
+                <ListView
+                    android:id="@+id/listView_Order"
+                    android:layout_width="@dimen/invoice_list_view_width"
+                    android:layout_height="@dimen/invoice_list_view_height"
+                    android:layout_marginLeft="@dimen/invoice_lis_view_margin_left"></ListView>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/invoice_layout_margin_left"
+                android:layout_marginTop="@dimen/invoice_layout_margin_top"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tong_gia_tri"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/invoice_text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtInvoice_Total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/invoice_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/invoice_layout_margin_top"
+        android:layout_weight="10"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnOrder_DatHang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="@string/xac_nhan"
+            android:textColor="@color/white" />
     </LinearLayout>
+
 
 </LinearLayout>

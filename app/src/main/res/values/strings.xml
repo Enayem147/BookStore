@@ -45,7 +45,6 @@
     <string name="thoi_gian_mua">Thời gian mua hàng : </string>
     <string name="ngay_lap_don">Ngày lập đơn hàng</string>
     <string name="hoa_don">Hóa đơn : </string>
-    <string name="ma_don_hang">Mã đơn hàng</string>
     <string name="cam_on">Cảm ơn đã đặt hàng ở BOOK STORE</string>
     <string name="tat_ca_sp">Tất cả sản phẩm</string>
     <string name="tim_kiem_sach"><font size="14">Nhập tên sách , tác giả , thể loại cần tìm </font></string>
@@ -58,4 +57,10 @@
     <string name="mk_cu"><font size="15">Nhập mật khẩu cũ</font></string>
     <string name="mk_moi"><font size="15">Nhập mật khẩu mới</font></string>
     <string name="mk_moi_conf"><font size="15">Nhập lại mật khẩu mới</font></string>
+    <string name="ma_don_hang">Mã đơn hàng</string>
+    <string name="ten_nguoi_nhan">Họ tên người nhận</string>
+    <string name="sdt_nguoi_nhan">Số điện thoại người nhận</string>
+    <string name="dia_chi_nguoi_nhan">Địa chỉ người nhận</string>
+    <string name="gio_hang_cua_ban">Giỏ hàng của bạn</string>
+    <string name="tong_gia_tri">Tổng giá trị đơn hàng</string>
 </resources>
