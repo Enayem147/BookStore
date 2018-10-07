@@ -160,6 +160,7 @@
     <dimen name="invoice_logo_width">130dp</dimen>
     <dimen name="invoice_logo_height">100dp</dimen>
     <dimen name="invoice_layout_margin_top">10dp</dimen>
+    <dimen name="invoice_layout_margin">30dp</dimen>
     <dimen name="invoice_layout_margin_left">40dp</dimen>
     <dimen name="invoice_text_margin_left">10dp</dimen>
     <dimen name="invoice_text_size">15sp</dimen>
@@ -221,4 +222,13 @@
 
     <dimen name="list_view_description_field_text_size"></dimen>
     <dimen name="list_view_description_value_text_size"></dimen>
+
+    //Listview Customer Order
+
+    <dimen name="cus_order_margin">10dp</dimen>
+    <dimen name="cus_order_padding">5dp</dimen>
+    <dimen name="cus_order_margin_top">10dp</dimen>
+    <dimen name="cus_order_margin_left">10dp</dimen>
+    <dimen name="cus_order_text_margin_right">10dp</dimen>
+    <dimen name="cus_order_text_size">14sp</dimen>
 </resources>

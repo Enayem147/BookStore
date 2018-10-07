@@ -9,22 +9,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.a84965.bookstore.R;
-import com.example.a84965.bookstore.model.LichSu;
-import com.example.a84965.bookstore.model.TatCaSach;
+import com.example.a84965.bookstore.model.DonHang;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class HistoryAdapter extends BaseAdapter {
 
-    ArrayList<LichSu> list ;
-    ArrayList<LichSu> arrayListSearch;
+    ArrayList<DonHang> list ;
+    ArrayList<DonHang> arrayListSearch;
     Context context;
     DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-    public HistoryAdapter(ArrayList<LichSu> list, Context context) {
+    public HistoryAdapter(ArrayList<DonHang> list, Context context) {
         this.list = list;
         this.context = context;
         arrayListSearch = new ArrayList<>();
@@ -59,14 +56,14 @@ public class HistoryAdapter extends BaseAdapter {
         imgHinhAnh = convertView.findViewById(R.id.imgHistory_HinhSach);
 
         // khởi tạo các giá trị cho listGioHang view Lịch Sử
-        LichSu lichSu = (LichSu) getItem(position);
-        txtSoLuong.setText(lichSu.getSach_SL() + "");
-        txtTenSach.setText(lichSu.getSach_Ten());
-        txtGia.setText(decimalFormat.format(lichSu.getSach_DonGia())+ " đ");
-        txtNgayMua.setText(lichSu.getLichSu_NgayDat());
+        DonHang donHang = (DonHang) getItem(position);
+        txtSoLuong.setText(donHang.getSach_SL() + "");
+        txtTenSach.setText(donHang.getSach_Ten());
+        txtGia.setText(decimalFormat.format(donHang.getSach_DonGia())+ " đ");
+        txtNgayMua.setText(donHang.getDH_NgayDat());
 
         Picasso.get()
-                .load(lichSu.getSach_HinhAnh())
+                .load(donHang.getSach_HinhAnh())
                 .into(imgHinhAnh);
 
         return convertView;
@@ -79,13 +76,13 @@ public class HistoryAdapter extends BaseAdapter {
     public void filter(String charText) {
         list.clear();
         if (charText.equals("Mã đơn hàng")) {
-            list.addAll(arrayListSearch);
+            list.addAll(0,arrayListSearch);
         } else {
             for (int j=0;j<arrayListSearch.size();j++) {
-                LichSu lichSu = arrayListSearch.get(j);
+                DonHang donHang = arrayListSearch.get(j);
                 // tìm kiếm theo mã hóa đơn
-                if ((lichSu.getHD_Ma().equals(charText))) {
-                    list.add(lichSu);
+                if ((donHang.getDH_Ma().equals(charText))) {
+                    list.add(donHang);
                 }
             }
         }

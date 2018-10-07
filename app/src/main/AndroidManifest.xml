@@ -27,7 +27,8 @@
         <activity android:name=".activity.OrderActivity" />
         <activity android:name=".activity.HistoryActivity" />
         <activity android:name=".activity.BookListActivity" />
-        <activity android:name=".activity.LoadingScreen"></activity>
+        <activity android:name=".activity.LoadingScreen" />
+        <activity android:name=".activity.CustomerOrderActivity"></activity>
     </application>
 
 </manifest>

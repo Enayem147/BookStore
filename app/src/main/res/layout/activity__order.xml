@@ -13,23 +13,13 @@
         android:id="@+id/toolbarOrder"
         layout="@layout/layout_toolbar"></include>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="20"
-        android:gravity="center">
 
-        <ImageView
-            android:layout_width="@dimen/invoice_logo_width"
-            android:layout_height="@dimen/invoice_logo_height"
-            android:src="@drawable/logo" />
-    </LinearLayout>
 
     <ScrollView
+        android:layout_marginTop="@dimen/invoice_layout_margin"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="70"
-
+        android:layout_weight="45"
         >
 
         <LinearLayout
@@ -131,53 +121,61 @@
                     android:textSize="@dimen/invoice_text_size" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/invoice_layout_margin_left"
-                android:layout_marginTop="@dimen/invoice_layout_margin_top"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/gio_hang_cua_ban"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/invoice_text_size"
-                    android:textStyle="bold" />
-
-                <ListView
-                    android:id="@+id/listView_Order"
-                    android:layout_width="@dimen/invoice_list_view_width"
-                    android:layout_height="@dimen/invoice_list_view_height"
-                    android:layout_marginLeft="@dimen/invoice_lis_view_margin_left"></ListView>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/invoice_layout_margin_left"
-                android:layout_marginTop="@dimen/invoice_layout_margin_top"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tong_gia_tri"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/invoice_text_size"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txtInvoice_Total"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/invoice_text_size" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/invoice_layout_margin_top"
+        android:layout_weight="45"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/invoice_layout_margin_left"
+            android:layout_marginTop="@dimen/invoice_layout_margin_top"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gio_hang_cua_ban"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/invoice_text_size"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/listView_Order"
+                android:layout_width="@dimen/invoice_list_view_width"
+                android:layout_height="@dimen/invoice_list_view_height"
+                android:layout_marginLeft="@dimen/invoice_lis_view_margin_left"></ListView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/invoice_layout_margin_left"
+            android:layout_marginTop="@dimen/invoice_layout_margin_top"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tong_gia_tri"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/invoice_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtInvoice_Total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:textSize="@dimen/invoice_text_size" />
+        </LinearLayout>
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

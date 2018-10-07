@@ -66,7 +66,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/E:/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_brightness_1_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/E:/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/hardware/ic_keyboard_arrow_right_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -76,10 +76,12 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="e73936" />
-                            <entry key="outputName" value="ic_menu_circle" />
+                            <entry key="color" value="2979ff" />
+                            <entry key="height" value="50" />
+                            <entry key="outputName" value="ic_customer_order_detail" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\84965" />
+                            <entry key="width" value="50" />
                           </map>
                         </option>
                       </PersistentState>

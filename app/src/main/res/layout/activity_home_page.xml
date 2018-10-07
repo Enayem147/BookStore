@@ -35,9 +35,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/home_new_book_text_margin_top"
                     android:layout_marginBottom="@dimen/home_new_book_text_margin_left"
                     android:layout_marginLeft="@dimen/home_new_book_text_margin_left"
+                    android:layout_marginTop="@dimen/home_new_book_text_margin_top"
                     android:text="@string/san_pham_moi"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/home_new_book_text_size" />
@@ -114,6 +114,52 @@
                     android:layout_height="@dimen/menu_left_divide_height"
                     android:background="@color/bluegray" />
 
+                // Đơn hàng
+
+                    <LinearLayout
+                        android:id="@+id/linerLayoutMenuCusOrder"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/menu_left_layout_height"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <LinearLayout
+                            android:layout_width="@dimen/menu_left_layout_width"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/menu_left_layout_margin_top"
+                            android:layout_weight="2"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="@dimen/menu_left_img_size"
+                                android:layout_height="@dimen/menu_left_img_size"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_menu_customer_order" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="@dimen/menu_left_layout_width"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/menu_left_layout_margin_top"
+                            android:layout_weight="8">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="@string/tinh_trang_don_hang"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/menu_left_text_size" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/menu_left_divide_height"
+                        android:background="@color/bluegray" />
+
                 <LinearLayout
                     android:id="@+id/linerLayoutMenuContact"
                     android:layout_width="match_parent"
@@ -139,6 +185,7 @@
                         android:layout_width="@dimen/menu_left_layout_width"
                         android:layout_height="match_parent"
                         android:layout_weight="8">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

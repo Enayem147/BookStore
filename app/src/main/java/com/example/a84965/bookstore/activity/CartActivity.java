@@ -1,11 +1,13 @@
 package com.example.a84965.bookstore.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,6 +23,9 @@ import java.util.ArrayList;
 
 public class CartActivity extends AppCompatActivity {
     private CartAdapter _cartAdapter;
+    public static boolean isUserOrder = false;
+    public static String maHD = "";
+    public static String ngayLapHD = "";
     Handler handler;
     ListView listViewCart;
     Toolbar toolbar;
@@ -35,9 +40,40 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__cart);
         callControls();
-        initCart();
         setTotal();
         AllButtonClick();
+        initCart();
+    }
+
+    @Override
+    protected void onResume() {
+        DialogCompleteOrder();
+        super.onResume();
+    }
+
+    private void DialogCompleteOrder() {
+        if (isUserOrder) {
+            CartActivity.txtEmpty.setVisibility(View.VISIBLE);
+            CartActivity.txtCart1.setVisibility(View.INVISIBLE);
+            CartActivity.txtTotal.setVisibility(View.INVISIBLE);
+            if(!maHD.equals("") && !ngayLapHD.equals("")){
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        final Dialog dialog = new Dialog(CartActivity.this);
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.setContentView(R.layout.dialog_complete_invoice);
+                        TextView txtMaHD = dialog.findViewById(R.id.txtInvoiceComp_MaHD);
+                        TextView txtNgayLap = dialog.findViewById(R.id.txtInvoiceComp_NgayLap);
+                        txtMaHD.setText(maHD);
+                        txtNgayLap.setText(ngayLapHD);
+                        dialog.show();
+                        isUserOrder = false;
+                    }
+                },1500);
+
+            }
+        }
     }
 
     /**
@@ -122,6 +158,10 @@ public class CartActivity extends AppCompatActivity {
             txtTotal.setVisibility(View.VISIBLE);
             listViewCart.setAdapter(_cartAdapter);
             _cartAdapter.notifyDataSetChanged();
+        }else{
+            CartActivity.txtEmpty.setVisibility(View.VISIBLE);
+            CartActivity.txtCart1.setVisibility(View.INVISIBLE);
+            CartActivity.txtTotal.setVisibility(View.INVISIBLE);
         }
     }
 

@@ -35,7 +35,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -43,12 +42,12 @@ import android.widget.ViewFlipper;
 import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.adapter.MenuAdapter;
 import com.example.a84965.bookstore.adapter.NewBooksAdapter;
+import com.example.a84965.bookstore.model.DonHang;
 import com.example.a84965.bookstore.model.Kho;
 import com.example.a84965.bookstore.model.LoaiSach;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.GioHang;
 import com.example.a84965.bookstore.model.KhachHang;
-import com.example.a84965.bookstore.model.LichSu;
 import com.example.a84965.bookstore.model.QuangCao;
 import com.example.a84965.bookstore.model.TacGia;
 import com.example.a84965.bookstore.model.TacGiaChiTiet;
@@ -71,7 +70,6 @@ public class HomePage extends AppCompatActivity {
 
     public static boolean isNewUser = false;
     public static boolean isMainPage = true;
-    public static boolean isUserOrder = false;
     public static boolean isFirst = true;
     private Handler handler;
     Toolbar toolbar;
@@ -80,7 +78,8 @@ public class HomePage extends AppCompatActivity {
     ListView listView;
     DrawerLayout drawerLayout;
     ViewFlipper viewFlipper;
-    LinearLayout linearLayoutMenuRes, linearLayoutMenuAll , linearLayoutMenuContact;
+    LinearLayout linearLayoutMenuRes, linearLayoutMenuAll , linearLayoutMenuContact ;
+    public static LinearLayout linearLayoutMenuCusOrder;
     static TextView txtMenuRes;
     static ImageView imgMenuRes;
 
@@ -93,7 +92,8 @@ public class HomePage extends AppCompatActivity {
     static public String new_SDT = "";
     static public ArrayList<GioHang> gioHang;
     static public ArrayList<Integer> listSoLuongKho;
-    static public ArrayList<LichSu> lichSu;
+    static public ArrayList<DonHang> donHang;
+    static public ArrayList<DonHang> lichSu;
     static public ArrayList<TatCaSach> tatCaSach;
     static public ArrayList<String> listMaDH;
     public boolean isLogin = false;
@@ -112,7 +112,6 @@ public class HomePage extends AppCompatActivity {
         drawerLayoutChange();
         initAllBookList();
         loginKhachHangRemembered();
-        DialogCompleteOrder();
         loadingScreen();
     }
 
@@ -125,13 +124,13 @@ public class HomePage extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    linearLayoutMenuCusOrder.setEnabled(true);
                     initHistory(KH_SDT);
                     initCart(KH_SDT);
                     updateMenuTitles();
                     getKhachHangProfile();
                 }
             }, 1000);
-
         }
     }
 
@@ -245,6 +244,16 @@ public class HomePage extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentBookList = new Intent(HomePage.this, BookListActivity.class);
                 startActivity(intentBookList);
+            }
+        });
+
+        //menu tình trạng đơn hàng
+
+        linearLayoutMenuCusOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCosOrder = new Intent(HomePage.this, CustomerOrderActivity.class);
+                startActivity(intentCosOrder);
             }
         });
 
@@ -425,10 +434,11 @@ public class HomePage extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 //cap nhật giỏ hàng
                 updateCart();
+                linearLayoutMenuCusOrder.setEnabled(false);
                 KH_SDT = "";
                 KH_Ten = "";
                 // cap nhat lich su
-                lichSu.clear();
+                donHang.clear();
                 khachHang = new KhachHang();
                 //remove shareRef
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -677,6 +687,7 @@ public class HomePage extends AppCompatActivity {
                         KhachHang kh = dataSnapshot.getValue(KhachHang.class);
                         if (kh.getKH_SDT().equals(txtSDT.getText().toString()) && kh.getKH_MK().equals(txtMK.getText().toString())) {
                             isLogin = true;
+                            linearLayoutMenuCusOrder.setEnabled(true);
                             KH_Ten = kh.getKH_HoTen();
                             KH_SDT = kh.getKH_SDT();
                             initCart(kh.getKH_SDT());
@@ -1117,16 +1128,23 @@ public class HomePage extends AppCompatActivity {
      */
 
     public static void initHistory(final String sdt) {
-        lichSu = new ArrayList<>();
+        donHang = new ArrayList<>();
         listMaDH = new ArrayList<>();
-        listMaDH.addAll(0, Collections.singleton("Mã đơn hàng"));
-        if (sdt != null && !sdt.equals("") && lichSu.size() == 0) {
-            mDatabase.child("LichSu").child(sdt).addChildEventListener(new GetChildFireBase() {
+        lichSu = new ArrayList<>();
+        listMaDH.addAll(Collections.singleton("Mã đơn hàng"));
+        if (sdt != null && !sdt.equals("") && donHang.size() == 0) {
+            mDatabase.child("DonHang").child(sdt).addChildEventListener(new GetChildFireBase() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    LichSu ls = dataSnapshot.getValue(LichSu.class);
-                    lichSu.add(ls);
-                    listMaDH.add(1,ls.getHD_Ma());
+                    DonHang dh = dataSnapshot.getValue(DonHang.class);
+                    if(dh.getDH_TrangThai() == 1 || dh.getDH_TrangThai()==2){
+                        donHang.add(0,dh);
+                    }
+                    if(dh.getDH_TrangThai() == 3){
+                        lichSu.add(0,dh);
+                        listMaDH.add(1,dh.getDH_Ma());
+                    }
+
                     super.onChildAdded(dataSnapshot, s);
                 }
             });
@@ -1170,6 +1188,10 @@ public class HomePage extends AppCompatActivity {
         linearLayoutMenuRes = findViewById(R.id.linerLayoutMenuRes);
         linearLayoutMenuAll = findViewById(R.id.linerLayoutMenuAll);
         linearLayoutMenuContact = findViewById(R.id.linerLayoutMenuContact);
+        linearLayoutMenuCusOrder = findViewById(R.id.linerLayoutMenuCusOrder);
+        linearLayoutMenuCusOrder.setEnabled(false);
+
+
         handler = new Handler();
         toolbar = findViewById(R.id.toolBar_TrangChinh);
         setTitle("Book Store");
@@ -1185,8 +1207,8 @@ public class HomePage extends AppCompatActivity {
             listSoLuongKho = new ArrayList<>();
         }
 
-        if (lichSu == null) {
-            lichSu = new ArrayList<>();
+        if (donHang == null) {
+            donHang = new ArrayList<>();
         }
 
         if(listMaDH == null){
@@ -1207,11 +1229,11 @@ public class HomePage extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     updateCart();
-                    lichSu.clear();
+                    donHang.clear();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            System.exit(0);
+                            System.exit(1);
                         }
                     }, 2000);
                 }
@@ -1242,29 +1264,7 @@ public class HomePage extends AppCompatActivity {
     /**
      * Hiển thị dialog chi tiết Order của khách hàng khi họ vừa đặt hàng xong
      */
-    private void DialogCompleteOrder() {
-        if (isUserOrder) {
-            initHistory(KH_SDT);
-            Intent intent = getIntent();
-            final String maHD = intent.getStringExtra("MaHD");
-            final String ngayLapHD = intent.getStringExtra("NgayLap");
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    final Dialog dialog = new Dialog(HomePage.this);
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.dialog_complete_invoice);
-                    TextView txtMaHD = dialog.findViewById(R.id.txtInvoiceComp_MaHD);
-                    TextView txtNgayLap = dialog.findViewById(R.id.txtInvoiceComp_NgayLap);
-                    txtMaHD.setText(maHD);
-                    txtNgayLap.setText(ngayLapHD);
-                    dialog.show();
-                    isUserOrder = false;
-                }
-            }, 500);
-            isMainPage = true;
-        }
-    }
+
 
 
     @Override

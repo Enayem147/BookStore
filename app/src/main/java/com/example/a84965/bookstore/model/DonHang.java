@@ -1,33 +1,36 @@
 package com.example.a84965.bookstore.model;
 
-public class LichSu {
-    private String HD_Ma;
+public class DonHang {
+    private String DH_Ma;
     private String Sach_Ma;
     private String Sach_Ten;
     private String Sach_HinhAnh;
     private int Sach_DonGia;
     private int Sach_SL;
-    private String LichSu_NgayDat;
+    private String DH_NgayDat;
+    private int DH_TrangThai;
 
-    public LichSu() {
+    public DonHang() {
     }
 
-    public LichSu(String HD_Ma, String sach_Ma, String sach_Ten, String sach_HinhAnh, int sach_DonGia, int sach_SL, String lichSu_NgayDat) {
-        this.HD_Ma = HD_Ma;
+    public DonHang(String DH_Ma, String sach_Ma, String sach_Ten, String sach_HinhAnh, int sach_DonGia, int sach_SL, String DH_NgayDat, int DH_TrangThai) {
+        this.DH_Ma = DH_Ma;
         Sach_Ma = sach_Ma;
         Sach_Ten = sach_Ten;
         Sach_HinhAnh = sach_HinhAnh;
         Sach_DonGia = sach_DonGia;
         Sach_SL = sach_SL;
-        LichSu_NgayDat = lichSu_NgayDat;
+        this.DH_NgayDat = DH_NgayDat;
+        this.DH_TrangThai = DH_TrangThai;
     }
 
-    public String getHD_Ma() {
-        return HD_Ma;
+
+    public String getDH_Ma() {
+        return DH_Ma;
     }
 
-    public void setHD_Ma(String HD_Ma) {
-        this.HD_Ma = HD_Ma;
+    public void setDH_Ma(String DH_Ma) {
+        this.DH_Ma = DH_Ma;
     }
 
     public String getSach_Ma() {
@@ -70,13 +73,19 @@ public class LichSu {
         Sach_SL = sach_SL;
     }
 
-    public String getLichSu_NgayDat() {
-        return LichSu_NgayDat;
+    public String getDH_NgayDat() {
+        return DH_NgayDat;
     }
 
-    public void setLichSu_NgayDat(String lichSu_NgayDat) {
-        LichSu_NgayDat = lichSu_NgayDat;
+    public void setDH_NgayDat(String DH_NgayDat) {
+        this.DH_NgayDat = DH_NgayDat;
     }
 
+    public int getDH_TrangThai() {
+        return DH_TrangThai;
+    }
 
+    public void setDH_TrangThai(int DH_TrangThai) {
+        this.DH_TrangThai = DH_TrangThai;
+    }
 }

@@ -1,7 +1,6 @@
 package com.example.a84965.bookstore.activity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,8 +15,8 @@ import android.widget.Toast;
 
 import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.adapter.InvoiceAdapter;
+import com.example.a84965.bookstore.model.DonHang;
 import com.example.a84965.bookstore.model.Kho;
-import com.example.a84965.bookstore.model.LichSu;
 import com.example.a84965.bookstore.ultil.GetChildFireBase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -83,7 +82,6 @@ public class OrderActivity extends AppCompatActivity {
      */
     private void clickButtonDatHang() {
         ngayDat = sdf.format(date);
-
         btnDatHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,26 +120,29 @@ public class OrderActivity extends AppCompatActivity {
                                 DatabaseReference updateKho = FirebaseDatabase.getInstance().getReference("Kho").child(listKey.get(i));
                                 updateKho.setValue(new Kho(HomePage.gioHang.get(i).getSach_Ma(), listSoLuong.get(i) - HomePage.gioHang.get(i).getSach_SL()));
                                 //thêm giỏ hàng vào lịch sử mua hàng
-                                LichSu lichSu = new LichSu(txtMaHD.getText().toString(),
+                                DonHang donHang = new DonHang(txtMaHD.getText().toString(),
                                         HomePage.gioHang.get(i).getSach_Ma(),
                                         HomePage.gioHang.get(i).getSach_Ten(),
                                         HomePage.gioHang.get(i).getSach_HinhAnh(),
                                         HomePage.gioHang.get(i).getSach_DonGia(),
                                         HomePage.gioHang.get(i).getSach_SL(),
-                                        ngayDat);
-                                mDatabase.child("LichSu").child(HomePage.KH_SDT).push().setValue(lichSu);
+                                        ngayDat,1);
+                                // trạng thái đơn hàng 1 : chưa giao , 2 : đang giao , 3 : đã giao , 4: lỗi
+                                mDatabase.child("DonHang").child(HomePage.KH_SDT).push().setValue(donHang);
                             }
                             // xóa giỏ hàng
                             DatabaseReference dataCart = FirebaseDatabase.getInstance().getReference("GioHang").child(HomePage.KH_SDT);
                             dataCart.removeValue();
-
                             HomePage.gioHang.clear();
-                            HomePage.isUserOrder = true;
-                            Intent intent = new Intent(getApplicationContext(), HomePage.class);
-                            intent.putExtra("MaHD", txtMaHD.getText());
-                            intent.putExtra("NgayLap", ngayDat);
+                            // cập nhật lịch sử mua hàng
+                            HomePage.initHistory(HomePage.KH_SDT);
+
+
+                            CartActivity.maHD = txtMaHD.getText().toString();
+                            CartActivity.ngayLapHD = ngayDat;
+                            CartActivity.isUserOrder = true;
+                            progressDialog.dismiss();
                             finish();
-                            startActivity(intent);
                         }
 
                     }

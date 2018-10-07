@@ -62,5 +62,9 @@
     <string name="sdt_nguoi_nhan">Số điện thoại người nhận</string>
     <string name="dia_chi_nguoi_nhan">Địa chỉ người nhận</string>
     <string name="gio_hang_cua_ban">Giỏ hàng của bạn</string>
+    <string name="tinh_trang_don_hang">Tình trạng đơn hàng</string>
     <string name="tong_gia_tri">Tổng giá trị đơn hàng</string>
+    <string name="chua_co_don_hang">Chưa có đơn hàng nào</string>
+    <string name="cus_ma_don_hang">Mã đơn hàng : </string>
+    <string name="trang_thai_don_hang">Trạng thái đơn hàng : </string>
 </resources>
