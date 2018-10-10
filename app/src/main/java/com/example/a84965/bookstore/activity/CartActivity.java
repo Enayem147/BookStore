@@ -46,16 +46,18 @@ public class CartActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    protected void onRestart() {
         DialogCompleteOrder();
-        super.onResume();
+        super.onRestart();
     }
+
 
     private void DialogCompleteOrder() {
         if (isUserOrder) {
-            CartActivity.txtEmpty.setVisibility(View.VISIBLE);
-            CartActivity.txtCart1.setVisibility(View.INVISIBLE);
-            CartActivity.txtTotal.setVisibility(View.INVISIBLE);
+            _cartAdapter.notifyDataSetChanged();
+            txtEmpty.setVisibility(View.VISIBLE);
+            txtCart1.setVisibility(View.INVISIBLE);
+            txtTotal.setVisibility(View.INVISIBLE);
             if(!maHD.equals("") && !ngayLapHD.equals("")){
                 handler.postDelayed(new Runnable() {
                     @Override

@@ -127,7 +127,7 @@ public class OrderActivity extends AppCompatActivity {
                                         HomePage.gioHang.get(i).getSach_DonGia(),
                                         HomePage.gioHang.get(i).getSach_SL(),
                                         ngayDat,1);
-                                // trạng thái đơn hàng 1 : chưa giao , 2 : đang giao , 3 : đã giao , 4: lỗi
+                                // trạng thái đơn hàng 1 : chưa giao , 2 : đang giao , 3 : đã giao , 4: tạm hoãn
                                 mDatabase.child("DonHang").child(HomePage.KH_SDT).push().setValue(donHang);
                             }
                             // xóa giỏ hàng
