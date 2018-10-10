@@ -4,77 +4,86 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@color/white">
+
     <LinearLayout
         android:layout_width="@dimen/login_layout_width"
         android:layout_height="@dimen/login_layout_height"
-        android:orientation="vertical"
         android:gravity="center"
-        >
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/register_title_margin_bottom"
             android:layout_marginTop="@dimen/profile_title_margin_top"
             android:gravity="center"
-            android:textAllCaps="true"
             android:text="@string/dang_ky_nhanh"
+            android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/profile_title_text_size"
             android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
             <ImageView
-                android:layout_gravity="center"
-                android:background="@drawable/icon_phone"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <EditText
-                android:maxLength="11"
-                android:inputType="number"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:background="@drawable/icon_phone" />
+
+            <EditText
+
                 android:id="@+id/txtDialogRegister_SDT"
+                android:layout_width="@dimen/login_text_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:hint="@string/nhap_sdt"
-                android:layout_width="@dimen/login_text_width"
-                android:layout_height="wrap_content" />
+                android:inputType="number"
+                android:maxLength="10" />
         </LinearLayout>
+
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="@dimen/login_margin_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:orientation="horizontal">
+
             <ImageView
-                android:layout_gravity="center"
-                android:background="@drawable/icon_pass"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <EditText
-                android:maxLength="12"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:inputType="textPassword"
+                android:background="@drawable/icon_pass" />
+
+            <EditText
                 android:id="@+id/txtDialogRegister_MK"
-                android:hint="@string/nhap_mk"
                 android:layout_width="@dimen/login_text_width"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="@string/nhap_mk"
+                android:inputType="textPassword"
+                android:maxLength="12" />
         </LinearLayout>
 
 
         <LinearLayout
-            android:layout_marginTop="@dimen/login_btn_margin_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/login_btn_margin_top"
+            android:orientation="horizontal">
+
             <Button
                 android:id="@+id/txtDialogRegister"
-                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:text="@string/dang_ky"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textColor="@color/white" />
         </LinearLayout>
 
     </LinearLayout>

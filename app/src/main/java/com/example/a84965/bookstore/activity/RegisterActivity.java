@@ -160,7 +160,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         KhachHang khachHang = dataSnapshot.getValue(KhachHang.class);
-                        if(khachHang.getKH_SDT().equals(sdt)){
+                        if (khachHang.getKH_SDT().equals(sdt)) {
                             exist[0] = true;
                         }
                         super.onChildAdded(dataSnapshot, s);
@@ -184,18 +184,18 @@ public class RegisterActivity extends AppCompatActivity {
 
                         int i = 0;
                         if (!checkPhone(sdt)) {
-                            if(++i == 1){
-                                strErr+="Số điện thoại không hợp lệ";
-                            }else{
-                                strErr+="\nSố điện thoại không hợp lệ";
+                            if (++i == 1) {
+                                strErr += "Số điện thoại không hợp lệ";
+                            } else {
+                                strErr += "\nSố điện thoại không hợp lệ";
                             }
                             error = true;
                         }
                         if (mk.length() < 6) {
-                            if(++i == 1){
-                                strErr+="Độ dài mật khẩu phải trên 6 ký tự";
-                            }else{
-                                strErr+="\nĐộ dài mật khẩu phải trên 6 ký tự";
+                            if (++i == 1) {
+                                strErr += "Độ dài mật khẩu phải trên 6 ký tự";
+                            } else {
+                                strErr += "\nĐộ dài mật khẩu phải trên 6 ký tự";
                             }
 
                             error = true;
@@ -208,10 +208,10 @@ public class RegisterActivity extends AppCompatActivity {
                         } else if (error) {
                             progressDialog.dismiss();
                             Toast.makeText(RegisterActivity.this, strErr, Toast.LENGTH_SHORT).show();
-                        }else if(exist[0]){
+                        } else if (exist[0]) {
                             progressDialog.dismiss();
                             Toast.makeText(RegisterActivity.this, "Số điện thoại đã tồn tại", Toast.LENGTH_SHORT).show();
-                        }else{
+                        } else {
                             Toast.makeText(RegisterActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                             KhachHang khachHang = new KhachHang(sdt, mk, ten, diachi);
                             mDatabase.child("KhachHang").push().setValue(khachHang);
@@ -220,14 +220,15 @@ public class RegisterActivity extends AppCompatActivity {
                             finish();
                         }
                     }
-                },1500);
+                }, 1500);
 
             }
         });
     }
 
     /**
-     * Kiểm tra số điện thoại ( 09 - 10 số , 01 - 11 số , chỉ có thể là số )
+     * Kiểm tra số điện thoại ( 10 số , chỉ có thể là số )
+     *
      * @param number : Số điện thoại
      * @return
      */
@@ -236,15 +237,17 @@ public class RegisterActivity extends AppCompatActivity {
         Matcher matcher = pattern.matcher(number);
         if (!matcher.matches()) {
             return false;
-        } else if (number.length() == 10 || number.length() == 11) {
+        } else if (number.length() == 10) {
             if (number.length() == 10) {
-                if (number.substring(0, 2).equals("09")) {
+                if (number.substring(0, 2).equals("03") ||
+                        number.substring(0, 2).equals("05") ||
+                        number.substring(0, 2).equals("07") ||
+                        number.substring(0, 2).equals("08") ||
+                        number.substring(0, 2).equals("09")) {
                     return true;
                 } else {
                     return false;
                 }
-            } else if (number.substring(0, 2).equals("01")) {
-                return true;
             } else {
                 return false;
             }

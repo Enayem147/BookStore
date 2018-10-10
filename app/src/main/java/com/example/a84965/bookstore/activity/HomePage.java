@@ -731,7 +731,7 @@ public class HomePage extends AppCompatActivity {
     }
 
     /**
-     * Kiểm tra số điện thoại ( 09 - 10 số , 01 - 11 số , chỉ có thể là số )
+     * Kiểm tra số điện thoại ( 10 số  , chỉ có thể là số )
      * @param number : Số điện thoại
      * @return
      */
@@ -740,15 +740,17 @@ public class HomePage extends AppCompatActivity {
         Matcher matcher = pattern.matcher(number);
         if (!matcher.matches()) {
             return false;
-        } else if (number.length() == 10 || number.length() == 11) {
+        } else if (number.length() == 10) {
             if (number.length() == 10) {
-                if (number.substring(0, 2).equals("09")) {
+                if (number.substring(0, 2).equals("03") ||
+                        number.substring(0, 2).equals("05") ||
+                        number.substring(0, 2).equals("07") ||
+                        number.substring(0, 2).equals("08") ||
+                        number.substring(0, 2).equals("09")) {
                     return true;
                 } else {
                     return false;
                 }
-            } else if (number.substring(0, 2).equals("01")) {
-                return true;
             } else {
                 return false;
             }
