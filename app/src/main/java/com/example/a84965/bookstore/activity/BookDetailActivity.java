@@ -24,12 +24,19 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RatingBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.adapter.FragmentPagerAdapter;
+import com.example.a84965.bookstore.adapter.ReviewsAdapter;
+import com.example.a84965.bookstore.model.DanhGia;
 import com.example.a84965.bookstore.model.Kho;
 import com.example.a84965.bookstore.model.Sach;
 import com.example.a84965.bookstore.model.GioHang;
@@ -61,13 +68,16 @@ public class BookDetailActivity extends AppCompatActivity {
     private String sachTen = "";
     private int sachGia = 0 ;
     private int soLuongKho = 1;
-    Button btnThem;
+    Button btnDanhGia;
+    ImageButton btnThem;
     ImageView imgHinh;
     TextView txtTen,txtGia,txtTrangThai;
+    String tieuDe= "";
     private DatabaseReference mDatabase;
     int soLuong = 1;
     private boolean isLogin = false;
     SharedPreferences sharedPreferences;
+    ArrayList<DanhGia> listDanhGia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,14 +86,28 @@ public class BookDetailActivity extends AppCompatActivity {
         callControls();
         initToolBar();
         initBookDetail();
-        ButtonThemGioHangClicked();
+        eventButtonsClick();
         initBookStatus();
+        initReviews();
+    }
+
+    private void initReviews() {
+        listDanhGia = new ArrayList<>();
+        mDatabase.child("DanhGia").child(sachMa).addChildEventListener(new GetChildFireBase() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                final DanhGia danhGia = dataSnapshot.getValue(DanhGia.class);
+                listDanhGia.add(danhGia);
+                super.onChildAdded(dataSnapshot, s);
+            }
+        });
+
     }
 
     /**
      * Event khi click vào nút THÊM VÀO GIỎ HÀNG
      */
-    private void ButtonThemGioHangClicked(){
+    private void eventButtonsClick(){
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,6 +118,76 @@ public class BookDetailActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnDanhGia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(HomePage.KH_SDT == null || HomePage.KH_SDT.equals("")){
+                    DialogDangNhap();
+                }else{
+                    DialogDanhGia();
+                }
+            }
+        });
+    }
+
+    /**
+     * Hiển thị Dialog đánh giá sách
+     */
+
+    private void DialogDanhGia() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_reviews);
+        final TextView txtRating = dialog.findViewById(R.id.txtDanhGia_Rating);
+        final EditText txtTieuDe = dialog.findViewById(R.id.txtDanhGia_TieuDe);
+        txtTieuDe.setText("");
+        final EditText txtNoiDung = dialog.findViewById(R.id.txtDanhGia_NoiDung);
+        final RatingBar ratingBar = dialog.findViewById(R.id.ratingBarReview);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                switch ((int) rating){
+                    case 1:
+                        txtRating.setText("Cực kì không hài lòng");
+                        break;
+                    case 2:
+                        txtRating.setText("Không hài lòng");
+                        break;
+                    case 3:
+                        txtRating.setText("Bình thường");
+                        break;
+                    case 4:
+                        txtRating.setText("Hài lòng");
+                        break;
+                    case 5:
+                        txtRating.setText("Rất hài lòng");
+                        break;
+                }
+            }
+        });
+        Button btnGuiDanhGia = dialog.findViewById(R.id.btnGuiDanhGia);
+        btnGuiDanhGia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float xepHang = ratingBar.getRating();
+                tieuDe = txtTieuDe.getText().toString();
+                if(tieuDe.equals("")){
+                    tieuDe = txtRating.getText().toString();
+                }
+                if(xepHang == 0.0){
+                    Toast.makeText(BookDetailActivity.this, "Vui lòng đánh giá sản phẩm", Toast.LENGTH_SHORT).show();
+                }else if (txtNoiDung.getText().toString().equals("") || txtNoiDung.getText().toString() == null){
+                    Toast.makeText(BookDetailActivity.this, "Nội dụng đánh giá không được rỗng", Toast.LENGTH_SHORT).show();
+                }else{
+                    DanhGia danhGia = new DanhGia(HomePage.KH_SDT,tieuDe,txtNoiDung.getText().toString(),xepHang);
+                    mDatabase.child("DanhGia").child(sachMa).push().setValue(danhGia);
+                    Toast.makeText(BookDetailActivity.this, "Cảm ơn quý khách đã đánh giá sản phẩm của chúng tôi", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            }
+        });
+        dialog.show();
     }
 
     /**
@@ -375,6 +469,7 @@ public class BookDetailActivity extends AppCompatActivity {
         listTG = (ArrayList<String>) intent.getSerializableExtra("TacGia");
 
         txtTrangThai = findViewById(R.id.txtDetail_TrangThai);
+        btnDanhGia = findViewById(R.id.btnDanhGia);
         btnThem = findViewById(R.id.btnThem_Sach);
         txtTen = findViewById(R.id.txtDetail_Ten);
         txtGia = findViewById(R.id.txtDetail_Gia);
@@ -567,6 +662,14 @@ public class BookDetailActivity extends AppCompatActivity {
 
     public List getTacGia(){
         return  listTG;
+    }
+
+    public String getMaSach(){
+        return sach.getSach_Ma();
+    }
+
+    public ArrayList<DanhGia> getReviews(){
+        return listDanhGia;
     }
 
     /**

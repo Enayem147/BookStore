@@ -57,7 +57,7 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/btn_cong_tru_margin_top">
                 <Button
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/border_button"
                     android:id="@+id/btnCart_Tru"
                     android:textStyle="bold"
                     android:textSize="@dimen/btn_cong_tru_text_size"
@@ -76,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <Button
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/border_button"
                     android:id="@+id/btnCart_Cong"
                     android:textSize="@dimen/btn_cong_tru_text_size"
                     android:textColor="@color/white"

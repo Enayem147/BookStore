@@ -189,7 +189,7 @@
             android:id="@+id/btnOrder_DatHang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/border_button"
             android:text="@string/xac_nhan"
             android:textColor="@color/white" />
     </LinearLayout>

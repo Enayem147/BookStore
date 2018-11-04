@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:background="@drawable/border_book_detail"
+        android:layout_width="300dp"
+        android:layout_height="500dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:background="@drawable/border_book_detail"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:text=" 1. Đánh giá của các bạn : "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+                <RatingBar
+                    android:id="@+id/ratingBarReview"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:stepSize="1" />
+            <TextView
+                android:textColor="@color/colorPrimary"
+                android:id="@+id/txtDanhGia_Rating"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@drawable/border_book_detail"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:text=" 2. Tiêu đề (Không bắt buộc) : "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/txtDanhGia_TieuDe"
+                android:textSize="15dp"
+                android:hint="Nhập tiêu đề đánh giá"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:background="@drawable/border_book_detail"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:text=" 3. Nội dung đánh giá : "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/txtDanhGia_NoiDung"
+                android:gravity="top"
+                android:lines="9"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:textSize="15dp"
+                android:hint="Đánh giá của bạn về sản phẩm này"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnGuiDanhGia"
+            android:layout_marginTop="10dp"
+            android:text="Gửi đánh giá"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -74,16 +74,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
-                <Button
-                    android:textSize="@dimen/detail_btn_text_size"
-                    android:id="@+id/btnThem_Sach"
+                <LinearLayout
                     android:layout_marginTop="@dimen/detail_btn_margin_top"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:background="@color/colorPrimary"
-                    android:text="@string/them_gio_hang"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="70dp"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+                    <ImageButton
+                        android:src="@drawable/ic_shopping_cart"
+                        android:id="@+id/btnThem_Sach"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/border_button" />
+                    <Button
+                        android:id="@+id/btnDanhGia"
+                        android:textColor="@color/white"
+                        android:text="Gửi đánh giá"
+                        android:layout_marginLeft="@dimen/detail_btn_margin_left"
+                        android:background="@drawable/border_button"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp" />
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     <LinearLayout

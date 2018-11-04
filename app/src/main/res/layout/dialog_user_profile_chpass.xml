@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/profile_btn_margin_top"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/border_button"
             android:text="@string/xac_nhan"
             android:textAllCaps="true"
             android:textColor="@color/white" />

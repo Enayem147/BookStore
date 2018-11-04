@@ -187,8 +187,9 @@
     <dimen name="detail_img_width">150dp</dimen>
     <dimen name="detail_img_height">240dp</dimen>
     <dimen name="detail_tab_layout_margin">20dp</dimen>
-    <dimen name="detail_btn_margin_top">20dp</dimen>
-    <dimen name="detail_btn_text_size">15sp</dimen>
+    <dimen name="detail_btn_margin_top">10dp</dimen>
+    <dimen name="detail_btn_margin_left">10dp</dimen>
+    <dimen name="detail_btn_text_size">12sp</dimen>
     <dimen name="detail_layout_text_margin_top">10dp</dimen>
 
     //dialog thêm vào giỏ hàng

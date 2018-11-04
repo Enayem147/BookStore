@@ -13,12 +13,9 @@ import android.widget.TextView;
 import com.example.a84965.bookstore.R;
 import com.example.a84965.bookstore.activity.BookDetailActivity;
 import com.example.a84965.bookstore.model.Sach;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 public class GioiThieu extends Fragment {
-    private DatabaseReference mDatabase;
     public GioiThieu() {
     }
     TextView txtGioiThieu;
@@ -26,7 +23,6 @@ public class GioiThieu extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gioi_thieu,container,false);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         txtGioiThieu = view.findViewById(R.id.txtGioithieu);
         txtGioiThieu.setMovementMethod(new ScrollingMovementMethod());
         // Lấy thông tin sách từ trang BookDetail
