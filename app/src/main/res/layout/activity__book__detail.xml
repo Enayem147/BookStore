@@ -89,7 +89,7 @@
                     <Button
                         android:id="@+id/btnDanhGia"
                         android:textColor="@color/white"
-                        android:text="Gửi đánh giá"
+                        android:text="Đánh giá sách"
                         android:layout_marginLeft="@dimen/detail_btn_margin_left"
                         android:background="@drawable/border_button"
                         android:layout_width="100dp"

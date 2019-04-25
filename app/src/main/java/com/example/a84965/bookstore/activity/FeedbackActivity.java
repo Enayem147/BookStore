@@ -5,36 +5,29 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a84965.bookstore.R;
-import com.example.a84965.bookstore.adapter.FragmentPagerAdapter;
+import com.example.a84965.bookstore.adapter.FeedbackAdapter;
 import com.example.a84965.bookstore.model.DanhGia;
-import com.example.a84965.bookstore.model.Kho;
-import com.example.a84965.bookstore.model.Sach;
-import com.example.a84965.bookstore.model.GioHang;
 import com.example.a84965.bookstore.model.KhachHang;
 import com.example.a84965.bookstore.ultil.DrawableClickListener;
 import com.example.a84965.bookstore.ultil.GetChildFireBase;
@@ -44,93 +37,153 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class BookDetailActivity extends AppCompatActivity {
-    ViewPager viewPager;
-    TabLayout tabLayout;
-    Toolbar toolbar;
-    private Handler handler;
-    private Sach sach = null;
-    private String nhaXB = "";
-    private List<String> listTG = new ArrayList<>();
-    private String sachMa = "";
-    private String sachHinh = "";
-    private String sachTen = "";
-    private int sachGia = 0 ;
-    private int soLuongKho = 1;
-    Button btnDanhGia;
-    ImageButton btnThem;
-    ImageView imgHinh;
-    TextView txtTen,txtGia,txtTrangThai;
-    private DatabaseReference mDatabase;
-    int soLuong = 1;
+public class FeedbackActivity extends AppCompatActivity {
     private boolean isLogin = false;
     SharedPreferences sharedPreferences;
+    Handler handler;
+    Button btnFeedback;
+    Toolbar toolbar;
+    FeedbackAdapter feedbackAdapter;
     ArrayList<DanhGia> listDanhGia;
-
+    ImageView imgSach;
+    TextView txtTen;
+    ListView listViewFeedback;
+    String tieuDe= "";
+    private String sachMa = "";
+    private static DatabaseReference mDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity__book__detail);
+        setContentView(R.layout.activity_feedback);
         callControls();
         initToolBar();
-        initBookDetail();
+        initBook();
+        initFeedBackList();
         eventButtonsClick();
-        initBookStatus();
-        initReviews();
     }
 
-    private void initReviews() {
-        listDanhGia = new ArrayList<>();
-        mDatabase.child("DanhGia").child(sachMa).addChildEventListener(new GetChildFireBase() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                final DanhGia danhGia = dataSnapshot.getValue(DanhGia.class);
-                listDanhGia.add(danhGia);
-                super.onChildAdded(dataSnapshot, s);
-            }
-        });
-
-    }
-
-    /**
-     * Event khi click vào nút THÊM VÀO GIỎ HÀNG
-     */
-    private void eventButtonsClick(){
-        btnThem.setOnClickListener(new View.OnClickListener() {
+    private void eventButtonsClick() {
+        btnFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(HomePage.KH_SDT == null || HomePage.KH_SDT.equals("")){
                     DialogDangNhap();
                 }else{
-                    DialogThem();
+                    getDialogDanhGia();
                 }
-            }
-        });
-
-        btnDanhGia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                  Intent intent = new Intent(BookDetailActivity.this,FeedbackActivity.class);
-                  intent.putExtra("sach_Ten",sachTen);
-                  intent.putExtra("sach_HinhAnh",sachHinh);
-                  intent.putExtra("sach_Ma",sachMa);
-                  startActivity(intent);
             }
         });
     }
 
-    /**
-     * Hiển thị Dialog đánh giá sách
-     */
+    private void initToolBar() {
+        toolbar = findViewById(R.id.toolbar_Feedback);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_back);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        setTitle("Đánh giá sản phẩm");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    }
 
+    private void initFeedBackList() {
+        listDanhGia = new ArrayList<>();
+        feedbackAdapter = new FeedbackAdapter(this,listDanhGia);
+        listViewFeedback.setAdapter(feedbackAdapter);
+        mDatabase.child("DanhGia").child(sachMa).addChildEventListener(new GetChildFireBase() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                final DanhGia danhGia = dataSnapshot.getValue(DanhGia.class);
+                listDanhGia.add(danhGia);
+                feedbackAdapter.notifyDataSetChanged();
+                super.onChildAdded(dataSnapshot, s);
+            }
+        });
+    }
 
+    private void initBook() {
+        Intent intent = getIntent();
+        String ten = intent.getStringExtra("sach_Ten");
+        String hinhAnh = intent.getStringExtra("sach_HinhAnh");
+        sachMa = intent.getStringExtra("sach_Ma");
+        txtTen.setText(ten);
+        Picasso.get()
+                .load(hinhAnh)
+                .into(imgSach);
+}
 
+    private void callControls() {
+        sharedPreferences = getSharedPreferences("loginData", MODE_PRIVATE);
+        handler = new Handler();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        imgSach = findViewById(R.id.imgFeedback);
+        txtTen = findViewById(R.id.txtFeedBack_Ten);
+        listViewFeedback = findViewById(R.id.listView_Feedback);
+        btnFeedback = findViewById(R.id.btnFeedback_Send);
+    }
+
+    private void getDialogDanhGia() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_reviews);
+        final TextView txtRating = dialog.findViewById(R.id.txtDanhGia_Rating);
+        final EditText txtTieuDe = dialog.findViewById(R.id.txtDanhGia_TieuDe);
+        txtTieuDe.setText("");
+        final EditText txtNoiDung = dialog.findViewById(R.id.txtDanhGia_NoiDung);
+        final RatingBar ratingBar = dialog.findViewById(R.id.ratingBarReview);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                switch ((int) rating){
+                    case 1:
+                        txtRating.setText("Cực kì không hài lòng");
+                        break;
+                    case 2:
+                        txtRating.setText("Không hài lòng");
+                        break;
+                    case 3:
+                        txtRating.setText("Bình thường");
+                        break;
+                    case 4:
+                        txtRating.setText("Hài lòng");
+                        break;
+                    case 5:
+                        txtRating.setText("Rất hài lòng");
+                        break;
+                }
+            }
+        });
+        Button btnGuiDanhGia = dialog.findViewById(R.id.btnGuiDanhGia);
+        btnGuiDanhGia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float xepHang = ratingBar.getRating();
+                tieuDe = txtTieuDe.getText().toString();
+                if(tieuDe.equals("")){
+                    tieuDe = txtRating.getText().toString();
+                }
+                if(xepHang == 0.0){
+                    Toast.makeText(FeedbackActivity.this, "Vui lòng đánh giá sản phẩm", Toast.LENGTH_SHORT).show();
+                }else if (txtNoiDung.getText().toString().equals("") || txtNoiDung.getText().toString() == null){
+                    Toast.makeText(FeedbackActivity.this, "Nội dụng đánh giá không được rỗng", Toast.LENGTH_SHORT).show();
+                }else{
+                    DanhGia danhGia = new DanhGia(HomePage.KH_SDT,tieuDe,txtNoiDung.getText().toString(),xepHang);
+                    mDatabase.child("DanhGia").child(sachMa).push().setValue(danhGia);
+                    Toast.makeText(FeedbackActivity.this, "Cảm ơn quý khách đã đánh giá sản phẩm của chúng tôi", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            }
+        });
+        dialog.show();
+    }
     /**
      * Hiển thị Dialog Đăng nhập
      */
@@ -187,7 +240,7 @@ public class BookDetailActivity extends AppCompatActivity {
         txtDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog dialogRes = new Dialog(BookDetailActivity.this);
+                final Dialog dialogRes = new Dialog(FeedbackActivity.this);
                 dialogRes.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialogRes.setContentView(R.layout.dialog_register);
                 final TextView txtResSDT = dialogRes.findViewById(R.id.txtDialogRegister_SDT);
@@ -252,7 +305,7 @@ public class BookDetailActivity extends AppCompatActivity {
                             }
                         });
 
-                        final ProgressDialog progressDialog = new ProgressDialog(BookDetailActivity.this);
+                        final ProgressDialog progressDialog = new ProgressDialog(FeedbackActivity.this);
                         progressDialog.setMessage("Chờ trong giây lát !!!");
                         progressDialog.show();
 
@@ -288,15 +341,15 @@ public class BookDetailActivity extends AppCompatActivity {
                                 // kiểm tra
                                 if (blank) {
                                     progressDialog.dismiss();
-                                    Toast.makeText(BookDetailActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FeedbackActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                                 } else if (error) {
                                     progressDialog.dismiss();
-                                    Toast.makeText(BookDetailActivity.this, strErr, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FeedbackActivity.this, strErr, Toast.LENGTH_SHORT).show();
                                 }else if(exist[0]){
                                     progressDialog.dismiss();
-                                    Toast.makeText(BookDetailActivity.this, "Số điện thoại đã tồn tại", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FeedbackActivity.this, "Số điện thoại đã tồn tại", Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(BookDetailActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FeedbackActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                                     KhachHang khachHang = new KhachHang(sdt, mk, "", "");
                                     mDatabase.child("KhachHang").push().setValue(khachHang);
                                     HomePage.new_SDT = sdt;
@@ -344,7 +397,7 @@ public class BookDetailActivity extends AppCompatActivity {
                         super.onChildAdded(dataSnapshot, s);
                     }
                 });
-                final ProgressDialog progressDialog = new ProgressDialog(BookDetailActivity.this);
+                final ProgressDialog progressDialog = new ProgressDialog(FeedbackActivity.this);
                 progressDialog.setMessage("Chờ trong giây lát !!!");
                 progressDialog.show();
                 handler.postDelayed(new Runnable() {
@@ -353,13 +406,13 @@ public class BookDetailActivity extends AppCompatActivity {
                         if (isLogin) {
                             HomePage.getKhachHangProfile();
                             progressDialog.dismiss();
-                            Toast.makeText(BookDetailActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FeedbackActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
 
 
                         } else {
                             progressDialog.dismiss();
-                            Toast.makeText(BookDetailActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FeedbackActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, 3000);
@@ -398,227 +451,4 @@ public class BookDetailActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Khởi tạo các giá trị đầu vào
-     */
-    private void callControls() {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        sharedPreferences = getSharedPreferences("loginData", MODE_PRIVATE);
-        Intent intent = getIntent();
-        sach = (Sach) intent.getSerializableExtra("Sach");
-        nhaXB = intent.getStringExtra("NhaXuatBan");
-        listTG = (ArrayList<String>) intent.getSerializableExtra("TacGia");
-
-        txtTrangThai = findViewById(R.id.txtDetail_TrangThai);
-        btnDanhGia = findViewById(R.id.btnDanhGia);
-        btnThem = findViewById(R.id.btnThem_Sach);
-        txtTen = findViewById(R.id.txtDetail_Ten);
-        txtGia = findViewById(R.id.txtDetail_Gia);
-        imgHinh = findViewById(R.id.imgBook_Detail);
-        handler = new Handler();
-    }
-
-
-    /**
-     * Khởi tạo trạng thái số lượng trong kho của Sách
-     */
-    public void initBookStatus(){
-        mDatabase.child("Kho").addChildEventListener(new GetChildFireBase() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Kho kho = dataSnapshot.getValue(Kho.class);
-                if(kho.getSach_Ma().equals(sach.getSach_Ma())){
-                    soLuongKho = kho.getKho_SoLuong();
-                    if(kho.getKho_SoLuong() >= 5){
-                        txtTrangThai.setText(R.string.con_hang);
-                        txtTrangThai.setTextColor(Color.rgb(0,238,0));
-                        btnThem.setEnabled(true);
-                    }else if (kho.getKho_SoLuong() >= 1){
-                        txtTrangThai.setText(R.string.sap_het_hang);
-                        txtTrangThai.setTextColor(Color.rgb(220,216,0));
-                        btnThem.setEnabled(true);
-                    }else{
-                        txtTrangThai.setText(R.string.het_hang);
-                        txtTrangThai.setTextColor(Color.GRAY);
-                        btnThem.setEnabled(false);
-                    }
-                }
-                super.onChildAdded(dataSnapshot, s);
-            }
-        });
-    }
-
-    /**
-     * Khởi tạo chi tiết Sách
-     */
-    public void initBookDetail(){
-        final DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-        txtTen.setText(sach.getSach_Ten());
-        txtGia.setText(decimalFormat.format(sach.getSach_DonGia()) +" đ");
-        Picasso.get()
-                .load(sach.getSach_HinhAnh())
-                .into(imgHinh);
-
-        sachMa = sach.getSach_Ma();
-        sachTen = sach.getSach_Ten();
-        sachGia = sach.getSach_DonGia();
-        sachHinh = sach.getSach_HinhAnh();
-    }
-
-
-    /**
-     * Hiển thị Dialog Thêm số lượng sách vào giỏ hàng
-     */
-    private void DialogThem() {
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_cart);
-
-        final TextView txtSoLuong = dialog.findViewById(R.id.txtNhap_SL);
-        txtSoLuong.setText(soLuong +"");
-        Button btnTru = dialog.findViewById(R.id.btnNhap_Tru);
-        Button btnCong = dialog.findViewById(R.id.btnNhap_Cong);
-        Button btnXacNhan = dialog.findViewById(R.id.btnNhap_XN);
-
-        // event click nút +
-        btnCong.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                soLuong++;
-                if(soLuong > soLuongKho){
-                    soLuong = soLuongKho;
-                }
-                txtSoLuong.setText(soLuong +"");
-            }
-        });
-        //event click nút -
-        btnTru.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                soLuong--;
-                if(soLuong <= 0){
-                    soLuong =1;
-                }
-                txtSoLuong.setText(soLuong +"");
-            }
-        });
-        //event click nút Xác nhận
-        btnXacNhan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(HomePage.gioHang.size() == 0){
-                    HomePage.gioHang.add(new GioHang(sachMa, sachTen, sachHinh, sachGia, soLuong));
-                    HomePage.listSoLuongKho.add(soLuongKho);
-                }else{
-                    boolean exist = false;
-                    for(int i=0;i<HomePage.gioHang.size();i++){
-                        if(sachMa.equals(HomePage.gioHang.get(i).getSach_Ma())){
-                            int sl = HomePage.gioHang.get(i).getSach_SL();
-                            sl+= soLuong;
-                            HomePage.gioHang.get(i).setSach_SL(sl);
-                            exist = true;
-                        }
-                    }
-                    if(!exist){
-                        HomePage.gioHang.add(new GioHang(sachMa, sachTen, sachHinh, sachGia, soLuong));
-                        HomePage.listSoLuongKho.add(soLuongKho);
-                    }
-                }
-                Toast.makeText(BookDetailActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-    }
-
-    /**
-     * Tạo menu trên toolbar
-     * @param menu
-     * @return
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.cart_menu,menu);
-        return true;
-    }
-
-    /**
-     * Event click menu trên toolbar
-     * @param item
-     * @return
-     */
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.menuDetail_Giohang:
-                if(HomePage.KH_SDT == null || HomePage.KH_SDT.equals("")){
-                    DialogDangNhap();
-                }else{
-                    Intent intentGH = new Intent(this,CartActivity.class);
-                    startActivity(intentGH);
-                }
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    /**
-     * Khởi tạo toolbar
-     */
-    private void initToolBar() {
-        toolbar = findViewById(R.id.toolBar);
-        toolbar.setNavigationIcon(R.drawable.ic_menu_back);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        viewPager = findViewById(R.id.viewPager);
-        tabLayout = findViewById(R.id.tabLayout);
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentPagerAdapter adapter  = new FragmentPagerAdapter(manager);
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-    }
-
-    /**
-     * Hàm public để cho fragment gọi lấy thông tin Sách - nhà xuất bản - danh sách tác giả
-     * @return
-     */
-    public Sach getThongTinSach(){
-        return sach;
-    }
-
-    public String getNhaXB(){
-        return nhaXB;
-    }
-
-    public List getTacGia(){
-        return  listTG;
-    }
-
-    public String getMaSach(){
-        return sach.getSach_Ma();
-    }
-
-    public ArrayList<DanhGia> getReviews(){
-        return listDanhGia;
-    }
-
-    /**
-     * Restart activity sẽ khởi tạo lại trạng thái số lượng Sách còn lại trong kho
-     */
-    @Override
-    protected void onRestart() {
-        initBookStatus();
-        super.onRestart();
-    }
 }

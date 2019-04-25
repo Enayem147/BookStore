@@ -141,9 +141,6 @@ public class BookListAdapter extends BaseAdapter {
     public void filter(String charText) {
         charText =charText.toLowerCase(Locale.getDefault());
         list.clear();
-        ArrayList<TatCaSach> searchByName = new ArrayList<>();
-        ArrayList<TatCaSach> searchByActor = new ArrayList<>();
-        ArrayList<TatCaSach> searchByType = new ArrayList<>();
 
         if (charText.length() == 0) {
             list.addAll(arrayListSearch);

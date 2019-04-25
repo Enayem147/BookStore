@@ -112,6 +112,7 @@ public class BooksAdapter extends BaseAdapter {
                 super.onChildAdded(dataSnapshot, s);
             }
         });
+
         // set giá
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         txt_Gia.setText(decimalFormat.format(sach.getSach_DonGia()) + " đ");

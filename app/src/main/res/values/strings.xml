@@ -67,4 +67,5 @@
     <string name="chua_co_don_hang">Chưa có đơn hàng nào</string>
     <string name="cus_ma_don_hang">Mã đơn hàng : </string>
     <string name="trang_thai_don_hang">Trạng thái đơn hàng : </string>
+    <string name="gui_nhan_xet">Gửi nhận xét</string>
 </resources>

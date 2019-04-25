@@ -28,7 +28,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Hài lòng"
                 android:textColor="@color/black" />
         </LinearLayout>
 
@@ -42,7 +41,7 @@
             <TextView
                 android:id="@+id/lvReview_NoiDung"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="100dp"
                 android:inputType="textMultiLine"
                 android:scrollbars="vertical" />
 
@@ -60,15 +59,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Được nhật xét bởi : "
-            android:textSize="12sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/lvReview_HoTen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Hoàng Nguyễn Trường Nam"
             android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            android:textSize="13sp" />
     </LinearLayout>
 </LinearLayout>

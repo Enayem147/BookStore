@@ -20,12 +20,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class ReviewsAdapter extends BaseAdapter {
+public class FeedbackAdapter extends BaseAdapter {
     Context context;
     ArrayList<DanhGia> list;
     private DatabaseReference mDatabase;
 
-    public ReviewsAdapter(Context context, ArrayList<DanhGia> list) {
+    public FeedbackAdapter(Context context, ArrayList<DanhGia> list) {
         this.context = context;
         this.list = list;
     }
@@ -49,7 +49,7 @@ public class ReviewsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        convertView = inflater.inflate(R.layout.list_view_reviews, null);
+        convertView = inflater.inflate(R.layout.list_view_feedback, null);
         RatingBar ratingBarReviews = convertView.findViewById(R.id.lvReview_RatingBar);
         TextView txtTieuDe = convertView.findViewById(R.id.lvReview_TieuDe);
         TextView txtNoiDung = convertView.findViewById(R.id.lvReview_NoiDung);
@@ -61,7 +61,12 @@ public class ReviewsAdapter extends BaseAdapter {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 KhachHang khachHang = dataSnapshot.getValue(KhachHang.class);
                 if(khachHang.getKH_SDT().equals(danhGia.getKH_SDT())){
-                    txtHoTen.setText(khachHang.getKH_HoTen());
+                    if(khachHang.getKH_HoTen().equals("")){
+                        txtHoTen.setText("Người dùng mới");
+                    }else{
+                        txtHoTen.setText(khachHang.getKH_HoTen());
+                    }
+
                 }
                 super.onChildAdded(dataSnapshot, s);
             }
